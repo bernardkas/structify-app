@@ -34,7 +34,7 @@ export default auth(req => {
   // In here you can change if you want isPublicRoute to make
   // all public or to make all private !isPublicRoute whatever you write in isPublicRoute
   // it goind to be private not public
-  if (!isLoggedIn && isPublicRoute) {
+  if (!isLoggedIn && !isPublicRoute) {
     let callbackUrl = nextUrl.pathname;
 
     if (nextUrl.search) {

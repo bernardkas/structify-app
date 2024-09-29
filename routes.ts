@@ -1,6 +1,6 @@
 // An array of routes that are accessible to the public
 
-export const publicRoutes = ['/settings'];
+export const publicRoutes = [''];
 
 // Protected routes
 export const authRoutes = [

@@ -12,18 +12,6 @@ const LeftSideMenu = () => {
       <div className='p-2 flex flex-row items-start w-full bg-[#152058] rounded-md shadow-md'>
         <Button
           asChild
-          variant={pathname === '/settings/profile' ? 'light' : 'link'}
-          className='text-white  text-start text-md  w-full rounded-none  '>
-          <Link href='/settings/profile'>Profile</Link>
-        </Button>
-        <Button
-          asChild
-          variant={pathname === '/settings/others' ? 'light' : 'link'}
-          className='text-white  text-start text-md  w-full rounded-none'>
-          <Link href='/settings/others'>Others</Link>
-        </Button>
-        <Button
-          asChild
           variant={pathname === '/settings' ? 'light' : 'link'}
           className='text-white  text-start text-md  w-full rounded-none'>
           <Link href='/settings/profile'>Profile</Link>
