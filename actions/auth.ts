@@ -221,10 +221,10 @@ export const newPassword = async (
 
 export const logout = async () => {
   await signOut({
-    redirectTo: '/',
+    redirectTo: '/auth/sign-in',
   });
 
-  revalidatePath('/');
+  revalidatePath('/auth/sign-in');
 };
 
 export const settings = async (values: z.infer<typeof SettingSchema>) => {

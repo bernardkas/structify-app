@@ -2,7 +2,7 @@
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import logo from '@/assets/logo.png';
+import logo from '@/assets/logo1.png';
 import Image from 'next/image';
 import MobileNavbar from './MobileNavbar';
 import {
@@ -14,6 +14,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import UserButton from '../auth/user-button';
+import NavbarButton from './navbar-button';
 
 interface NavbarProps {
   currentUser: any;
@@ -29,13 +30,20 @@ const Navbar = ({ currentUser }: NavbarProps) => {
   return (
     <div className='shadow-lg '>
       <div className='mx-4 flex  h-[70px] flex-row items-center justify-between '>
-        <div>
-          <Link className='text-2xl font-bold text-orange-500 h-16' href='/'>
-           <h1>Structify</h1>
-          </Link>
+        <div className="flex flex-row items-center gap-10">
+          <div className="relative w-[200px] h-[200px]">
+           <Image src={logo} alt="Logo"
+            layout="fill"
+            objectFit="contain"
+            quality={100} 
+           />
+          </div>
+        <div className="flex flex-row bg-slate-600 rounded-full">
+         <NavbarButton />
+        </div>
         </div>
         <div className='hidden flex-row gap-1 items-center lg:flex'>
-
+         
           {!currentUser ? (
             <Link
               className='mx-2 font-noto-sans font-[500] text-base text-white bg-orange-500 p-1 rounded-sm w-[100px] text-center'
