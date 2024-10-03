@@ -93,14 +93,17 @@ model Address {
   clients Clients[]
 }
 
+enum ClientStatus {
+  ACTIVE
+  INACTIVE
+}
 model Clients {
   id            String  @id
   uuid          String  @unique @default(uuid())
   name          String
   organization  String
   clientId      String?
-  clientAddress String
-  status        String
+  status        ClientStatus
   color         String
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
