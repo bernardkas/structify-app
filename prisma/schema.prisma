@@ -19,30 +19,29 @@ enum UserRole {
 }
 
 enum Subscription {
-    BASIC
-    PREMIUM
-    ENTERPRISE
+  BASIC
+  PREMIUM
+  ENTERPRISE
 }
 
-
 model User {
-  id            String          @id @default(cuid())
-  name          String
-  email         String          @unique
-  password String?
-  emailVerified DateTime?
-  isOAuth Boolean @default(false)
-  image         String?
-  accounts      Account[]
-  role          UserRole @default(USER)
-  subscription Subscription @default(BASIC)
+  id                String       @id @default(cuid())
+  name              String
+  email             String       @unique
+  password          String?
+  emailVerified     DateTime?
+  isOAuth           Boolean      @default(false)
+  image             String?
+  accounts          Account[]
+  role              UserRole     @default(USER)
+  subscription      Subscription @default(BASIC)
   subscriptionsDate DateTime?
-  user  NameTable[]  @relation("NameTheTable")
- 
+  clients           Clients[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model Account {
   userId            String
   type              String
@@ -55,47 +54,62 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@id([provider, providerAccountId])
 }
- 
+
 model VerificationToken {
-  id String @id @default(cuid())
-  email String
-  token      String @unique
-  expires    DateTime
-  
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
   @@unique([email, token])
 }
 
 model PasswordResetToken {
-  id String @id @default(cuid())
-  email String
-  token      String @unique
-  expires    DateTime
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
 
   @@unique([email, token])
 }
- 
 
- model NameTable {
-  id            Int      @id @default(sequence())
-  userId        String?
-  user          User?     @relation("NameTheTable", fields: [userId], references: [id], onDelete: Cascade)
-  name          String?
-  lastname      String
-  phone         String
-  email         String?
-  title         String
-  isPaid Boolean? @default(false)
-  isEnterprise Boolean? @default(false)
-  description   String?
-  photo         String[]
+model Address {
+  id      String @id
+  uuid    String @unique @default(uuid())
+  street  String
+  city    String
+  state   String
+  zip     String
+  country String
+
+  clients Clients[]
 }
 
+model Clients {
+  id            String  @id
+  uuid          String  @unique @default(uuid())
+  name          String
+  organization  String
+  clientId      String?
+  clientAddress String
+  status        String
+  color         String
 
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  address   Address? @relation(fields: [addressId], references: [id])
+  addressId String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}

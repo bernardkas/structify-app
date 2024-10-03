@@ -55,9 +55,6 @@ const SignupForm = () => {
       <div className='flex flex-col justify-center items-center h-full'>
         <Card className='flex flex-col items-center'>
           <CardHeader>
-            <h1 className='font-noto-sans text-3xl font-bold mb-5 text-orange-500'>
-              Sign Up
-            </h1>
           </CardHeader>
           <CardContent>
             <Social type={['google']} />

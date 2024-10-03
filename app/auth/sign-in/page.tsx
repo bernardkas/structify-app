@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import logo from '@/assets/logo.png'
 
 const SignInPage = () => {
   return (
@@ -28,7 +29,11 @@ const SignInPage = () => {
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
           <div className="absolute inset-0 bg-zinc-900" />
           <div className="relative z-20 flex items-center text-lg font-medium">
-            structify
+          <Image src={logo} alt="Logo" 
+             width={200}
+             objectFit="contain"
+             quality={100} 
+          />
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
@@ -43,10 +48,10 @@ const SignInPage = () => {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                Create an account
+              Sign In
               </h1>
               <p className="text-sm text-muted-foreground">
-                Enter your email below to create your account
+                Enter your email below to login
               </p>
             </div>
             <SignInFrom />
