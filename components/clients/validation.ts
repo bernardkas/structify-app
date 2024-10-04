@@ -2,10 +2,13 @@ import { z } from "zod";
 
 
 export const CreateClientSchema = z.object({
+    uuid: z.string().optional(),
     name: z.string().min(1, 'This field is required'),
     organization: z.string(),
     color: z.string().optional(),
-    status: z.enum(['active', 'inactive']).default('inactive'), 
+    phone: z.string().min(1),
+    email: z.string().email().optional(),
+    status: z.enum(['ACTIVE', 'INACTIVE']).default('INACTIVE'),  
     date: z.date().optional(),
     address: z.object({
         street: z.string().min(1, 'This field is required'),

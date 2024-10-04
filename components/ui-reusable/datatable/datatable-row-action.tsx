@@ -20,11 +20,15 @@ import {
 
 
 interface DataTableRowActionsProps<TData> {
-  row: Row<TData>
+  row: Row<TData> 
+  onDelete: (value: any) => void
+  onArchive?: (value: any) => void
 }
 
 export function DataTableRowActions<TData>({
   row,
+  onArchive,
+  onDelete,
 }: DataTableRowActionsProps<TData>) {
 
   return (
@@ -33,18 +37,18 @@ export function DataTableRowActions<TData>({
         <Button
           variant="ghost"
           className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+          onClick={(e) => e.stopPropagation()}
         >
           <DotsHorizontalIcon className="h-4 w-4" />
           <span className="sr-only">Open menu</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>Archive</DropdownMenuItem>
+        {/* <DropdownMenuItem onClick={() => onArchive(row.original.uuid as string)}>Archive</DropdownMenuItem> */}
         <DropdownMenuSeparator />
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={row.original.uuid}>
           Delete
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

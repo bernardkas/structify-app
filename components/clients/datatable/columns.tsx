@@ -5,6 +5,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { DataTableColumnHeader } from "@/components/ui-reusable/datatable/datatable-column-header"
 import { DataTableRowActions } from "@/components/ui-reusable/datatable/datatable-row-action"
 import { Clients } from "@prisma/client"
+import { archiveClient, deleteClient } from "@/actions/Model/clients"
+import { toast } from "react-toastify"
 
 
 
@@ -21,6 +23,7 @@ export const columns: ColumnDef<Clients>[] = [
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
         className="translate-y-[2px]"
+        onClick={(e) => e.stopPropagation()}
       />
     ),
     cell: ({ row }) => (
@@ -29,6 +32,7 @@ export const columns: ColumnDef<Clients>[] = [
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
         className="translate-y-[2px]"
+        onClick={(e) => e.stopPropagation()}
       />
     ),
     enableSorting: false,
@@ -54,7 +58,12 @@ export const columns: ColumnDef<Clients>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Color" />
     ),
-    cell: ({ row }) => <div>{row.getValue("color")}</div>,
+    cell: ({ row }) => {
+      const color = row.getValue("color") ;
+      return (
+          <div style={{ backgroundColor: color  }}  className={`w-4 h-4 rounded-full`}></div>
+      )
+    },
   },
   {
     accessorKey: "phone",
@@ -69,10 +78,25 @@ export const columns: ColumnDef<Clients>[] = [
       <DataTableColumnHeader column={column} title="Status" />
     ),
     cell: ({ row }) => <div>{row.getValue("status")}</div>,
-  },
-  
+  },  
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    accessorKey: "actions",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Actions" />
+    ),
+    cell: ({ row }) => {
+      const deleteClientById = () => {
+        deleteClient(row.original.uuid).then(data => {
+          if (data?.success) {
+            toast(data?.success, {type: 'success'})
+          }
+        });
+      }
+
+      return (
+        <DataTableRowActions  row={row} onDelete={deleteClientById} />
+      )
+    } 
   },
 ]

@@ -1,8 +1,22 @@
-import React from 'react'
+'use client';
 
-const ClientOverview = () => {
+import React from 'react'
+import { DataTable } from '../ui-reusable/datatable/datatable';
+import { columns } from './datatable/columns';
+import { useRouter } from 'next/navigation';
+
+interface ClientOverviewProps {
+  clients: any
+}
+const ClientOverview = ({clients}: ClientOverviewProps) => {
+  const router = useRouter()
+  const handleRowClick = (client: any) => {
+    router.push(`/clients/${client.uuid}/detail`)
+  }
   return (
-    <div>Clients</div>
+    <div>
+       <DataTable onRowClick={handleRowClick} columns={columns} data={clients} />
+    </div>
   )
 }
 

@@ -97,6 +97,13 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={(e) => {
+                    if (e.target instanceof HTMLInputElement) {
+                      e.stopPropagation();
+                    } else {
+                      onRowClick?.(row.original);
+                    }
+                  }}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

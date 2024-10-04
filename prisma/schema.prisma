@@ -82,13 +82,13 @@ model PasswordResetToken {
 }
 
 model Address {
-  id      String @id
+  id      String @id @default(cuid())
   uuid    String @unique @default(uuid())
   street  String
-  city    String
-  state   String
+  city    String?
+  state   String?
   zip     String
-  country String
+  country String?
 
   clients Clients[]
 }
@@ -98,13 +98,16 @@ enum ClientStatus {
   INACTIVE
 }
 model Clients {
-  id            String  @id
+  id            String  @id @default(cuid())
   uuid          String  @unique @default(uuid())
   name          String
-  organization  String
+  organization  String?
   clientId      String?
-  status        ClientStatus
-  color         String
+  status        ClientStatus?
+  color         String?
+  phone         String
+  email         String?
+  date          DateTime?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
