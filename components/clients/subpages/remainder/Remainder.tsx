@@ -50,7 +50,9 @@ const Remainder = ({ remainders, clientId }: RemainderProps) => {
               <AlertDialogHeader>
                 <DialogTitle>{isEditing ? 'Edit Remainder' : 'Add Remainder'}</DialogTitle>
                 <DialogDescription>
+                  <div>
                   <RemainderForm setOpenDialog={setOpenDialog} isEditing={isEditing} remainder={selectedRow} clientId={clientId} />
+                  </div>
                 </DialogDescription>
               </AlertDialogHeader>
             </DialogContent>

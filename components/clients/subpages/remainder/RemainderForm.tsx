@@ -53,7 +53,7 @@ const RemainderForm = ({
   );
   const [selectedFrequency, setSelectedFrequency] = useState<string>(remainder?.frequency || '');
   const [selectedDaysOfWeek, setSelectedDaysOfWeek] = useState<string[]>(remainder?.daysOfWeek || []);
-  const [selectedDaysOfMonth, setSelectedDaysOfMonth] = useState<number[]>(remainder?.daysOfMonth || []);
+  const [selectedDaysOfMonth, setSelectedDaysOfMonth] = useState<string[]>(remainder?.daysOfMonth || []);
 
   const [loading, setLoading] = useState(false);
 
@@ -125,7 +125,7 @@ const RemainderForm = ({
 
   const handleDateChange = (date: Date | undefined) => {
     setSelectedDate(date);
-    form.setValue('startDate', date);
+    form.setValue('startDate', date as any);
   };
 
   useEffect(() => {
@@ -199,7 +199,7 @@ const RemainderForm = ({
                         value={field.value}
                         onValueChange={value => {
                           field.onChange(value);
-                          setSelectedFrequency(value); // Set selected frequency
+                          setSelectedFrequency(value); 
                         }}>
                         <SelectTrigger className='w-[180px] text-black'>
                           <SelectValue placeholder='Status..' />

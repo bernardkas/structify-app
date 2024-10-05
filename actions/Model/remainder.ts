@@ -6,16 +6,26 @@ import prisma from '@/db/db';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
-export const getRemainders = async () => {
+export const getRemainders = async (clientId: string) => {
+
+  const existingClient = await prisma.client.findMany({
+    where: {
+      uuid: clientId
+    }
+  })
   const remainders = await prisma.remainder.findMany({
+    where: {
+      clientId: existingClient[0].id
+    },
     include: {
       client: true,
     },
+
   });
 
-  // Remove 'id' from each client object
-  const sanitizedClients = remainders.map(({ id, ...client }) => client);
-  return sanitizedClients;
+  return remainders
+
+
 };
 
 export const createRemainder = async (
