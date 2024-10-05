@@ -17,12 +17,13 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Trash} from "lucide-react"
 
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData> 
-  onDelete: (value: any) => void
-  onArchive?: (value: any) => void
+  onDelete: () => void
+  onArchive?: () => void
 }
 
 export function DataTableRowActions<TData>({
@@ -30,6 +31,8 @@ export function DataTableRowActions<TData>({
   onArchive,
   onDelete,
 }: DataTableRowActionsProps<TData>) {
+
+
 
   return (
     <DropdownMenu>
@@ -45,10 +48,11 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         {/* <DropdownMenuItem onClick={() => onArchive(row.original.uuid as string)}>Archive</DropdownMenuItem> */}
-        <DropdownMenuSeparator />
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={row.original.uuid}>
-          Delete
+        <DropdownMenuItem  onClick={(e) => {
+          e.stopPropagation() 
+          onDelete(e)
+        }}>
+        <Trash className="mr-3" />  Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

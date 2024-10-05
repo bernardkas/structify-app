@@ -21,21 +21,21 @@ export function DataTableToolbar<TData>({
 
   const [showArchived, setShowArchived] = useState(false);
 
-  const handleToggleArchived = (checked: boolean) => {
-    setShowArchived(checked);
+  // const handleToggleArchived = (checked: boolean) => {
+  //   setShowArchived(checked);
   
-    const column = table.getColumn("deletedAt");
+  //   const column = table.getColumn("deletedAt");
   
-    if (column) {
-      if (checked) {
-        column.setFilterValue("archived");
-      } else {
-        column.setFilterValue("active");
-      }
-    } else {
-      console.error("deletedAt column not found");
-    }
-  };
+  //   if (column) {
+  //     if (checked) {
+  //       column.setFilterValue("archived");
+  //     } else {
+  //       column.setFilterValue("active");
+  //     }
+  //   } else {
+  //     console.error("deletedAt column not found");
+  //   }
+  // };
   
   
 
@@ -50,7 +50,7 @@ export function DataTableToolbar<TData>({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn('deletedAt') && (
+        {/* {table.getColumn('deletedAt') && (
           <div className="flex items-center space-x-2">
            <Switch
             checked={showArchived}
@@ -58,7 +58,7 @@ export function DataTableToolbar<TData>({
             />
           <span className="text-gray-500 text-sm">{showArchived ? "Archived" : "Active"}</span>
         </div>
-          )}
+          )} */}
         {isFiltered && (
           <Button
             variant="ghost"

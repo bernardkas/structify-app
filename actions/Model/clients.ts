@@ -9,7 +9,7 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 export const getClients = async () => {
-    const clients = await prisma.clients.findMany({
+    const clients = await prisma.client.findMany({
         include: {
           address: true
         }
@@ -23,7 +23,7 @@ export const getClients = async () => {
 export const getClientById = async (id: any) => {
   console.log('slug', id)
   const uuid = id.slug
-  const client = await prisma.clients.findFirst({
+  const client = await prisma.client.findFirst({
     where: {
       uuid: uuid,
     },
@@ -71,7 +71,7 @@ export const createClient = async (
   
   const clientId = generateClientId();
 
-  const client = await prisma.clients.create({
+  const client = await prisma.client.create({
     data: {
       name,
       organization,
@@ -126,7 +126,7 @@ export const updateClient = async (
     address: { street, city, state, zip, country },
   } = values;
 
-  const clientExists = await prisma.clients.findUnique({
+  const clientExists = await prisma.client.findUnique({
     where: { uuid },
   });
 
@@ -134,7 +134,7 @@ export const updateClient = async (
     return { error: 'Client not found' };
   }
 
-  await prisma.clients.update({
+  await prisma.client.update({
     where: { uuid },
     data: {
       name,
@@ -167,7 +167,7 @@ export const updateClient = async (
 
 
 export const deleteClient = async (uuid: string) => {
-  await prisma.clients.delete({
+  await prisma.client.delete({
     where: {
       uuid: uuid 
     },
@@ -178,7 +178,7 @@ export const deleteClient = async (uuid: string) => {
 
 
 export const archiveClient = async (uuid: string) => {
-  await prisma.clients.update({
+  await prisma.client.update({
     where: {
       uuid: uuid,
     },

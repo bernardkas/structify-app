@@ -4,14 +4,14 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DataTableColumnHeader } from "@/components/ui-reusable/datatable/datatable-column-header"
 import { DataTableRowActions } from "@/components/ui-reusable/datatable/datatable-row-action"
-import { Clients } from "@prisma/client"
+import { Client } from "@prisma/client"
 import { archiveClient, deleteClient } from "@/actions/Model/clients"
 import { toast } from "react-toastify"
 
 
 
 
-export const columns: ColumnDef<Clients>[] = [
+export const columns: ColumnDef<Client>[] = [
   {
     id: "select",
     header: ({ table }) => (

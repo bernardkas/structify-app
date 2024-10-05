@@ -14,7 +14,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { CreateClientSchema } from './validation';
-import { Clients } from '@prisma/client';
+import { Client } from '@prisma/client';
 import {
   Select,
   SelectContent,

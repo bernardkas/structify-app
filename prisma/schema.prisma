@@ -36,7 +36,7 @@ model User {
   role              UserRole     @default(USER)
   subscription      Subscription @default(BASIC)
   subscriptionsDate DateTime?
-  clients           Clients[]
+  client           Client[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -90,14 +90,14 @@ model Address {
   zip     String
   country String?
 
-  clients Clients[]
+  clients Client[]
 }
 
 enum ClientStatus {
   ACTIVE
   INACTIVE
 }
-model Clients {
+model Client {
   id            String  @id @default(cuid())
   uuid          String  @unique @default(uuid())
   name          String
@@ -115,7 +115,35 @@ model Clients {
   address   Address? @relation(fields: [addressId], references: [id])
   addressId String?
 
+  reminder Remainder[]
+
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+}
+
+
+enum RemainderStatus {
+  ACTIVE
+  INACTIVE
+  PAUSED
+}
+
+model Remainder {
+  id              String      @id @default(cuid())
+  uuid            String      @unique @default(uuid())
+  name            String
+  clientId        String      
+  client          Client   @relation(fields: [clientId], references: [id])
+  startDate       DateTime
+  frequency       String   
+  daysOfWeek      String[] 
+  daysOfMonth     String[]    
+  reminderTime    String   
+  // reminderType    String?   
+  emailRecipient String
+  reminderMessage String?
+  status          RemainderStatus   
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
