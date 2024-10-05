@@ -2,7 +2,7 @@ import { getClientById } from "@/actions/Model/clients";
 import Navigation from "@/components/clients/subpages/Navigation";
 import DetailPage from "@/components/ui-reusable/detail-page";
 import { getContrastingTextColor } from "@/lib/text-color-contrasting";
-import { Clients } from "@prisma/client";
+import { Client } from "@prisma/client";
 
 
 
@@ -13,7 +13,7 @@ export default async function ClientLayout({
   children: React.ReactNode;
   params: any;
 }>) {
-  const client = await getClientById(params) as Clients;
+  const client = await getClientById(params) as Client;
   return (
     <div className='mx-3'>
        <DetailPage data={client} />
