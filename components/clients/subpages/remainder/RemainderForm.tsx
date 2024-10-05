@@ -235,6 +235,7 @@ const RemainderForm = ({
                             { label: 'Sunday', value: 'sunday' },
                           ]}
                           selectedOptions={selectedDaysOfWeek}
+                          // @ts-ignore
                           setSelectedOptions={setSelectedDaysOfWeek}
                         />
                       </FormControl>
@@ -262,6 +263,7 @@ const RemainderForm = ({
                             value: day.toString(),
                           }))}
                           selectedOptions={selectedDaysOfMonth}
+                          // @ts-ignore
                           setSelectedOptions={setSelectedDaysOfMonth}
                         />
                       </FormControl>

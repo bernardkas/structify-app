@@ -10,8 +10,6 @@ type SubpageRemainderProps = {
 const SubpageRemainder = async ({params}: SubpageRemainderProps) => {
   const clientId = params.slug
   const remainders = await getRemainders(clientId)
-
-  console.log('reminders', remainders)
   return (
     <div>
       <Remainder remainders={remainders} clientId={clientId} />
