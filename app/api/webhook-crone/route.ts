@@ -1,8 +1,7 @@
+'use server';
 import { sendReminderEmails } from '@/lib/reminderEmail';
 import { NextRequest, NextResponse } from 'next/server';
 import cron from 'node-cron';
-
-
 
 
 export async function POST(request: NextRequest) {
