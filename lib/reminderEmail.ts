@@ -33,6 +33,7 @@ export const sendReminderEmails = async () => {
         from: 'noreply@yourapp.com',
         to: emailRecipient,
         subject: `Reminder from ${client.name}`,
+        // @ts-ignore
         text: reminderMessage,
       });
 
