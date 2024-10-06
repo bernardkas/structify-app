@@ -61,6 +61,7 @@ export const columns: ColumnDef<Client>[] = [
     cell: ({ row }) => {
       const color = row.getValue("color") ;
       return (
+        // @ts-ignore
           <div style={{ backgroundColor: color  }}  className={`w-4 h-4 rounded-full`}></div>
       )
     },
