@@ -23,12 +23,10 @@ import {
 import { Button } from '@/components/ui/button';
 import DatePicker from '@/components/ui/date-picker';
 import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
 import MultiSelect from '@/components/ui-reusable/multi-select';
-import { createRemainder, updateRemainder } from '@/actions/Model/remainder';
+import { createRemainder, updateRemainder } from '@/actions/Model/remainder/remainder';
 import { toast } from 'react-toastify';
 import { BeatLoader } from 'react-spinners';
-import { Client, Remainder } from '@prisma/client';
 import { RemainderWithDetials } from './type';
 
 interface RemainderFormProps {

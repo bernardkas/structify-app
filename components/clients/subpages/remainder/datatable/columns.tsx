@@ -7,7 +7,7 @@ import { DataTableRowActions } from "@/components/ui-reusable/datatable/datatabl
 import { Client, Remainder } from "@prisma/client"
 import { toast } from "react-toastify"
 import { useFormattedDate } from "@/lib/use-formatted-date"
-import { deleteRemainder } from "@/actions/Model/remainder"
+import { deleteRemainder } from "@/actions/Model/remainder/remainder"
 
 
 

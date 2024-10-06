@@ -1,4 +1,4 @@
-import { getRemainders } from '@/actions/Model/remainder'
+import { getRemainders } from '@/actions/Model/remainder/remainder'
 import Remainder from '@/components/clients/subpages/remainder/Remainder'
 import React from 'react'
 
