@@ -2,7 +2,7 @@ import { Resend } from 'resend'; // Import your email provider
 import { format } from 'date-fns';
 import prisma from '@/db/db';
 
-const resend = new Resend(process.env.RESEND_API_WEBHOOK);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendReminderEmails = async () => {
   const now = new Date();
