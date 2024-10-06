@@ -50,7 +50,7 @@ export function DataTableRowActions<TData>({
         {/* <DropdownMenuItem onClick={() => onArchive(row.original.uuid as string)}>Archive</DropdownMenuItem> */}
         <DropdownMenuItem  onClick={(e) => {
           e.stopPropagation() 
-          onDelete(e)
+          onDelete()
         }}>
         <Trash className="mr-3" />  Delete
         </DropdownMenuItem>
