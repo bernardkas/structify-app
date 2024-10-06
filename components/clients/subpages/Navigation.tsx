@@ -1,13 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Clients } from '@prisma/client';
+import { Client } from '@prisma/client';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
 interface NavigationProps {
-  client: Clients;
+  client: Client;
 }
 
 const Navigation = ({ client }: NavigationProps) => {
