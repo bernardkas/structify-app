@@ -1,11 +1,6 @@
-
 {
-    "redirects": [
-      {
-        "source": "/api/cron/remainder",
-        "destination": "/some-other-route",
-        "permanent": false
-      }
-    ]
+    "crons": [{
+      "path": "/api/cron/remainder",
+      "schedule": "0 10 * * *"
+    }]
   }
-  
