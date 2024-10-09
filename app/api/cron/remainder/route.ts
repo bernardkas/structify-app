@@ -4,7 +4,6 @@ const cron = require('node-cron');
 
 
 export async function GET()  {
-    console.log('running cron')
     sendReminderEmails();
   return NextResponse.json({ message: 'Reminder emails sent successfully' });
 };  

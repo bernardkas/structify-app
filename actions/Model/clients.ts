@@ -21,7 +21,6 @@ export const getClients = async () => {
 }
 
 export const getClientById = async (id: any) => {
-  console.log('slug', id)
   const uuid = id.slug
   const client = await prisma.client.findFirst({
     where: {
