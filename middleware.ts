@@ -16,6 +16,10 @@ export default auth(req => {
   // This way dynamic
   // const dynamicRoute = [`/test/${nextUrl.pathname}`];
 
+  if (nextUrl.pathname === '/api/cron/remainder') {
+    return null; // Allow access without redirect or authentication
+  }
+
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
@@ -51,5 +55,5 @@ export default auth(req => {
 });
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
+  matcher: ['/((?!.+\\.[\\w]+$|_next|api/cron/remainder).*)', '/', '/(api|trpc)(.*)'],
 };

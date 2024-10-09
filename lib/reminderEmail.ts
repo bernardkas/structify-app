@@ -8,22 +8,31 @@ export const sendReminderEmails = async () => {
   const now = new Date();
   const dayOfWeek = format(now, 'EEEE').toLowerCase();
   const currentTime = format(now, 'HH:mm'); 
+  const dayOfMonth = now.getDate().toString(); 
 
   const reminders = await prisma.remainder.findMany({
     where: {
-      status: 'ACTIVE', 
-      frequency: 'weekly',
-      daysOfWeek: {
-        has: dayOfWeek, 
-      },
-      reminderTime: currentTime, 
+      status: 'ACTIVE',
+      OR: [
+        {
+          frequency: 'weekly',
+          daysOfWeek: {
+            has: dayOfWeek,
+          },
+        },
+        {
+          frequency: 'monthly',
+          daysOfMonth: {
+            has: dayOfMonth,
+          },
+        },
+      ],
+      reminderTime: currentTime,
     },
     include: {
       client: true,
     },
   });
-
-  console.log('Fetched reminders:', reminders);
 
   for (const reminder of reminders) {
     const { emailRecipient, reminderMessage, client } = reminder;
