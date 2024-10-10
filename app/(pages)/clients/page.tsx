@@ -10,8 +10,6 @@ import React from 'react'
 
 const Clients = async () => {
   const clients = await getClients()
-
-  console.log('clients', clients)
   return (
     <div className="mx-5">
       <div className='flex flex-row justify-between items-center mt-3'>

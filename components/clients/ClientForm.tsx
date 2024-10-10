@@ -67,7 +67,6 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
       toast("Client created successfully", {type: 'success'});
       setLoading(false)
       if (data?.error) {
-        console.log('Error creating client');
         toast(data?.error, {type: 'error'});
         setLoading(false)
       }
@@ -78,12 +77,10 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
     setLoading(true)
     updateClient(values).then(data => {
       if (data?.success) {
-        console.log('Client created successfully');
         toast(data?.success, {type: 'success'});
         setLoading(false)
       }
       if (data.error) {
-        console.log('Error creating client');
         toast(data?.error, {type: 'error'});
         setLoading(false)
       }
