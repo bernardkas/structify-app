@@ -9,13 +9,20 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 export const getClients = async () => {
+  const user = await auth()
+  if (!user) {
+    return { error: 'User not found' }
+  }
+
     const clients = await prisma.client.findMany({
+      where: {
+        userId: user.user?.id
+      },
         include: {
           address: true
         }
       });
-    
-      // Remove 'id' from each client object
+
       const sanitizedClients = clients.map(({ id, ...client }) => client);
       return sanitizedClients;
 }
@@ -172,6 +179,7 @@ export const deleteClient = async (uuid: string) => {
     },
   });
 
+  revalidatePath(`/clients`);
   return {success: "Successfully deleted"}
 }
 
@@ -190,3 +198,30 @@ export const archiveClient = async (uuid: string) => {
 }
   
 
+
+export const getProjectByClientId = async (clientId: string) => {
+  const client = await prisma.client.findUnique({
+    where: {
+      uuid: clientId, 
+    },
+    select: {
+      id: true, 
+    },
+  });
+
+  if (!client) {
+    return redirect(`/clients`);
+  }
+
+
+  const projects = await prisma.project.findMany({
+    where: {
+      clientId: client.id, 
+    },
+    include: {
+      address: true,
+    },
+  });
+
+    return projects;
+}

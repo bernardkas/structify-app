@@ -137,6 +137,6 @@ export const deleteRemainder = async (uuid: string) => {
         uuid: uuid 
       },
     });
-
+    revalidatePath(`/clients/${uuid}/remainder`);
     return {success: "Successfully deleted"}
   }

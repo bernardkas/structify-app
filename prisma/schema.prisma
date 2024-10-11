@@ -91,6 +91,7 @@ model Address {
   country String?
 
   clients Client[]
+  projects Project[]
 }
 
 enum ClientStatus {
@@ -116,6 +117,7 @@ model Client {
   addressId String?
 
   reminder Remainder[]
+  project Project[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -146,4 +148,28 @@ model Remainder {
   status          RemainderStatus   
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+
+
+model Project {
+  id            String  @id @default(cuid())
+  uuid          String  @unique @default(uuid())
+  name          String
+  projectId      String?
+  description   String?
+  projectType        String? 
+  projectStatus        String?
+  color         String?
+  startDate          DateTime? 
+
+  client   Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId String
+
+  address   Address? @relation(fields: [addressId], references: [id])
+  addressId String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }

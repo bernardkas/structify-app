@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { AlertDialogHeader } from '@/components/ui/alert-dialog';
 import RemainderForm from './RemainderForm';
-import { RemainderWithDetials } from './type';
+import { RemainderWithDetials } from '@/types/RemainderType';
 
 interface RemainderProps {
   remainders?: any;

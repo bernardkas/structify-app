@@ -27,7 +27,7 @@ import MultiSelect from '@/components/ui-reusable/multi-select';
 import { createRemainder, updateRemainder } from '@/actions/Model/remainder/remainder';
 import { toast } from 'react-toastify';
 import { BeatLoader } from 'react-spinners';
-import { RemainderWithDetials } from './type';
+import { RemainderWithDetials } from '@/types/RemainderType';
 
 interface RemainderFormProps {
   remainder?: RemainderWithDetials;
@@ -61,7 +61,7 @@ const RemainderForm = ({
     defaultValues: remainder || {
       name: '',
       description: '',
-      startDate: null,
+      startDate: selectedDate,
       frequency: '',
       daysOfWeek: [],
       daysOfMonth: [],
