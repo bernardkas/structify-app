@@ -42,7 +42,7 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(initialDate);
   const [loading, setLoading] = useState(false);
 
-  const [selectedClient, setSelectedClient] = useState<string | undefined>();
+  const [selectedClient, setSelectedClient] = useState<string | undefined>(project.client.uuid);
 
   const form = useForm<z.infer<typeof CreateProjectSchema>>({
     resolver: zodResolver(CreateProjectSchema),
@@ -52,7 +52,8 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
       color: project?.color || '',
       projectStatus: project?.projectStatus || '',
       projectType: project?.projectType || '',
-      clientId: project?.clientId || selectedClient || "",
+      description: project?.description || '',
+      clientId: project?.client.uuid || selectedClient || "",
       startDate: project?.startDate ? new Date(project.startDate) : selectedDate,
       address: {
         street: project?.address?.street || '',
@@ -76,7 +77,7 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
       }
     });
   };
-
+  console.log('selectedClient', selectedClient)
   const update = (values: z.infer<typeof CreateProjectSchema>) => {
     setLoading(true)
     updateProject(values).then(data => {
@@ -93,7 +94,10 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
 
   const isCreating = (values: z.infer<typeof CreateProjectSchema>) => {
     if (isEditing) {
-      return update(values);
+      return update({
+        ...values,
+      clientId: selectedClient
+      });
     }
     return create({
       ...values,

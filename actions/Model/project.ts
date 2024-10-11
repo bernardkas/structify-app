@@ -30,7 +30,7 @@ export const getProjects = async () => {
   return sanitizedClients;
 };
 
-export const getClientById = async (id: any) => {
+export const getProjectById = async (id: any) => {
   const uuid = id.slug;
   const project = await prisma.project.findFirst({
     where: {
