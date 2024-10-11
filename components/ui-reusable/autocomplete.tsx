@@ -1,70 +1,122 @@
-import React, { useState, useEffect } from 'react';
-import { Input } from '@/components/ui/input';
-import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
-import { Command, CommandInput, CommandItem, CommandGroup, CommandList, CommandEmpty } from '@/components/ui/command';
+'use client'
+import React, { useState, useEffect, useMemo } from 'react';
+import { Check, ChevronsUpDown, X } from 'lucide-react';
+import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Button } from '@/components/ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { cn } from '@/lib/utils';
 
 interface AutocompleteProps {
-  data: any[];
+  data: any[] | undefined; 
   placeholder?: string;
-  onSelect?: (clientId: string) => void;
+  searchPlaceholder?: string;
+  multiple?: boolean;
+  clearable?: boolean;
+  onSelect?: (value: string | string[]) => void; 
+  modelValue?: string | string[];
 }
 
-const Autocomplete: React.FC<AutocompleteProps> = ({ data, placeholder = 'Search...', onSelect }) => {
-  const [inputValue, setInputValue] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [filteredData, setFilteredData] = useState<any[]>([]);
+const Autocomplete: React.FC<AutocompleteProps> = ({
+  data = [],
+  placeholder = 'Search...',
+  searchPlaceholder = 'Search...',
+  multiple = false,
+  clearable = false,
+  onSelect,
+  modelValue = '',
+}) => {
+  const [open, setOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedItem, setSelectedItem] = useState<string | null>(null); 
+  const [selectedItems, setSelectedItems] = useState<string[]>([]); 
+
+  const filteredData = useMemo(() => {
+    return data.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) 
+    );
+  }, [searchTerm, data]);
 
   useEffect(() => {
-    if (inputValue) {
-      const filtered = data.filter((item) =>
-        item.name.toLowerCase().includes(inputValue.toLowerCase())
-      );
-      setFilteredData(filtered);
-      setIsOpen(filtered.length > 0);
-    } else {
-      setIsOpen(false);
-      setFilteredData([]);
-    }
-  }, [inputValue, data]);
-
-  const handleSelect = (clientId: string) => {
-    const selectedClient = data.find((client) => client.id === clientId);
-    if (selectedClient) {
-      setInputValue(selectedClient.name);
-      setIsOpen(false);
-      if (onSelect) {
-        onSelect(clientId); // Return the client ID
+    if (modelValue) {
+      if (multiple) {
+        setSelectedItems(modelValue as string[]);
+      } else {
+        setSelectedItem(modelValue as string);
       }
+    }
+  }, [modelValue, multiple]);
+
+  const handleSelectItem = (id: string) => {
+    if (multiple) {
+      if (selectedItems.includes(id)) {
+        setSelectedItems((prev) => prev.filter((item) => item !== id));
+      } else {
+        setSelectedItems((prev) => [...prev, id]);
+      }
+      if (onSelect) onSelect(selectedItems); 
+    } else {
+      setSelectedItem(id);
+      setOpen(false);
+      if (onSelect) onSelect(id);
     }
   };
 
+  const clearSelection = () => {
+    setSelectedItem(null);
+    setSelectedItems([]);
+    if (onSelect) onSelect(multiple ? [] : []);
+  };
+
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Input
-          type="text"
-          placeholder={placeholder}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          className="w-full"
-        />
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between"
+        >
+          <span className="truncate">
+            {multiple
+              ? selectedItems.length > 0
+                ? selectedItems.map((id) => data.find((item) => item.uuid === id)?.name).join(', ')
+                : placeholder
+              : data.find((item) => item.uuid === selectedItem)?.name || placeholder} 
+          </span>
+          <div className="flex items-center space-x-1">
+            {clearable && (selectedItem || selectedItems.length > 0) && (
+              <X className="w-4 h-4" onClick={clearSelection} />
+            )}
+            <ChevronsUpDown className="w-4 h-4 ml-2 opacity-50" />
+          </div>
+        </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-full">
+      <PopoverContent className="w-full p-0">
         <Command>
-          <CommandInput
-            placeholder="Type to search..."
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+          <CommandInput placeholder={searchPlaceholder}
           />
           <CommandList>
             {filteredData.length > 0 ? (
-              <CommandGroup>
-                {filteredData.map((client) => (
-                  <CommandItem key={client.id} onSelect={() => handleSelect(client.id)}>
-                    {client.name}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
+              filteredData.map((item) => (
+                <CommandItem
+                  key={item.uuid}
+                  onSelect={() => handleSelectItem(item.uuid)} 
+                >
+                  {item.name} 
+                  <Check
+                    className={cn(
+                      'ml-auto h-4 w-4',
+                      multiple
+                        ? selectedItems.includes(item.uuid) 
+                          ? 'opacity-100'
+                          : 'opacity-0'
+                        : selectedItem === item.uuid 
+                        ? 'opacity-100'
+                        : 'opacity-0'
+                    )}
+                  />
+                </CommandItem>
+              ))
             ) : (
               <CommandEmpty>No results found.</CommandEmpty>
             )}

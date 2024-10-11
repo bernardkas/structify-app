@@ -28,17 +28,21 @@ import { toast } from 'react-toastify';
 import { CreateProjectSchema } from './validation';
 import { Textarea } from '../ui/textarea';
 import { createProject, updateProject } from '@/actions/Model/project';
-import ClientAutocomplete from '../autocomplete/ClientAutocomplete';
+import Autocomplete from '../ui-reusable/autocomplete';
+import { ClientWithDetails } from '@/types/ClientType';
 
 interface ProjectFormProps {
   project?: any;
   isEditing?: boolean;
+  clients?: ClientWithDetails[]
 }
-const ProjectForm = ({ project, isEditing }: ProjectFormProps) => {
+const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
   const initialDate = project?.date ? new Date(project.date) : new Date();
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(initialDate);
   const [loading, setLoading] = useState(false);
+
+  const [selectedClient, setSelectedClient] = useState<string | undefined>();
 
   const form = useForm<z.infer<typeof CreateProjectSchema>>({
     resolver: zodResolver(CreateProjectSchema),
@@ -48,7 +52,7 @@ const ProjectForm = ({ project, isEditing }: ProjectFormProps) => {
       color: project?.color || '',
       projectStatus: project?.projectStatus || '',
       projectType: project?.projectType || '',
-      // clientId: project.clientId || "",
+      clientId: project?.clientId || selectedClient || "",
       startDate: project?.startDate ? new Date(project.startDate) : selectedDate,
       address: {
         street: project?.address?.street || '',
@@ -91,12 +95,22 @@ const ProjectForm = ({ project, isEditing }: ProjectFormProps) => {
     if (isEditing) {
       return update(values);
     }
-    return create(values);
+    return create({
+      ...values,
+      clientId: selectedClient
+    });
   }
 
   const handleDateChange = (date: Date | undefined) => {
     setSelectedDate(date);
-    form.setValue('date', date);
+    form.setValue('startDate', date);
+  };
+
+  const handleSelectClient = (clientId: string) => {
+    const client = clients?.find((c) => c.uuid === clientId);
+    if (client) {
+      setSelectedClient(client.uuid)
+    }
   };
 
   return (
@@ -181,7 +195,12 @@ const ProjectForm = ({ project, isEditing }: ProjectFormProps) => {
                   <FormItem>
                     <FormLabel>Client</FormLabel>
                     <FormControl>
-                      <ClientAutocomplete />
+                    <Autocomplete
+                      data={clients}
+                      placeholder="Search clients..."
+                      onSelect={handleSelectClient}
+                      modelValue={selectedClient} 
+                    />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -205,6 +224,7 @@ const ProjectForm = ({ project, isEditing }: ProjectFormProps) => {
                 </div>
             </div>
 
+              <h1 className="font-bold">Project site</h1>
           <div className='flex flex-row gap-3 items-center'>
             <FormField
               control={form.control}

@@ -9,8 +9,9 @@ export const CreateProjectSchema = z.object({
     startDate: z.date().optional(),
     projectType: z.string().optional(),
     projectStatus: z.string().optional(),
-    clientId: z.string().min(1),
+    clientId: z.string().optional(),
     address: z.object({
+        id: z.string().optional(),
         street: z.string().min(1, 'This field is required'),
         city: z.string().optional(),
         state: z.string().optional(),

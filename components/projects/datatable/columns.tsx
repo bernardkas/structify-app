@@ -7,6 +7,7 @@ import { DataTableRowActions } from "@/components/ui-reusable/datatable/datatabl
 import { Client } from "@prisma/client"
 import { archiveClient, deleteClient } from "@/actions/Model/clients"
 import { toast } from "react-toastify"
+import { deleteProject } from "@/actions/Model/project"
 
 
 
@@ -67,11 +68,15 @@ export const columns: ColumnDef<Client>[] = [
     },
   },
   {
-    accessorKey: "client.name",
+    accessorKey: "client.name", 
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Client name" />
     ),
-    cell: ({ row }) => <div>{row.getValue("client.name")}</div>,
+    cell: ({ row }) => {
+      // @ts-ignore
+      const clientName = row?.original?.client?.name || "No client"; // Safely access the client object
+      return <div>{clientName}</div>;
+    },
   },
   {
     accessorKey: "projectType",
@@ -94,8 +99,8 @@ export const columns: ColumnDef<Client>[] = [
       <DataTableColumnHeader column={column} title="Actions" />
     ),
     cell: ({ row }) => {
-      const deleteClientById = () => {
-        deleteClient(row.original.uuid).then(data => {
+      const deleteProjectById = () => {
+        deleteProject(row.original.uuid).then(data => {
           if (data?.success) {
             toast(data?.success, {type: 'success'})
           }
@@ -103,7 +108,7 @@ export const columns: ColumnDef<Client>[] = [
       }
 
       return (
-        <DataTableRowActions  row={row} onDelete={deleteClientById} />
+        <DataTableRowActions  row={row} onDelete={deleteProjectById} />
       )
     } 
   },

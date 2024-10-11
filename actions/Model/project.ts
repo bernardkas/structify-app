@@ -1,5 +1,4 @@
-'use server'
-
+'use server';
 
 import { auth } from '@/auth';
 import { CreateClientSchema } from '@/components/clients/validation';
@@ -10,34 +9,44 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 export const getProjects = async () => {
-    const projects = await prisma.project.findMany({
-        include: {
-          address: true,
-          client: true
+  const user = await auth()
+  if (!user) {
+    return { error: 'User not found' }
+  }
+
+  const projects = await prisma.project.findMany({
+      where: {
+        client: {
+          userId: user.user?.id
         }
-      });
-    
-      const sanitizedClients = projects.map(({ id, ...project }) => project);
-      return sanitizedClients;
-}
+      },
+    include: {
+      address: true,
+      client: true,
+    },
+  });
+
+  const sanitizedClients = projects.map(({ id, ...project }) => project);
+  return sanitizedClients;
+};
 
 export const getClientById = async (id: any) => {
-  const uuid = id.slug
+  const uuid = id.slug;
   const project = await prisma.project.findFirst({
     where: {
       uuid: uuid,
     },
-      include: {
-        address: true,
-        client: true
-      }
-    });
+    include: {
+      address: true,
+      client: true,
+    },
+  });
 
-    if (project?.uuid !== uuid) {
-      return redirect(`/projects`);
-    }
-    return project;
-}
+  if (project?.uuid !== uuid) {
+    return redirect(`/projects`);
+  }
+  return project;
+};
 
 export const createProject = async (
   values: z.infer<typeof CreateProjectSchema>
@@ -64,13 +73,20 @@ export const createProject = async (
     address: { street, city, state, zip, country },
   } = values;
 
-  
   const generateProjecttId = () => {
-    const randomNumber = Math.floor(10000 + Math.random() * 90000); 
+    const randomNumber = Math.floor(10000 + Math.random() * 90000);
     return `P${randomNumber}`;
   };
-  
+
   const projectId = generateProjecttId();
+
+  const client = await prisma.client.findUnique({
+    where: { uuid: clientId },
+  });
+
+  if (!client) {
+    return { error: 'Client not found' };
+  }
 
   const project = await prisma.project.create({
     data: {
@@ -80,7 +96,11 @@ export const createProject = async (
       projectStatus,
       projectId,
       projectType,
-      clientId,
+      client: {
+        connect: {
+          uuid: clientId,
+        },
+      },
       startDate,
       address: {
         create: {
@@ -93,7 +113,7 @@ export const createProject = async (
       },
     },
   });
-  
+
   redirect(`/projects/${project.uuid}/detail`);
 };
 
@@ -103,11 +123,6 @@ export const updateProject = async (
   const validateFields = CreateProjectSchema.safeParse(values);
   if (!validateFields.success) {
     return { error: 'Invalid fields' };
-  }
-  const existingUser = await auth();
-
-  if (!existingUser) {
-    return { error: 'User not found' };
   }
 
   const {
@@ -121,6 +136,14 @@ export const updateProject = async (
     clientId,
     address: { street, city, state, zip, country },
   } = values;
+
+  const client = await prisma.client.findUnique({
+    where: { uuid: clientId },
+  });
+
+  if (!client) {
+    return { error: 'Client not found' };
+  }
 
   const projectExists = await prisma.project.findUnique({
     where: { uuid },
@@ -138,7 +161,11 @@ export const updateProject = async (
       color,
       projectStatus,
       projectType,
-      clientId,
+      client: {
+        connect: {
+          uuid: clientId,
+        },
+      },
       startDate,
       address: {
         create: {
@@ -156,17 +183,15 @@ export const updateProject = async (
   return { success: 'Projects updated successfully' };
 };
 
-
 export const deleteProject = async (uuid: string) => {
   await prisma.project.delete({
     where: {
-      uuid: uuid 
+      uuid: uuid,
     },
   });
 
-  return {success: "Successfully deleted"}
-}
-
+  return { success: 'Successfully deleted' };
+};
 
 export const archiveProject = async (uuid: string) => {
   await prisma.project.update({
@@ -174,11 +199,9 @@ export const archiveProject = async (uuid: string) => {
       uuid: uuid,
     },
     data: {
-      deletedAt: new Date(),  
+      deletedAt: new Date(),
     },
   });
 
-  return {success: "Successfully archived"}
-}
-  
-
+  return { success: 'Successfully archived' };
+};

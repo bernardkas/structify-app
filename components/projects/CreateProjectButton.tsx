@@ -3,8 +3,14 @@ import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import SheetWrapper from '../ui-reusable/sheet-wrapper';
 import ProjectForm from './ProjectForm';
+import { Client } from '@prisma/client';
+import { ClientWithDetails } from '@/types/ClientType';
 
-const CreateProjectButton = () => {
+interface CreateProjectButtonProps {
+  clients?: ClientWithDetails[]
+}
+
+const CreateProjectButton = ({ clients }: CreateProjectButtonProps) => {
   const [open, setOpen] = useState(false);
   return (
     <div>
@@ -18,7 +24,7 @@ const CreateProjectButton = () => {
         setOpenSheet={setOpen}
         title='Create new project'
         description='Create a new project'>
-        <ProjectForm />
+        <ProjectForm clients={clients} />
       </SheetWrapper>
     </div>
   );
