@@ -198,6 +198,7 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                     <Autocomplete
                       data={clients}
                       placeholder="Search clients..."
+                      // @ts-ignore
                       onSelect={handleSelectClient}
                       modelValue={selectedClient} 
                     />
