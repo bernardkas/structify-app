@@ -190,6 +190,7 @@ export const deleteProject = async (uuid: string) => {
     },
   });
 
+  revalidatePath(`/projects`);
   return { success: 'Successfully deleted' };
 };
 

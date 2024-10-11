@@ -179,6 +179,7 @@ export const deleteClient = async (uuid: string) => {
     },
   });
 
+  revalidatePath(`/clients`);
   return {success: "Successfully deleted"}
 }
 
@@ -198,19 +199,29 @@ export const archiveClient = async (uuid: string) => {
   
 
 
-export const getProjectByClientId = async (id: any) => {
-  const uuid = id.slug
-  const project = await prisma.project.findFirst({
+export const getProjectByClientId = async (clientId: string) => {
+  const client = await prisma.client.findUnique({
     where: {
-      uuid: uuid,
+      uuid: clientId, 
     },
-      include: {
-        address: true
-      }
-    });
+    select: {
+      id: true, 
+    },
+  });
 
-    if (project?.uuid !== uuid) {
-      return redirect(`/clients`);
-    }
-    return project;
+  if (!client) {
+    return redirect(`/clients`);
+  }
+
+
+  const projects = await prisma.project.findMany({
+    where: {
+      clientId: client.id, 
+    },
+    include: {
+      address: true,
+    },
+  });
+
+    return projects;
 }
