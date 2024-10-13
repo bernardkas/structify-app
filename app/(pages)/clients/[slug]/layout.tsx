@@ -16,7 +16,7 @@ export default async function ClientLayout({
   const client = await getClientById(params) as Client;
   return (
     <div className='mx-3'>
-       <DetailPage data={client} />
+       <DetailPage data={client} name="Clients" />
        <div className="flex flex-row bg-slate-600 rounded-full w-fit my-3">
        <Navigation client={client} />
        </div>

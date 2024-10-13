@@ -9,7 +9,6 @@ export const CreateProjectSchema = z.object({
     startDate: z.date().optional(),
     projectType: z.string().optional(),
     projectStatus: z.string().optional(),
-    description: z.string().optional(),
     clientId: z.string().optional(),
     address: z.object({
         id: z.string().optional(),

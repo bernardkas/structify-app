@@ -42,7 +42,7 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(initialDate);
   const [loading, setLoading] = useState(false);
 
-  const [selectedClient, setSelectedClient] = useState<string | undefined>(project.client.uuid);
+  const [selectedClient, setSelectedClient] = useState<string | undefined>(project?.client?.uuid);
 
   const form = useForm<z.infer<typeof CreateProjectSchema>>({
     resolver: zodResolver(CreateProjectSchema),

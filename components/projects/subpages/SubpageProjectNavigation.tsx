@@ -22,6 +22,31 @@ const SubpageProjectNavigation = ({ project }: NavigationProps) => {
           Detail
         </Button>
       </Link>
+      <Link href={`/projects/${project.uuid}/employees`}>
+        <Button variant='link' className={`${getButtonVariant('employees')}`}>
+          Employees
+        </Button>
+      </Link>
+      <Link href={`/projects/${project.uuid}/budget-cost-tracking`}>
+        <Button variant='link' className={`${getButtonVariant('budget-cost-tracking')}`}>
+          Budget & cost tracking
+        </Button>
+      </Link>
+      <Link href={`/projects/${project.uuid}/materials`}>
+        <Button variant='link' className={`${getButtonVariant('materials')}`}>
+          Materials
+        </Button>
+      </Link>
+      <Link href={`/projects/${project.uuid}/plans-blueprints`}>
+        <Button variant='link' className={`${getButtonVariant('plans-blueprints')}`}>
+        Plans and Blueprints
+        </Button>
+      </Link>
+      <Link href={`/projects/${project.uuid}/notes`}>
+        <Button variant='link' className={`${getButtonVariant('notes')}`}>
+        Notes
+        </Button>
+      </Link>
     </div>
   );
 };

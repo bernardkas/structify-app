@@ -15,7 +15,7 @@ export default async function ProjectLayout({
   const project = await getProjectById(params) as Project;
   return (
     <div className='mx-3'>
-       <DetailPage data={project} />
+       <DetailPage data={project} name='Projects' />
        <div className="flex flex-row bg-slate-600 rounded-full w-fit my-3">
        <SubpageProjectNavigation project={project} />
        </div>
