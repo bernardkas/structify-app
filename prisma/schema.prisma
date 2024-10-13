@@ -113,7 +113,7 @@ model Client {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  address   Address? @relation(fields: [addressId], references: [id])
+  address   Address? @relation(fields: [addressId], references: [id], onDelete: Cascade)
   addressId String?
 
   reminder Remainder[]
@@ -166,10 +166,40 @@ model Project {
   client   Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   clientId String
 
-  address   Address? @relation(fields: [addressId], references: [id])
+  address   Address? @relation(fields: [addressId], references: [id], onDelete: Cascade)
   addressId String?
+  budget          ProjectBudget[] 
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+}
+
+
+model ProjectBudget {
+  id              String   @id @default(cuid())
+  uuid          String  @unique @default(uuid())
+  projectId       String   
+  project         Project  @relation(fields: [projectId], references: [id])
+  name      String
+  totalBudget     Float    
+  costsIncurred   Float    
+  estimatedCosts  EstimatedCost[] 
+  costOverruns    Float?   
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model EstimatedCost {
+  id              String   @id @default(cuid())
+  uuid          String  @unique @default(uuid())
+  projectBudgetId String
+  projectBudget   ProjectBudget @relation(fields: [projectBudgetId], references: [id], onDelete: Cascade)
+
+  type            String   
+  amount          Float    
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

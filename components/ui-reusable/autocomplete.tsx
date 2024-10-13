@@ -74,7 +74,7 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className="w-full justify-between text-black"
         >
           <span className="truncate">
             {multiple
