@@ -37,7 +37,6 @@ const BudgetCostTrackingForm = ({
   const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof CreateBudgetCostSchema>>({
     resolver: zodResolver(CreateBudgetCostSchema),
-    // @ts-ignore
     defaultValues: budgetCostData || {
       uuid: budgetCostData?.uuid || "",
       name: '',

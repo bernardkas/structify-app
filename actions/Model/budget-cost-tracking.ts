@@ -87,6 +87,28 @@ export const updateBudgetAndCost = async (
     estimatedCosts,
   } = values;
 
+  const existingBudget = await prisma.projectBudget.findUnique({
+    where: { uuid },
+    include: { estimatedCosts: true }, 
+  });
+
+  if (!existingBudget) {
+    return { error: 'Budget not found' };
+  }
+
+  const existingCostIds = existingBudget.estimatedCosts.map((cost) => cost.uuid);
+
+  const updatedCostIds = estimatedCosts.map((cost) => cost.uuid).filter(Boolean);
+  const removedCostIds = existingCostIds.filter((id) => !updatedCostIds.includes(id));
+
+  if (removedCostIds.length > 0) {
+    await prisma.estimatedCost.deleteMany({
+      where: {
+        uuid: { in: removedCostIds },
+      },
+    });
+  }
+
   const project = await prisma.project.findUnique({
     where: { uuid: projectId },
   });
