@@ -170,6 +170,7 @@ model Project {
   addressId String?
   budget          ProjectBudget[] 
   materials       Material[]
+  documents       Documents[]
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -231,5 +232,19 @@ model MaterialInfo {
   material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())  
+  updatedAt DateTime @updatedAt
+}
+
+model Documents {
+  id        String @id @default(cuid())
+  uuid          String  @unique @default(uuid())
+  name      String
+  type      String
+  file String?
+
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
