@@ -38,7 +38,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
             quality={100} 
            />
           </div>
-        <div className="flex flex-row bg-slate-600 rounded-full">
+        <div className="flex-row bg-slate-600 rounded-full hidden md:flex ">
          <NavbarButton />
         </div>
         </div>
@@ -57,7 +57,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
           )}
         </div>
 
-        <div className='text-gray-800 lg:hidden flex flex-row items-center gap-5'>
+        <div className='text-gray-800 md:hidden flex flex-row items-center gap-5'>
           <Sheet open={openSheet} onOpenChange={setOpenSheet}>
             <SheetTrigger className='text-gray-800 lg:hidden flex flex-row items-center gap-5'>
               <Menu />

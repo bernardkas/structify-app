@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import UserButton from '../auth/user-button';
 import { auth } from '@/auth';
+import NavbarButton from './navbar-button';
 
 interface MobileNavbarProps {
   currentUser: any;
@@ -21,12 +22,10 @@ const MobileNavbar = ({ currentUser, onClose }: MobileNavbarProps) => {
           </Link>
         ) : (
           <>
-            <Link
-              className='mx-2 font-noto-sans font-[500] text-base text-gray-800'
-              href='/settings'>
-              Dashboard
-            </Link>
+          <div className='flex flex-col gap-2 text-dark'>
+            <NavbarButton onClose={onClose} className="flex flex-col text-black" textColor="text-black" />
             <UserButton currentUser={currentUser} onClose={onClose} />
+          </div>
           </>
         )}
       </div>

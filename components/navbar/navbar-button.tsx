@@ -3,32 +3,38 @@ import React from 'react'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 
-const NavbarButton = () => {
+interface NavbarButtonProps {
+    className?: string
+    textColor?: string
+    onClose?: () => void
+}
+
+const NavbarButton = ({className, textColor = 'text-white', onClose}: NavbarButtonProps) => {
   return (
-    <div>
+    <div className={className}>
         <Link href="/dashboard">
-        <Button variant="link" className="text-white">
+        <Button onClick={onClose} variant="link" className={textColor}>
             Dashboard
         </Button>
         </Link>
         <Link href="/clients">
-        <Button variant="link" className="text-white">
+        <Button onClick={onClose} variant="link" className={textColor}>
             Clients
         </Button>
         </Link>
 
         <Link href="/projects">
-        <Button variant="link" className="text-white">
+        <Button onClick={onClose} variant="link" className={textColor}>
             Projects
         </Button>
         </Link>
         <Link href="/employees">
-        <Button variant="link" className="text-white">
+        <Button onClick={onClose} variant="link" className={textColor}>
             Employees
         </Button>
         </Link>
 
-        <Button disabled variant="link" className="text-white">
+        <Button disabled variant="link" className={textColor}>
             Invoices
         </Button>
        
