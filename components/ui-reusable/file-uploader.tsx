@@ -11,7 +11,7 @@ interface FileUploaderProps {
 }
 
 const FileUploader = ({
-  acceptedFileTypes = ['application/pdf', 'image/jpeg', 'image/jpg'], // Default allowed types
+  acceptedFileTypes = ['application/pdf', 'image/jpg', 'image/jpeg'],
   maxFileSize = 5, // Default max size is 5MB
   onFileUpload,
   onFileRemove,
@@ -59,21 +59,21 @@ const FileUploader = ({
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <label className="w-full h-[200px] border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer rounded-md">
-        <input
-          type="file"
-          onChange={handleFileChange}
-          accept={acceptedFileTypes.map(type => `.${type.split('/').pop()}`).join(',')}
-          className="hidden"
-        />
-        <div className="flex flex-col items-center text-gray-500">
-          <UploadIcon className="w-10 h-10 mb-2" />
-          <span className="text-sm">Upload File</span>
-        </div>
-      </label>
-
-      {/* File Preview */}
-      {uploadedFile && (
+      {/* Conditionally show the upload input if no file is uploaded */}
+      {!uploadedFile ? (
+        <label className="w-full h-[200px] border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer rounded-md">
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept={acceptedFileTypes.map(type => `.${type.split('/').pop()}`).join(',')}
+            className="hidden"
+          />
+          <div className="flex flex-col items-center text-gray-500">
+            <UploadIcon className="w-10 h-10 mb-2" />
+            <span className="text-sm">Upload File</span>
+          </div>
+        </label>
+      ) : (
         <div className="flex flex-row items-center gap-2">
           {filePreview ? (
             <img

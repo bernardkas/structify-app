@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-
 import {
   GetObjectCommand,
   PutObjectCommand,
@@ -15,7 +14,7 @@ const s3Client = new S3Client({
   },
 });
 
-export async function uploadFileToS3(file: File) {
+export async function uploadFileToS3(file: Buffer, fileType: string) {
   try {
     const session = await auth();
     const userId = session?.user?.id;
@@ -32,20 +31,17 @@ export async function uploadFileToS3(file: File) {
       Bucket: process.env.AWS_BUCKET_NAME || '',
       Key: `${userFolder}/${generateFileName()}`,
       Body: file,
-      ContentType: 'image/png',
-      Metadata: {
-        'Content-Disposition': 'inline',
-      },
+      ContentType: fileType || 'application/octet-stream',
+      ContentDisposition: 'inline', 
     };
 
     const command = new PutObjectCommand(params);
     await s3Client.send(command);
 
-    const url = ` https://${params.Bucket}.s3.amazonaws.com/${params.Key}`;
-
+    const url = `https://${params.Bucket}.s3.amazonaws.com/${params.Key}`;
     return url;
   } catch (error) {
-    console.error('Error uploading photo to S3:', error);
-    throw new Error('Failed to upload photo to S3');
+    console.error('Error uploading file to S3:', error);
+    throw new Error('Failed to upload file to S3');
   }
 }

@@ -24,6 +24,9 @@ export const getProjects = async () => {
       address: true,
       client: true,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
 
   const sanitizedClients = projects.map(({ id, ...project }) => project);

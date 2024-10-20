@@ -18,12 +18,18 @@ import { z } from 'zod';
 import { CreatePlansBlueprintsSchema } from './validation';
 import ImageUploader from '@/components/ui-reusable/image-uploader';
 import FileUploader from '@/components/ui-reusable/file-uploader';
+import { createPlansBlueprint } from '@/actions/Model/plans-blueprints';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { s3Upload } from '@/actions/upload-s3';
+import { uploadFileToS3 } from '@/lib/upload-file-s3';
 
 interface AddFilesProps {
   file?: any;
   projectId: string;
+  handleCloseDialog: () => void;
 }
-const AddFiles = ({ file, projectId }: AddFilesProps) => {
+const AddFiles = ({ file, projectId, handleCloseDialog }: AddFilesProps) => {
   const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof CreatePlansBlueprintsSchema>>({
     resolver: zodResolver(CreatePlansBlueprintsSchema),
@@ -35,34 +41,42 @@ const AddFiles = ({ file, projectId }: AddFilesProps) => {
   });
 
   const create = (values: z.infer<typeof CreatePlansBlueprintsSchema>) => {
-    console.log(values);
+    setLoading(true);
+    createPlansBlueprint(values).then(data => {
+      if (data?.success) {
+        setLoading(false);
+        handleCloseDialog()
+        toast(data?.success, { type: 'success' });
+      }
+    });
   };
-
-  const onSubmit = async (data: any) => {
-    const payload = {
-      ...data,
-      projectId: projectId,
-    };
-    create(payload);
-  };
-
-  const [images, setImages] = useState<File[]>(file?.file);
-
-//   const handleImageUpload = (image: File | File[]) => {
-//     if (Array.isArray(image)) {
-//       setImages(prev => [...prev, ...image]);
-//     } else {
-//       setImages([image]);
-//     }
-//   };
-
-//   console.log('images', images);
 
   const [uploadFile, setUploadFile] = useState<File | null>(null);
 
+  const onSubmit = async (data: any) => {
+    setLoading(true)
+
+    const formData = new FormData();
+    formData.append('file', uploadFile as any)
+    const upload = await axios.post('/api/s3-upload', formData, {
+        headers: {
+          'Content-Type': uploadFile?.type,
+          'Content-Disposition': 'inline',
+        },
+      });
+
+      const uploadedFile = upload.data.fileName
+
+    const payload = {
+      ...data,
+      projectId: projectId,
+      file: uploadedFile,
+      type: uploadFile?.type
+    };
+    create(payload);
+  };
   const handleFileUpload = (uploadedFile: File | null) => {
     setUploadFile(uploadedFile);
-    console.log('Uploaded file:', uploadedFile);
   };
   return (
     <div>
@@ -96,7 +110,6 @@ const AddFiles = ({ file, projectId }: AddFilesProps) => {
                   <FormLabel>Files</FormLabel>
                   <FormControl>
                     <FileUploader
-                      acceptedFileTypes={['application/pdf', 'image/jpeg']}
                       maxFileSize={5}
                       onFileUpload={handleFileUpload}
                     />

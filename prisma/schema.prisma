@@ -239,7 +239,7 @@ model Documents {
   id        String @id @default(cuid())
   uuid          String  @unique @default(uuid())
   name      String
-  type      String
+  type      String?
   file String?
 
   projectId String?

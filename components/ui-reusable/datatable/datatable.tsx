@@ -45,6 +45,7 @@ export function DataTable<TData, TValue>({
     []
   )
   const [sorting, setSorting] = useState<SortingState>([])
+  
 
   const table = useReactTable({
     data,
@@ -94,7 +95,7 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table?.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
+                <TableRow 
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   onClick={(e) => {

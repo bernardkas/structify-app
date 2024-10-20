@@ -17,6 +17,9 @@ export const getMaterials = async (projectId: string) => {
     include: {
       materialInfo: true,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
 
   return resposne;

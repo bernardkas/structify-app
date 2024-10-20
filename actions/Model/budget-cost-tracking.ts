@@ -18,6 +18,9 @@ export const getBudgetAndCosts = async (projectId: string) => {
     include: {
       estimatedCosts: true,
     },
+    orderBy: {
+      createdAt: 'desc',
+    },
   });
 
   return budgetAndCosts;

@@ -14,10 +14,14 @@ import { DataTable } from '@/components/ui-reusable/datatable/datatable';
 import { columns } from './datatable/columns';
 
 interface PlansBlueprintsProps {
-    projectId: string
+  getPlansBlueprints: any;
+  projectId: string;
 }
 
-const PlansBlueprints = ({projectId}: PlansBlueprintsProps) => {
+const PlansBlueprints = ({
+  getPlansBlueprints,
+  projectId,
+}: PlansBlueprintsProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState<any | undefined>();
   const [isEditing, setIsEditing] = useState(false);
@@ -29,9 +33,17 @@ const PlansBlueprints = ({projectId}: PlansBlueprintsProps) => {
   };
 
   const handleRowClick = (row: any) => {
-    setSelectedRow(row);
-    setIsEditing(true);
-    setOpenDialog(true);
+    const fileUrl = row.file;
+
+    if (fileUrl) {
+      window.open(fileUrl, '_blank');
+    } else {
+      console.error('File URL is not available');
+    }
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
   };
   return (
     <div className='space-y-5'>
@@ -45,12 +57,10 @@ const PlansBlueprints = ({projectId}: PlansBlueprintsProps) => {
           </DialogTrigger>
           <DialogContent className='text-black max-h-[650px] overflow-y-auto'>
             <AlertDialogHeader>
-              <DialogTitle>
-                {'Add plans and blueprints'}
-              </DialogTitle>
+              <DialogTitle>{'Add plans and blueprints'}</DialogTitle>
 
               <div>
-                <AddFiles projectId={projectId} />
+                <AddFiles projectId={projectId} handleCloseDialog={handleCloseDialog} />
               </div>
             </AlertDialogHeader>
           </DialogContent>
@@ -58,7 +68,11 @@ const PlansBlueprints = ({projectId}: PlansBlueprintsProps) => {
       </div>
       <div className='border-[2px]'></div>
       <div className=''>
-        <DataTable onRowClick={handleRowClick} columns={columns} data={[]} />
+        <DataTable
+          onRowClick={handleRowClick}
+          columns={columns}
+          data={getPlansBlueprints}
+        />
       </div>
     </div>
   );

@@ -71,13 +71,11 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
       toast("Project created successfully", {type: 'success'});
       setLoading(false)
       if (data?.error) {
-        console.log('Error creating client');
         toast(data?.error, {type: 'error'});
         setLoading(false)
       }
     });
   };
-  console.log('selectedClient', selectedClient)
   const update = (values: z.infer<typeof CreateProjectSchema>) => {
     setLoading(true)
     updateProject(values).then(data => {

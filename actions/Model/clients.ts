@@ -20,7 +20,10 @@ export const getClients = async () => {
       },
         include: {
           address: true
-        }
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
       });
 
       const sanitizedClients = clients.map(({ id, ...client }) => client);
