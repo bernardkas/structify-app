@@ -162,6 +162,7 @@ model Project {
   projectStatus        String?
   color         String?
   startDate          DateTime? 
+  hourlyRate        String?
 
   client   Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
   clientId String

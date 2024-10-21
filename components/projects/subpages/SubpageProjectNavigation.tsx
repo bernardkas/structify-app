@@ -42,11 +42,11 @@ const SubpageProjectNavigation = ({ project }: NavigationProps) => {
         Plans and Blueprints
         </Button>
       </Link>
-      <Link href={`/projects/${project.uuid}/notes`}>
+      {/* <Link href={`/projects/${project.uuid}/notes`}>
         <Button variant='link' className={`${getButtonVariant('notes')}`}>
         Notes
         </Button>
-      </Link>
+      </Link> */}
     </div>
   );
 };

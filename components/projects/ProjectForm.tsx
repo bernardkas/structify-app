@@ -34,27 +34,34 @@ import { ClientWithDetails } from '@/types/ClientType';
 interface ProjectFormProps {
   project?: any;
   isEditing?: boolean;
-  clients?: ClientWithDetails[]
+  clients?: ClientWithDetails[];
 }
-const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
+const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
   const initialDate = project?.date ? new Date(project.date) : new Date();
 
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(initialDate);
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    initialDate
+  );
   const [loading, setLoading] = useState(false);
 
-  const [selectedClient, setSelectedClient] = useState<string | undefined>(project?.client?.uuid);
+  const [selectedClient, setSelectedClient] = useState<string | undefined>(
+    project?.client?.uuid
+  );
 
   const form = useForm<z.infer<typeof CreateProjectSchema>>({
     resolver: zodResolver(CreateProjectSchema),
     defaultValues: {
-      uuid: project?.uuid || "",
+      uuid: project?.uuid || '',
       name: project?.name || '',
       color: project?.color || '',
       projectStatus: project?.projectStatus || '',
       projectType: project?.projectType || '',
       description: project?.description || '',
-      clientId: project?.client.uuid || selectedClient || "",
-      startDate: project?.startDate ? new Date(project.startDate) : selectedDate,
+      clientId: project?.client.uuid || selectedClient || '',
+      hourlyRate: project?.hourlyRate || '',
+      startDate: project?.startDate
+        ? new Date(project.startDate)
+        : selectedDate,
       address: {
         street: project?.address?.street || '',
         city: project?.address?.city || '',
@@ -66,26 +73,26 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
   });
 
   const create = (values: z.infer<typeof CreateProjectSchema>) => {
-    setLoading(true)
+    setLoading(true);
     createProject(values).then(data => {
-      toast("Project created successfully", {type: 'success'});
-      setLoading(false)
+      toast('Project created successfully', { type: 'success' });
+      setLoading(false);
       if (data?.error) {
-        toast(data?.error, {type: 'error'});
-        setLoading(false)
+        toast(data?.error, { type: 'error' });
+        setLoading(false);
       }
     });
   };
   const update = (values: z.infer<typeof CreateProjectSchema>) => {
-    setLoading(true)
+    setLoading(true);
     updateProject(values).then(data => {
       if (data?.success) {
-        toast(data?.success, {type: 'success'});
-        setLoading(false)
+        toast(data?.success, { type: 'success' });
+        setLoading(false);
       }
       if (data.error) {
-        toast(data?.error, {type: 'error'});
-        setLoading(false)
+        toast(data?.error, { type: 'error' });
+        setLoading(false);
       }
     });
   };
@@ -94,14 +101,14 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
     if (isEditing) {
       return update({
         ...values,
-      clientId: selectedClient
+        clientId: selectedClient,
       });
     }
     return create({
       ...values,
-      clientId: selectedClient
+      clientId: selectedClient,
     });
-  }
+  };
 
   const handleDateChange = (date: Date | undefined) => {
     setSelectedDate(date);
@@ -109,9 +116,9 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
   };
 
   const handleSelectClient = (clientId: string) => {
-    const client = clients?.find((c) => c.uuid === clientId);
+    const client = clients?.find(c => c.uuid === clientId);
     if (client) {
-      setSelectedClient(client.uuid)
+      setSelectedClient(client.uuid);
     }
   };
 
@@ -119,6 +126,9 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(isCreating)}>
         <div className='space-y-5'>
+        <div className="flex flex-row gap-3 items-center">
+
+
           <FormField
             control={form.control}
             name='name'
@@ -131,14 +141,35 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                     placeholder='Name'
                     name='fullname'
                     type='text'
-                    className="text-black"
-                  />
+                    className='text-black'
+                    />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
-          />
+            />
 
+          <FormField
+            control={form.control}
+            name='hourlyRate'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Hourly Rate</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder='35'
+                    name='fullname'
+                    type='text'
+                    className='text-black'
+                    />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+            />
+
+            </div>
           <div className='flex flex-row gap-3 items-center'>
             <FormField
               control={form.control}
@@ -163,7 +194,7 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
               )}
             />
 
-              <FormField
+            <FormField
               control={form.control}
               name='projectType'
               render={({ field }) => (
@@ -175,7 +206,9 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                         <SelectValue placeholder='Status..' />
                       </SelectTrigger>
                       <SelectContent side='top'>
-                        <SelectItem value='new-construction'>New Construction</SelectItem>
+                        <SelectItem value='new-construction'>
+                          New Construction
+                        </SelectItem>
                         <SelectItem value='renovation'>Renovation</SelectItem>
                         <SelectItem value='maintenance'>Maintenance</SelectItem>
                       </SelectContent>
@@ -185,31 +218,29 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                 </FormItem>
               )}
             />
-
           </div>
 
-          <div className="flex flex-row gap-3 items-center">
-
-          <FormField
-                control={form.control}
-                name='clientId'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Client</FormLabel>
-                    <FormControl>
+          <div className='flex flex-row gap-3 items-center'>
+            <FormField
+              control={form.control}
+              name='clientId'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Client</FormLabel>
+                  <FormControl>
                     <Autocomplete
                       data={clients}
-                      placeholder="Search clients..."
+                      placeholder='Search clients...'
                       // @ts-ignore
                       onSelect={handleSelectClient}
-                      modelValue={selectedClient} 
+                      modelValue={selectedClient}
                     />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-                />
-            
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div className='flex flex-row gap-4'>
               <FormField
                 control={form.control}
@@ -218,16 +249,20 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                   <FormItem>
                     <FormLabel>Color</FormLabel>
                     <FormControl>
-                      <ColorInput {...field} modelValue={field.value} defaultColor='#000000' />
+                      <ColorInput
+                        {...field}
+                        modelValue={field.value}
+                        defaultColor='#000000'
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
-                />
-                </div>
+              />
             </div>
+          </div>
 
-              <h1 className="font-bold">Project site</h1>
+          <h1 className='font-bold'>Project site</h1>
           <div className='flex flex-row gap-3 items-center'>
             <FormField
               control={form.control}
@@ -236,7 +271,12 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                 <FormItem>
                   <FormLabel>Street</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder='Street' type='text' className="text-black" />
+                    <Input
+                      {...field}
+                      placeholder='Street'
+                      type='text'
+                      className='text-black'
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -249,7 +289,12 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                 <FormItem>
                   <FormLabel>City (optional)</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder='City' type='text' className="text-black" />
+                    <Input
+                      {...field}
+                      placeholder='City'
+                      type='text'
+                      className='text-black'
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -265,7 +310,12 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                 <FormItem>
                   <FormLabel>State (optional)</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder='State' type='text' className="text-black" />
+                    <Input
+                      {...field}
+                      placeholder='State'
+                      type='text'
+                      className='text-black'
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -278,7 +328,12 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                 <FormItem>
                   <FormLabel>Zip</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder='Zip' type='text' className="text-black" />
+                    <Input
+                      {...field}
+                      placeholder='Zip'
+                      type='text'
+                      className='text-black'
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -291,7 +346,12 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                 <FormItem>
                   <FormLabel>Country (optional)</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder='Country' type='text' className="text-black" />
+                    <Input
+                      {...field}
+                      placeholder='Country'
+                      type='text'
+                      className='text-black'
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -305,23 +365,21 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
               <FormItem className='flex flex-col'>
                 <FormLabel>Start date (optional)</FormLabel>
                 <FormControl>
-                  <div className="text-black">
-
-                  <DatePicker
-                    {...field}
-                    selectedDate={selectedDate}
-                    onDateChange={handleDateChange}
-                    buttonText='Select a date'
+                  <div className='text-black'>
+                    <DatePicker
+                      {...field}
+                      selectedDate={selectedDate}
+                      onDateChange={handleDateChange}
+                      buttonText='Select a date'
                     />
-                    </div>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-
-<FormField
+          <FormField
             control={form.control}
             name='description'
             render={({ field }) => (
@@ -331,7 +389,7 @@ const ProjectForm = ({ project, isEditing,clients }: ProjectFormProps) => {
                   <Textarea
                     {...field}
                     placeholder='Description...'
-                    className="text-black resize-none"
+                    className='text-black resize-none'
                   />
                 </FormControl>
                 <FormMessage />

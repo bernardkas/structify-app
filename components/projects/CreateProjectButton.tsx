@@ -19,12 +19,15 @@ const CreateProjectButton = ({ clients }: CreateProjectButtonProps) => {
       </Button>
 
       <SheetWrapper
-      className='w-[60vh]'
+        className='w-[60vh]'
         open={open}
         setOpenSheet={setOpen}
         title='Create new project'
         description='Create a new project'>
+          <div className='max-h-[650px] overflow-y-auto p-2'>
+
         <ProjectForm clients={clients} />
+          </div>
       </SheetWrapper>
     </div>
   );

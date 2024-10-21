@@ -73,6 +73,7 @@ export const createProject = async (
     projectStatus,
     startDate,
     clientId,
+    hourlyRate,
     address: { street, city, state, zip, country },
   } = values;
 
@@ -99,6 +100,7 @@ export const createProject = async (
       projectStatus,
       projectId,
       projectType,
+      hourlyRate,
       client: {
         connect: {
           uuid: clientId,
@@ -137,6 +139,7 @@ export const updateProject = async (
     projectStatus,
     startDate,
     clientId,
+    hourlyRate,
     address: { street, city, state, zip, country },
   } = values;
 
@@ -164,6 +167,7 @@ export const updateProject = async (
       color,
       projectStatus,
       projectType,
+      hourlyRate,
       client: {
         connect: {
           uuid: clientId,
