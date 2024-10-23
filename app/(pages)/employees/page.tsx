@@ -1,8 +1,16 @@
+import { getEmployees } from '@/actions/Model/employee'
+import EmployeeOverview from '@/components/employees/EmployeeOverview'
 import React from 'react'
 
-const Employees = () => {
+const Employees = async () => {
+  const employees = await getEmployees(); 
   return (
-    <div>Employees</div>
+    <div className="mx-5">
+      <div>
+       <EmployeeOverview employees={employees}  /> 
+      </div>
+      
+    </div>
   )
 }
 
