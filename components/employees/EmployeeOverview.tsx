@@ -9,7 +9,7 @@ import { Employee } from '@prisma/client';
 import { columns } from './datatable/columns';
 
 interface EmployeeOverviewProps {
-  employees: Employee[];
+    employees: any;
 }
 
 const EmployeeOverview = ({ employees }: EmployeeOverviewProps) => {
