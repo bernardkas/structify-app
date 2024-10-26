@@ -1,9 +1,10 @@
 import { start } from 'repl';
 import { z } from 'zod';
 
-export const CreateEmployeeSchema = z.object({
+export const  CreateEmployeeSchema = z.object({
   uuid: z.string().optional(),
   name: z.string().min(1, 'This field is required'),
+  color: z.string().optional(),
   email: z.string().email().optional(),
   phone: z.string().min(1, 'This field is required'),
   hourlyRate: z.preprocess(

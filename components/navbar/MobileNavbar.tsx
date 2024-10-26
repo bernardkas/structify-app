@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import UserButton from '../auth/user-button';
 import { auth } from '@/auth';
-import NavbarButton from './navbar-button';
+import NavigationMenuButton from './navbar-button';
 
 interface MobileNavbarProps {
   currentUser: any;
@@ -23,7 +23,7 @@ const MobileNavbar = ({ currentUser, onClose }: MobileNavbarProps) => {
         ) : (
           <>
           <div className='flex flex-col gap-2 text-dark'>
-            <NavbarButton onClose={onClose} className="flex flex-col text-black" textColor="text-black" />
+            <NavigationMenuButton onClose={onClose} />
             <UserButton currentUser={currentUser} onClose={onClose} />
           </div>
           </>

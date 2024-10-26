@@ -132,7 +132,7 @@ export const updateClient = async (
     email,
     status,
     date,
-    address: { street, city, state, zip, country },
+    address: { id, street, city, state, zip, country },
   } = values;
 
   const clientExists = await prisma.client.findUnique({
@@ -154,13 +154,25 @@ export const updateClient = async (
       status,
       date,
       address: {
-        update: {
-          street,
-          city,
-          state,
-          zip,
-          country,
-        },
+        upsert: {
+          where: {
+            id: id || ''
+          },
+          create: {
+            street,
+            city,
+            state,
+            zip,
+            country
+          },
+          update: {
+            street,
+            city,
+            state,
+            zip,
+            country
+          },
+        }
       },
       user: {
         connect: {

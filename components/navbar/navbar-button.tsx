@@ -1,45 +1,97 @@
-'use client'
-import React from 'react'
-import { Button } from '../ui/button'
-import Link from 'next/link'
+"use client"
 
-interface NavbarButtonProps {
-    className?: string
-    textColor?: string
+import * as React from "react"
+import Link from "next/link"
+
+import { cn } from "@/lib/utils"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
+
+interface NaviagtionMenuButtonProps {
     onClose?: () => void
 }
 
-const NavbarButton = ({className, textColor = 'text-white', onClose}: NavbarButtonProps) => {
+const components: { title: string; href: string}[] = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+  },
+  {
+    title: "Clients",
+    href: "/clients",
+  },
+  {
+    title: "Projects",
+    href: "/projects",
+  },
+]
+
+export default function NavigationMenuButton({onClose}: NaviagtionMenuButtonProps) {
   return (
-    <div className={className}>
-        <Link href="/dashboard">
-        <Button onClick={onClose} variant="link" className={textColor}>
-            Dashboard
-        </Button>
-        </Link>
-        <Link href="/clients">
-        <Button onClick={onClose} variant="link" className={textColor}>
-            Clients
-        </Button>
-        </Link>
+    <NavigationMenu>
+      <NavigationMenuList>
+      <NavigationMenuItem>
+        {components.map(item => (
+            <Link onClick={onClose} href={item.href} legacyBehavior passHref>
+            <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-transparent rounded-full`}>
+              {item.title}
+            </NavigationMenuLink>
+          </Link>
+        ))}
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="bg-transparent">Employee</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] grid-cols-1">
+              <ListItem onClick={onClose} href="/employees" title="Employee">
+               Manage employee
+              </ListItem>
+              <ListItem onClick={onClose} href="/employees" title="Add hours">
+              Add employee daily hours worked
+              </ListItem>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <Link onClick={onClose} href='/invoice' legacyBehavior passHref>
+            <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-transparent rounded-full`}>
+              Invoice
+            </NavigationMenuLink>
+          </Link>
 
-        <Link href="/projects">
-        <Button onClick={onClose} variant="link" className={textColor}>
-            Projects
-        </Button>
-        </Link>
-        <Link href="/employees">
-        <Button onClick={onClose} variant="link" className={textColor}>
-            Employees
-        </Button>
-        </Link>
-
-        <Button disabled variant="link" className={textColor}>
-            Invoices
-        </Button>
-       
-    </div>
+      </NavigationMenuList>
+    </NavigationMenu>
   )
 }
 
-export default NavbarButton
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+})
+ListItem.displayName = "ListItem"

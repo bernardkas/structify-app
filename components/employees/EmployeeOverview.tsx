@@ -5,8 +5,8 @@ import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { AlertDialogHeader } from '../ui/alert-dialog';
 import EmployeeForm from './EmployeeForm';
 import { DataTable } from '../ui-reusable/datatable/datatable';
-import { Employee } from '@prisma/client';
 import { columns } from './datatable/columns';
+import { useRouter } from 'next/navigation';
 
 interface EmployeeOverviewProps {
     employees: any;
@@ -22,11 +22,9 @@ const EmployeeOverview = ({ employees }: EmployeeOverviewProps) => {
       setIsEditing(false);
       setOpenDialog(true);
     };
-  
+    const router = useRouter()
     const handleRowClick = (row: any) => {
-      setSelectedRow(row);
-      setIsEditing(true);
-      setOpenDialog(true);
+      router.push(`/employees/${row.uuid}/detail`)
     }
   
   return (
@@ -43,7 +41,7 @@ const EmployeeOverview = ({ employees }: EmployeeOverviewProps) => {
             <DialogContent  className='text-black max-h-[650px] overflow-y-auto'>
               <AlertDialogHeader>
                 <DialogTitle>
-                  {isEditing ? 'Edit Employee' : 'Add Employee'}
+                    Add Employee
                 </DialogTitle>
 
                 <div>

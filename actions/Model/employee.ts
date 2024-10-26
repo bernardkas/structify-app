@@ -30,7 +30,10 @@ export const getEmployeeById = async (id: string) => {
   const response = await prisma.employee.findUnique({
     where: {
       uuid: id
-    }
+    },
+    include: {
+      address: true
+    },
   })
   return response
 }
@@ -51,6 +54,7 @@ export const createEmployee = async (values: z.infer<typeof CreateEmployeeSchema
         name,
         email,
         phone,
+        color,
         hourlyRate,
         salary,
         jobTitle,
@@ -60,6 +64,7 @@ export const createEmployee = async (values: z.infer<typeof CreateEmployeeSchema
             city,
             state,
             zip,
+            country
         }
     } = values
   await prisma.employee.create({
@@ -70,6 +75,7 @@ export const createEmployee = async (values: z.infer<typeof CreateEmployeeSchema
       hourlyRate,
       salary,
       jobTitle,
+      color,
       startedMonth,
       address: {
         create: {
@@ -77,6 +83,7 @@ export const createEmployee = async (values: z.infer<typeof CreateEmployeeSchema
           city,
           state,
           zip,
+          country
         }
       },
       user: {
@@ -110,15 +117,20 @@ export const updateEmployee = async (values: z.infer<typeof CreateEmployeeSchema
         phone,
         hourlyRate,
         salary,
+        color,
         jobTitle,
         startedMonth,
         address: {
+            id,
             street,
             city,
             state,
             zip,
+            country
         }
     } = values
+
+    console.log('valuess', values)
   await prisma.employee.update({
     where: {
       uuid: uuid
@@ -130,13 +142,27 @@ export const updateEmployee = async (values: z.infer<typeof CreateEmployeeSchema
       hourlyRate,
       salary,
       jobTitle,
+      color,
       startedMonth,
       address: {
-        create: {
-          street,
-          city,
-          state,
-          zip,
+        upsert: {
+          where: {
+            id: id || ''
+          },
+          create: {
+            street,
+            city,
+            state,
+            zip,
+            country
+          },
+          update: {
+            street,
+            city,
+            state,
+            zip,
+            country
+          },
         }
       },
       user: {

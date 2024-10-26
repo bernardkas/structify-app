@@ -14,7 +14,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import UserButton from '../auth/user-button';
-import NavbarButton from './navbar-button';
+import NavigationMenuButton  from './navbar-button';
 
 interface NavbarProps {
   currentUser: any;
@@ -39,7 +39,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
            />
           </div>
         <div className="flex-row bg-slate-600 rounded-full hidden md:flex ">
-         <NavbarButton />
+         <NavigationMenuButton />
         </div>
         </div>
         <div className='hidden flex-row gap-1 items-center lg:flex'>

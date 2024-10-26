@@ -258,6 +258,7 @@ model Employee {
   uuid          String  @unique @default(uuid())
   name          String
   email         String?
+  color String?
   phone         String
   address       Address? @relation(fields: [addressId], references: [id], onDelete: Cascade)
   addressId String?

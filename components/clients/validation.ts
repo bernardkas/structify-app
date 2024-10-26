@@ -11,6 +11,7 @@ export const CreateClientSchema = z.object({
     status: z.enum(['ACTIVE', 'INACTIVE']).default('INACTIVE'),  
     date: z.date().optional(),
     address: z.object({
+        id: z.string().optional(),
         street: z.string().min(1, 'This field is required'),
         city: z.string().optional(),
         state: z.string().optional(),

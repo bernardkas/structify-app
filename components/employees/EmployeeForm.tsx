@@ -19,11 +19,14 @@ import DatePicker from '../ui/date-picker';
 import { PhoneInput } from 'react-international-phone';
 import { createEmployee, updateEmployee } from '@/actions/Model/employee';
 import { toast } from 'react-toastify';
+import ColorInput from '../ui-reusable/color-input';
+import 'react-international-phone/style.css';
+
 
 interface EmployeeFormProps {
   employee?: any;
   isEditing?: boolean;
-  setOpenDialog: (a: boolean) => void;
+  setOpenDialog?: (a: boolean) => void;
 }
 
 const EmployeeForm = ({
@@ -50,6 +53,7 @@ const EmployeeForm = ({
       hourlyRate: '',
       salary: '',
       jobTitle: '',
+      color: '',
       startedMonth: initialDate,
       address: {
         street: employee?.address?.street || '',
@@ -61,36 +65,34 @@ const EmployeeForm = ({
     },
   });
 
+
   const create = (values: z.infer<typeof CreateEmployeeSchema>) => {
     setLoading(true);
-   createEmployee(values).then((data) => {
-    if (data?.success) {
-      toast(data?.success, { type: 'success' });
-      setLoading(false);
-      setOpenDialog(false)
-    }
+    createEmployee(values).then(data => {
+      if (data?.success) {
+        toast(data?.success, { type: 'success' });
+        setLoading(false);
+      }
 
-    if (data.error) {
-      toast(data?.error, { type: 'error' });
-      setLoading(false);
-    }
-   })
+      if (data.error) {
+        toast(data?.error, { type: 'error' });
+        setLoading(false);
+      }
+    });
   };
 
   const update = (values: z.infer<typeof CreateEmployeeSchema>) => {
     setLoading(true);
-  updateEmployee(values).then((data) => {
-    if (data?.success) {
-      toast(data?.success, { type: 'success' });
-      setLoading(false);
-      setOpenDialog(false)
-    }
+    updateEmployee(values).then(data => {
+      if (data?.success) {
+        toast(data?.success, { type: 'success' });
+        setLoading(false);
+      }
 
-    if (data.error) {
-      toast(data?.error, { type: 'error' });   
-    }
-
-})
+      if (data.error) {
+        toast(data?.error, { type: 'error' });
+      }
+    });
   };
 
   const onSubmit = async (data: any) => {
@@ -111,7 +113,7 @@ const EmployeeForm = ({
   };
 
   return (
-    <div>
+    <div className='max-w-[600px]'>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='space-y-5'>
@@ -152,6 +154,26 @@ const EmployeeForm = ({
                 </FormItem>
               )}
             />
+
+            <div className='flex flex-row gap-4'>
+              <FormField
+                control={form.control}
+                name='color'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Color</FormLabel>
+                    <FormControl>
+                      <ColorInput
+                        {...field}
+                        modelValue={field.value}
+                        defaultColor='#000000'
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <div className='flex flex-row gap-3 items-center'>
               <FormField

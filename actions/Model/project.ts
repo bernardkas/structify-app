@@ -140,7 +140,7 @@ export const updateProject = async (
     startDate,
     clientId,
     hourlyRate,
-    address: { street, city, state, zip, country },
+    address: { id, street, city, state, zip, country },
   } = values;
 
   const client = await prisma.client.findUnique({
@@ -175,13 +175,25 @@ export const updateProject = async (
       },
       startDate,
       address: {
-        create: {
-          street,
-          city,
-          state,
-          zip,
-          country,
-        },
+        upsert: {
+          where: {
+            id: id || ''
+          },
+          create: {
+            street,
+            city,
+            state,
+            zip,
+            country
+          },
+          update: {
+            street,
+            city,
+            state,
+            zip,
+            country
+          },
+        }
       },
     },
   });
