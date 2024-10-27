@@ -1,4 +1,4 @@
-import { Address, Employee, User } from '@prisma/client';
+import { Address, Employee, EmployeeHours, User } from '@prisma/client';
   
   export interface EmployeeWithDetails extends Employee {
     address: Address | null;
@@ -6,4 +6,6 @@ import { Address, Employee, User } from '@prisma/client';
   }
   
 
-  
+  export interface EmployeeHoursWithDetails extends EmployeeHours {
+    employee: EmployeeWithDetails
+  }

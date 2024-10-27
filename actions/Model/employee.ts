@@ -3,6 +3,7 @@ import { auth } from "@/auth"
 import { CreateEmployeeSchema } from "@/components/employees/validation"
 import prisma from "@/db/db"
 import { revalidatePath } from "next/cache"
+import { redirect } from "next/navigation"
 import { z } from "zod"
 
 
@@ -67,7 +68,7 @@ export const createEmployee = async (values: z.infer<typeof CreateEmployeeSchema
             country
         }
     } = values
-  await prisma.employee.create({
+  const employee = await prisma.employee.create({
     data: {
       name,
       email,
@@ -93,7 +94,8 @@ export const createEmployee = async (values: z.infer<typeof CreateEmployeeSchema
       }
     },
   })
-  revalidatePath('/employees')
+
+  redirect(`/employees/${employee.uuid}/detail`);
   return {success: "Employee created successfully"}
 }
 

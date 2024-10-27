@@ -74,7 +74,7 @@ const EmployeeForm = ({
         setLoading(false);
       }
 
-      if (data.error) {
+      if (data?.error) {
         toast(data?.error, { type: 'error' });
         setLoading(false);
       }
@@ -89,7 +89,7 @@ const EmployeeForm = ({
         setLoading(false);
       }
 
-      if (data.error) {
+      if (data?.error) {
         toast(data?.error, { type: 'error' });
       }
     });

@@ -269,6 +269,8 @@ model Employee {
   userId String?
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  employeeHours EmployeeHours[]
+
   startedMonth DateTime?
 
   createdAt DateTime @default(now())
@@ -277,3 +279,14 @@ model Employee {
 
 
 
+model EmployeeHours {
+   id            String  @id @default(cuid())
+   uuid          String  @unique @default(uuid())
+  employeeId String?
+  employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  hours Int
+  description String?
+  date DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

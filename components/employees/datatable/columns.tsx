@@ -26,6 +26,19 @@ export const columns: ColumnDef<Employee>[] = [
     cell: ({ row }) => <div>{row.getValue("phone")}</div>,
   },
   {
+    accessorKey: "color",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Color" />
+    ),
+    cell: ({ row }) => {
+      const color = row.getValue("color") ;
+      return (
+        // @ts-ignore
+          <div style={{ backgroundColor: color  }}  className={`w-4 h-4 rounded-full`}></div>
+      )
+    },
+  },
+  {
     accessorKey: "hourlyRate",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Hourly Rate" />
