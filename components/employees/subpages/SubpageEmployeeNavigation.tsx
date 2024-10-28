@@ -18,12 +18,12 @@ const SubpageEmployeeNavigation = ({ employee }: NavigationProps) => {
 
   return (
     <div>
-      <Link href={`/employee/${employee.uuid}/detail`}>
+      <Link href={`/employees/${employee.uuid}/detail`}>
         <Button variant='link' className={`${getButtonVariant('detail')}`}>
           Detail
         </Button>
       </Link>
-      <Link href={`/employee/${employee.uuid}/detail`}>
+      <Link href={`/employees/${employee.uuid}/work-hours-tracking`}>
         <Button variant='link' className={`${getButtonVariant('work-hours-tracking')}`}>
         Work Hours Tracking
         </Button>

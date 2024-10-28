@@ -1,4 +1,4 @@
-'use server'
+'use server';
 import { auth } from '@/auth';
 import { CreateAddHoursEmployeeSchema } from '@/components/employees/add-hours/validation';
 import prisma from '@/db/db';
@@ -6,20 +6,20 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 export const getEmployeeHours = async () => {
-    const user = await auth();
+  const user = await auth();
 
   const response = await prisma.employeeHours.findMany({
     include: {
       employee: true,
     },
     where: {
-        employee: {
-            userId: user?.user?.id
-        }
+      employee: {
+        userId: user?.user?.id,
       },
+    },
     orderBy: {
-        createdAt: 'desc',
-      }
+      createdAt: 'desc',
+    },
   });
   return response;
 };
@@ -59,7 +59,7 @@ export const createEmployeeHours = async (
 
   const existingEmployee = await prisma.employee.findUnique({
     where: {
-      uuid: employeeId
+      uuid: employeeId,
     },
   });
 
@@ -76,35 +76,36 @@ export const createEmployeeHours = async (
   return { success: 'Hours logged successfully.' };
 };
 
-export const updateEmployeeHours = async (values: z.infer<typeof CreateAddHoursEmployeeSchema>) => {
-    const validateFields = CreateAddHoursEmployeeSchema.safeParse(values);
-    if (!validateFields.success) {
-      return { error: 'Invalid fields' };
-    }
-  
-    const { uuid, employeeId, hours, description, date } = values;
-  
-    const existingEmployee = await prisma.employee.findUnique({
-      where: {
-        uuid: employeeId
-      },
-    });
+export const updateEmployeeHours = async (
+  values: z.infer<typeof CreateAddHoursEmployeeSchema>
+) => {
+  const validateFields = CreateAddHoursEmployeeSchema.safeParse(values);
+  if (!validateFields.success) {
+    return { error: 'Invalid fields' };
+  }
 
-    await prisma.employeeHours.update({
-        where: {
-          uuid: uuid
-        },
-        data: {
-            employeeId: existingEmployee?.id,
-          hours,
-          description,
-          date,
-        },
-      });
+  const { uuid, employeeId, hours, description, date } = values;
 
+  const existingEmployee = await prisma.employee.findUnique({
+    where: {
+      uuid: employeeId,
+    },
+  });
 
-      revalidatePath('/employees/add-hours');
-      return { success: 'Hours updated successfully.' };
+  await prisma.employeeHours.update({
+    where: {
+      uuid: uuid,
+    },
+    data: {
+      employeeId: existingEmployee?.id,
+      hours,
+      description,
+      date,
+    },
+  });
+
+  revalidatePath('/employees/add-hours');
+  return { success: 'Hours updated successfully.' };
 };
 
 export const deleteEmployeeHours = async (id: string) => {
@@ -114,5 +115,30 @@ export const deleteEmployeeHours = async (id: string) => {
     },
   });
   revalidatePath('/employees/add-hours');
-return {success: "Hours deleted successfully"}
+  return { success: 'Hours deleted successfully' };
+};
+
+
+export const getEmployeeHoursByEmployeeId = async (id: string) => {
+  const employee = await prisma.employee.findUnique({
+    where: {
+      uuid: id,
+    },
+    include: {
+      address: true,
+    },
+  });
+
+  const hours = await prisma.employeeHours.findMany({
+    where: {
+      employeeId: employee?.id,
+    },
+    include: {
+      employee: true,
+    },
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
+  return hours;
 };
