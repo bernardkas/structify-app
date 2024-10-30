@@ -225,3 +225,27 @@ export const archiveProject = async (uuid: string) => {
 
   return { success: 'Successfully archived' };
 };
+
+
+export const getEmployeeByProjectId = async (projectId: string) => {
+  const existingProject = await prisma.project.findUnique({
+    where: {
+      uuid: projectId,
+    },
+  });
+
+  if (!existingProject) {
+    return;
+  }
+
+  const employee = await prisma.assignEmployee.findMany({
+    where: {
+      projectId: existingProject?.id,
+    },
+    include: {
+      employee: true,
+      project: true,
+    },
+  });
+  return employee;
+};

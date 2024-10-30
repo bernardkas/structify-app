@@ -56,6 +56,9 @@ export default function NavigationMenuButton({onClose}: NaviagtionMenuButtonProp
               <ListItem onClick={onClose} href="/employees/add-hours" title="Add hours">
               Add employee daily hours worked
               </ListItem>
+              <ListItem onClick={onClose} href="/employees/assign-employee" title="Assign employees">
+              Assign Employees for a project
+              </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
