@@ -66,6 +66,7 @@ export const createEmployeeHours = async (
   await prisma.employeeHours.create({
     data: {
       employeeId: existingEmployee?.id,
+      name: existingEmployee?.name,
       hours,
       description,
       date,
@@ -98,6 +99,7 @@ export const updateEmployeeHours = async (
     },
     data: {
       employeeId: existingEmployee?.id,
+      name: existingEmployee?.name,
       hours,
       description,
       date,

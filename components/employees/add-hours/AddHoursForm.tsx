@@ -137,7 +137,7 @@ const AddHoursForm = ({
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='space-y-5'>
             {/* Reminder Name */}
-            <div className='flex flex-row gap-5'>
+            <div className='flex flex-row gap-2 items-end'>
               <FormField
                 control={form.control}
                 name='employeeId'

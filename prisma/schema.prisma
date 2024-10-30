@@ -282,6 +282,7 @@ model Employee {
 model EmployeeHours {
    id            String  @id @default(cuid())
    uuid          String  @unique @default(uuid())
+   name  String?  
   employeeId String?
   employee   Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   hours Int

@@ -4,18 +4,17 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Checkbox } from "@/components/ui/checkbox"
 import { DataTableColumnHeader } from "@/components/ui-reusable/datatable/datatable-column-header"
 import { DataTableRowActions } from "@/components/ui-reusable/datatable/datatable-row-action"
-import { Client, Remainder } from "@prisma/client"
+import {  EmployeeHours } from "@prisma/client"
 import { toast } from "react-toastify"
 import { useFormattedDate } from "@/lib/use-formatted-date"
-import { deleteRemainder } from "@/actions/Model/remainder/remainder"
 import { deleteEmployeeHours } from "@/actions/Model/employee-hours"
 
 
 
 
-export const columns: ColumnDef<Remainder>[] = [
+export const columns: ColumnDef<EmployeeHours>[] = [
   {
-    accessorKey: "employee.name",
+    accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Employee Name" />
     ),
