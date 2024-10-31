@@ -31,7 +31,13 @@ export const columns: ColumnDef<EmployeeHours>[] = [
     ),
     cell: ({ row }) => <div>{row.getValue("hours")}</div>,
   },
-  
+  {
+    accessorKey: "minutes",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Minutes" />
+    ),
+    cell: ({ row }) => <div>{row.getValue("minutes") || "N/A"}</div>,
+  },
   {
     accessorKey: "date",
     header: ({ column }) => (

@@ -282,6 +282,7 @@ model EmployeeHours {
   employeeId  String?
   employee    Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   hours       Int
+  minutes     Int?
   description String?
   date        DateTime
   createdAt   DateTime  @default(now())

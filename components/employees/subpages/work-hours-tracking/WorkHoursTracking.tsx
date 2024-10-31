@@ -12,6 +12,7 @@ interface WorkHoursTrackingProps {
 interface MonthlySummary {
   month: string;
   totalHours: number;
+  totalMinutes: number;
   totalEarnings: number;
 }
 
@@ -29,17 +30,33 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
         month: 'long',
         year: 'numeric',
       }).format(new Date(entry.date));
+
       if (!summaries[month]) {
-        summaries[month] = { month, totalHours: 0, totalEarnings: 0 };
+        summaries[month] = { month, totalHours: 0, totalMinutes: 0, totalEarnings: 0 };
       }
-      summaries[month].totalHours += entry.hours;
-      summaries[month].totalEarnings +=
-        entry.hours * (employee.hourlyRate || 0);
+
+      const entryTotalMinutes = entry.hours * 60 + (entry.minutes || 0);
+
+      const entryHours = Math.floor(entryTotalMinutes / 60);
+      const entryMinutes = entryTotalMinutes % 60;
+
+      summaries[month].totalHours += entryHours;
+      summaries[month].totalMinutes += entryMinutes;
+
+      const entryEarnings = (entryTotalMinutes / 60) * (employee.hourlyRate || 0);
+      summaries[month].totalEarnings += entryEarnings;
+    });
+
+    Object.values(summaries).forEach((summary) => {
+      const extraHours = Math.floor(summary.totalMinutes / 60);
+      summary.totalHours += extraHours;
+      summary.totalMinutes = summary.totalMinutes % 60;
     });
 
     setMonthlySummaries(Object.values(summaries));
     setLoading(false);
   }, [hours, employee.hourlyRate]);
+
 
   return (
     <div>
@@ -67,14 +84,17 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
               </Card>
             ))
         ) : (
-          monthlySummaries.map(summary => (
+          monthlySummaries.map((summary) => (
             <Card key={summary.month} className='w-[300px] mx-auto'>
               <CardContent className='p-5'>
                 <h3 className='text-lg font-bold'>{summary.month}</h3>
                 <div className='flex flex-col mt-2'>
                   <div className='flex justify-between'>
                     <span className='text-stone-700'>Total Hours:</span>
-                    <span className='font-bold'>{summary.totalHours} h</span>
+                    <span className='font-bold'>
+                      {summary.totalHours} h
+                      {summary.totalMinutes > 0 && ` ${summary.totalMinutes} m`}
+                    </span>
                   </div>
                   <div className='flex justify-between'>
                     <span className='text-stone-700'>Total Earnings:</span>

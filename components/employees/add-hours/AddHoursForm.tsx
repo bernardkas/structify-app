@@ -66,6 +66,7 @@ const AddHoursForm = ({
       uuid: employeeHours?.employee?.uuid || '',
       employeeId: '',
       hours: 0,
+      minutes: 0,
       description: '',
       date: selectedDate,
     },
@@ -178,24 +179,45 @@ const AddHoursForm = ({
               />
             </div>
 
+            <div className='flex flex-row gap-2'>
+
             <FormField
               control={form.control}
               name='hours'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Hours</FormLabel>
+                  <FormLabel>*Hours</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       type='number'
-                      placeholder='Hours'
+                      placeholder='8'
+                      className='text-black'
+                      />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              />
+            <FormField
+              control={form.control}
+              name='minutes'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Minutes (optional)</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type='number'
+                      placeholder='30'
                       className='text-black'
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
-            />
+              />
+              </div>
 
             <FormField
               control={form.control}
