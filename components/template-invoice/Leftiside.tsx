@@ -624,11 +624,14 @@ const Leftiside = ({
               )}
 
               {editorType === 'description' ? (
+                <div className="space-y-2">
+                  <p>Write your description here</p>
                  <TipTapEditor
                  isToolbar={false}
                  content={content}
                  onChange={(newContent: string) => handleContentChange(newContent)}
-               />
+                 />
+                 </div>
               ) : (
                 fields.map((field, index) => (
                   <div key={field.id}>
