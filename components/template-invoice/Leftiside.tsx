@@ -28,6 +28,8 @@ import {
   SelectValue,
 } from '../ui/select';
 import TipTapEditor from '../ui-reusable/tip-tap-editor/tip-tap-editor';
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 
 interface LeftSideProps {
   invoice?: any;
@@ -422,12 +424,7 @@ const Leftiside = ({
                     <FormItem>
                       <FormLabel>*Company Phone</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          placeholder='Company Phone'
-                          type='text'
-                          className='text-black'
-                        />
+                      <PhoneInput defaultCountry="at" {...field}/>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -572,12 +569,7 @@ const Leftiside = ({
                   <FormItem>
                     <FormLabel>Client Phone</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        placeholder='Client Phone'
-                        type='text'
-                        className='text-black'
-                      />
+                    <PhoneInput defaultCountry="at" {...field}/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
