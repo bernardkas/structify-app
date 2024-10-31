@@ -302,3 +302,54 @@ model AssignEmployee {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+model Invoice {
+  id         String    @id @default(cuid())
+  uuid       String    @unique @default(uuid())
+  // Company information
+  name String
+  invoiceNumber String
+  companyName String
+  address String
+  city String
+  postCode String
+  companyPhone String
+  email String?
+  companyLogo String?
+  date DateTime?
+  // Bill to
+  clientName  String
+  clientCompanyName String?
+  clientAddress String
+  clientPhone String?
+  clientEmail String?
+  // Descriptio
+  descriptions    InvoiceDescription[] @relation("InvoiceDescriptions")
+
+  // Payemen
+  subtotal Int?
+  taxRate Int?
+  totalTax Int?
+  fullPrice Int?
+
+  richText Json?
+
+   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InvoiceDescription {
+  id           String  @id @default(cuid())
+  description  String?
+  quantity     Int?
+  unitPrice    Int?
+  tax          Int?
+  totalPrice   Int?
+
+  invoiceId    String?
+  invoice      Invoice? @relation("InvoiceDescriptions", fields: [invoiceId], references: [id], onDelete: Cascade) 
+
+   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -22,9 +22,9 @@ const ImageUploader = ({ images, handleImageUpload, multi = false }: ImageUpload
         setSelectedImages((prev) => [...prev, ...newImages] as any);
         handleImageUpload(files); 
       } else {
-        const newImage = URL.createObjectURL(files[0]); // Generate preview URL for the single image
+        const newImage = URL.createObjectURL(files[0]); 
         setSelectedImages([newImage] as any);
-        handleImageUpload(files[0]); // Return actual File object
+        handleImageUpload(files[0]); 
       }
   };
 
