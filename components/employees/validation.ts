@@ -7,6 +7,10 @@ export const  CreateEmployeeSchema = z.object({
   color: z.string().optional(),
   email: z.string().email().optional(),
   phone: z.string().min(1, 'This field is required'),
+  overtime: z.preprocess(
+    (value) => Number(value),
+    z.number().optional()
+  ),
   hourlyRate: z.preprocess(
     (value) => Number(value),
     z.number().optional()

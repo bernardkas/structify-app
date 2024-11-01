@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Form,
   FormControl,
@@ -21,6 +21,8 @@ import { createEmployee, updateEmployee } from '@/actions/Model/employee';
 import { toast } from 'react-toastify';
 import ColorInput from '../ui-reusable/color-input';
 import 'react-international-phone/style.css';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { EmployeeWithDetails } from '@/types/EmployeeType';
 
 
 interface EmployeeFormProps {
@@ -43,6 +45,8 @@ const EmployeeForm = ({
     initialDate
   );
 
+  const [editorType, setEditorType] = useState<'hourly' | 'salary'>('hourly');
+
   const form = useForm<z.infer<typeof CreateEmployeeSchema>>({
     resolver: zodResolver(CreateEmployeeSchema),
     defaultValues: employee || {
@@ -50,9 +54,10 @@ const EmployeeForm = ({
       name: '',
       email: '',
       phone: '',
-      hourlyRate: '',
-      salary: '',
+      hourlyRate: 0,
+      salary: 0,
       jobTitle: '',
+      overtime: 0,
       color: '',
       startedMonth: initialDate,
       address: {
@@ -111,6 +116,19 @@ const EmployeeForm = ({
     setSelectedDate(date);
     form.setValue('startedMonth', date);
   };
+
+  useEffect(() => {
+    if (employee?.hourlyRate) {
+      setEditorType('hourly');
+    } else if (employee?.salary) {
+      setEditorType('salary');
+    }
+  }, [employee]);
+
+
+  const handleSelectChange = (value: 'hourly' | 'salary') => {
+    setEditorType(value);
+  }
 
   return (
     <div className='max-w-[600px]'>
@@ -174,8 +192,6 @@ const EmployeeForm = ({
                 )}
               />
             </div>
-
-            <div className='flex flex-row gap-3 items-center'>
               <FormField
                 control={form.control}
                 name='phone'
@@ -189,9 +205,20 @@ const EmployeeForm = ({
                   </FormItem>
                 )}
               />
-            </div>
+              
 
-            {/* Cost Overruns */}
+            <Select onValueChange={handleSelectChange}>
+              <SelectTrigger className='w-[180px] text-black'>
+                <SelectValue placeholder='Hourly or salary..' />
+              </SelectTrigger>
+              <SelectContent side='top'>
+                <SelectItem value='hourly'>Hourly rate</SelectItem>
+                <SelectItem value='salary'>Salary</SelectItem>
+              </SelectContent>
+            </Select>
+
+              <div className="flex flex-row gap-3 items-center flex-wrap">
+
             <FormField
               control={form.control}
               name='hourlyRate'
@@ -204,12 +231,14 @@ const EmployeeForm = ({
                       type='number'
                       placeholder='35'
                       className='text-black'
+                      onFocus={() => form.setValue('salary', 0)}
+                      disabled={editorType === 'salary'}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
-            />
+              />
             <FormField
               control={form.control}
               name='salary'
@@ -221,6 +250,28 @@ const EmployeeForm = ({
                       {...field}
                       type='number'
                       placeholder='1200'
+                      className='text-black'
+                      onFocus={() => form.setValue('hourlyRate', 0)}
+                      disabled={editorType === 'hourly'}
+                      />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              />
+              </div>
+
+<FormField
+              control={form.control}
+              name='overtime'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Overtime</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type='number'
+                      placeholder='ex:20'
                       className='text-black'
                     />
                   </FormControl>

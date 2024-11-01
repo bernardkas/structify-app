@@ -13,27 +13,18 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { CreateAddHoursEmployeeSchema } from './validation';
 import { useEffect, useState } from 'react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import DatePicker from '@/components/ui/date-picker';
 import { Textarea } from '@/components/ui/textarea';
-import MultiSelect from '@/components/ui-reusable/multi-select';
-import { createRemainder, updateRemainder } from '@/actions/Model/remainder/remainder';
 import { toast } from 'react-toastify';
 import { BeatLoader } from 'react-spinners';
 import Autocomplete from '@/components/ui-reusable/autocomplete';
-import { EmployeeHoursWithDetails } from '@/types/EmployeeType';
+import { EmployeeHoursWithDetails, EmployeeWithDetails } from '@/types/EmployeeType';
 import { createEmployeeHours, updateEmployeeHours } from '@/actions/Model/employee-hours';
 
 interface AddHoursFormProps {
   employeeHours?: EmployeeHoursWithDetails;
-  employee: EmployeeHoursWithDetails[]
+  employee: EmployeeWithDetails[]
   isEditing?: boolean;
   setOpenDialog: (a: boolean) => void
 }
@@ -57,6 +48,7 @@ const AddHoursForm = ({
   );
 
   const [loading, setLoading] = useState(false);
+  const [isSalaryEmployee, setIsSalaryEmployee] = useState<boolean>(false); 
 
   const form = useForm<z.infer<typeof CreateAddHoursEmployeeSchema>>({
     resolver: zodResolver(CreateAddHoursEmployeeSchema),
@@ -127,10 +119,14 @@ const AddHoursForm = ({
   const handleSelectClient = (employeeId: string) => {
     const client = employee?.find(c => c.uuid === employeeId);
     if (client) {
+        console.log('client', client)
         form.setValue('employeeId', employeeId as any);
         setSelectedEmployee(client.uuid);
+        setIsSalaryEmployee(!!client?.salary
+        );
     }
   };
+
   
   return (
     <div>
@@ -181,42 +177,65 @@ const AddHoursForm = ({
 
             <div className='flex flex-row gap-2'>
 
-            <FormField
-              control={form.control}
-              name='hours'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>*Hours</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type='number'
-                      placeholder='8'
-                      className='text-black'
-                      />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              />
-            <FormField
-              control={form.control}
-              name='minutes'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Minutes (optional)</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type='number'
-                      placeholder='30'
-                      className='text-black'
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-              />
+            {isSalaryEmployee ? (
+                            <FormField
+                                control={form.control}
+                                name='overtime'
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>*Overtime Hours</FormLabel>
+                                        <FormControl>
+                                            <Input
+                                                {...field}
+                                                type='number'
+                                                placeholder='2'
+                                                className='text-black'
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        ) : (
+                            <div className='flex flex-row gap-2'>
+                                <FormField
+                                    control={form.control}
+                                    name='hours'
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>*Hours</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    type='number'
+                                                    placeholder='8'
+                                                    className='text-black'
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name='minutes'
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Minutes (optional)</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    type='number'
+                                                    placeholder='30'
+                                                    className='text-black'
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                        )}
               </div>
 
             <FormField

@@ -18,7 +18,8 @@ export const getEmployees = async () => {
         userId: user.user?.id
       },
         include: {
-          address: true
+          address: true,
+          employeeHours: true
         },
         orderBy: {
           createdAt: 'desc',
@@ -59,6 +60,7 @@ export const createEmployee = async (values: z.infer<typeof CreateEmployeeSchema
         hourlyRate,
         salary,
         jobTitle,
+        overtime,
         startedMonth,
         address: {
             street,
@@ -78,6 +80,7 @@ export const createEmployee = async (values: z.infer<typeof CreateEmployeeSchema
       jobTitle,
       color,
       startedMonth,
+      overtime,
       address: {
         create: {
           street,
@@ -121,6 +124,7 @@ export const updateEmployee = async (values: z.infer<typeof CreateEmployeeSchema
         salary,
         color,
         jobTitle,
+        overtime,
         startedMonth,
         address: {
             id,
@@ -146,6 +150,7 @@ export const updateEmployee = async (values: z.infer<typeof CreateEmployeeSchema
       jobTitle,
       color,
       startedMonth,
+      overtime,
       address: {
         upsert: {
           where: {

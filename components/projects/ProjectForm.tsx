@@ -39,7 +39,7 @@ interface ProjectFormProps {
 
 
 const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
-  const initialDate = project?.date ? new Date(project.date) : new Date();
+  const initialDate = project?.startDate ? new Date(project.startDate) : new Date();
 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     initialDate
@@ -63,9 +63,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
       clientId: project?.client.uuid || selectedClient || '',
       hourlyRate: project?.hourlyRate || '',
       totalBudget: project?.totalBudget || '',
-      startDate: project?.startDate
-        ? new Date(project.startDate)
-        : selectedDate,
+      startDate: initialDate,
       address: {
         street: project?.address?.street || '',
         city: project?.address?.city || '',
@@ -118,6 +116,8 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
     setSelectedDate(date);
     form.setValue('startDate', date);
   };
+
+  console.log('projects',project)
 
   const handleSelectClient = (clientId: string) => {
     const client = clients?.find(c => c.uuid === clientId);

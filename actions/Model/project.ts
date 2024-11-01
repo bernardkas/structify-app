@@ -159,7 +159,7 @@ export const updateProject = async (
   });
 
   if (!projectExists) {
-    return { error: 'Client not found' };
+    return { error: 'Project not found' };
   }
 
   await prisma.project.update({

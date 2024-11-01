@@ -27,10 +27,6 @@ const components: { title: string; href: string}[] = [
     title: "Clients",
     href: "/clients",
   },
-  {
-    title: "Projects",
-    href: "/projects",
-  },
 ]
 
 export default function NavigationMenuButton({onClose}: NaviagtionMenuButtonProps) {
@@ -46,6 +42,21 @@ export default function NavigationMenuButton({onClose}: NaviagtionMenuButtonProp
           </Link>
         ))}
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="bg-transparent">Projects</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] grid-cols-1">
+              <ListItem onClick={onClose} href="/projects" title="Projects"> 
+               Projects
+              </ListItem>
+              <ListItem onClick={onClose} href="/projects/add-hours" title="Add hours">
+              Add project hours
+              </ListItem>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
+
         <NavigationMenuItem>
           <NavigationMenuTrigger className="bg-transparent">Employee</NavigationMenuTrigger>
           <NavigationMenuContent>

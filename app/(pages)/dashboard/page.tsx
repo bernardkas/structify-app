@@ -1,8 +1,22 @@
+import { getClients } from "@/actions/Model/clients";
+import { getEmployees } from "@/actions/Model/employee";
+import { getEmployeeHours } from "@/actions/Model/employee-hours";
+import { getProjects } from "@/actions/Model/project";
+import DashboardOverview from "@/components/dashboard/DashboardOverview";
 
-export default async function Dashboard() {
+
+const  DashboardPage = async () => {
+  const [projects, clients, employees, employeeHours] = await Promise.all([
+    getProjects(),
+    getClients(),
+    getEmployees(),
+    getEmployeeHours()
+  ]);
+
+
   return (
-    <div>
-     <h1>Dashboard</h1>
-    </div>
+        <DashboardOverview projects={projects} clients={clients} employees={employees} employeeHours={employeeHours} />
   );
 }
+
+export default DashboardPage;

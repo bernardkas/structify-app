@@ -262,6 +262,7 @@ model Employee {
   addressId  String?
   hourlyRate Int?
   salary     Int?
+  overtime Int?
   jobTitle   String?
 
   userId String?
@@ -282,8 +283,9 @@ model EmployeeHours {
   name        String?
   employeeId  String?
   employee    Employee? @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  hours       Int
+  hours       Int?
   minutes     Int?
+  overtime Int?
   description String?
   date        DateTime
   createdAt   DateTime  @default(now())

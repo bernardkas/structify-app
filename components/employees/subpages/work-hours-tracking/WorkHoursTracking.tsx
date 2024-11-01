@@ -3,10 +3,11 @@ import { DataTable } from '@/components/ui-reusable/datatable/datatable';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React, { useEffect, useState } from 'react';
 import { columns } from './datatable/columns';
+import { EmployeeHoursWithDetails, EmployeeWithDetails } from '@/types/EmployeeType';
 
 interface WorkHoursTrackingProps {
-  employee: any;
-  hours: any;
+  employee: EmployeeWithDetails;
+  hours: EmployeeHoursWithDetails[];
 }
 
 interface MonthlySummary {
@@ -14,6 +15,8 @@ interface MonthlySummary {
   totalHours: number;
   totalMinutes: number;
   totalEarnings: number;
+  totalOvertime: number;
+  overtimeHours: number;
 }
 
 const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
@@ -32,7 +35,7 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
       }).format(new Date(entry.date));
 
       if (!summaries[month]) {
-        summaries[month] = { month, totalHours: 0, totalMinutes: 0, totalEarnings: 0 };
+        summaries[month] = { month, totalHours: 0, totalMinutes: 0, totalEarnings: 0,  totalOvertime: 0, overtimeHours: 0 };
       }
 
       const entryTotalMinutes = entry.hours * 60 + (entry.minutes || 0);
@@ -45,7 +48,17 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
 
       const entryEarnings = (entryTotalMinutes / 60) * (employee.hourlyRate || 0);
       summaries[month].totalEarnings += entryEarnings;
+      console.log('employees', employee)
+      
+      if (employee.salary) {
+        const overtimeHours = entry?.overtime ?? 0;
+        const employeeOvertimeRate = employee?.overtime ?? 0; 
+        summaries[month].overtimeHours += overtimeHours;
+        summaries[month].totalOvertime += overtimeHours * employeeOvertimeRate;
+    }
     });
+    
+    
 
     Object.values(summaries).forEach((summary) => {
       const extraHours = Math.floor(summary.totalMinutes / 60);
@@ -55,8 +68,7 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
 
     setMonthlySummaries(Object.values(summaries));
     setLoading(false);
-  }, [hours, employee.hourlyRate]);
-
+  }, [hours, employee.hourlyRate, employee.salary]);
 
   return (
     <div>
@@ -89,13 +101,31 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
               <CardContent className='p-5'>
                 <h3 className='text-lg font-bold'>{summary.month}</h3>
                 <div className='flex flex-col mt-2'>
-                  <div className='flex justify-between'>
-                    <span className='text-stone-700'>Total Hours:</span>
-                    <span className='font-bold'>
-                      {summary.totalHours} h
-                      {summary.totalMinutes > 0 && ` ${summary.totalMinutes} m`}
-                    </span>
-                  </div>
+                {employee.salary ? (
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-stone-700">Overtime Hours:</span>
+                      <span className="font-bold">{summary.overtimeHours} h</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-stone-700">Overtime Total:</span>
+                      <span className="font-bold">
+                        {summary.totalOvertime.toFixed(2)} €
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-stone-700">Total Hours:</span>
+                      <span className="font-bold">
+                        {summary.totalHours} h
+                        {summary.totalMinutes > 0 && ` ${summary.totalMinutes} m`}
+                      </span>
+                    </div>
+                  </>
+                )}
+
                   <div className='flex justify-between'>
                     <span className='text-stone-700'>Total Earnings:</span>
                     <span className='font-bold'>

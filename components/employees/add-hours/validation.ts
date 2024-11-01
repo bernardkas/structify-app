@@ -6,9 +6,13 @@ export const CreateAddHoursEmployeeSchema = z.object({
     employeeId: z.string().min(1),
     hours:  z.preprocess(
         (value) => Number(value),
-        z.number().min(1, 'This field is required')
+        z.number().optional()
     ),
     minutes:  z.preprocess(
+        (value) => Number(value),
+        z.number().optional()
+    ),
+    overtime:  z.preprocess(
         (value) => Number(value),
         z.number().optional()
     ),

@@ -44,7 +44,7 @@ export const createEmployeeHours = async (
     return { error: 'Invalid fields' };
   }
 
-  const { employeeId, hours, description, date, minutes } = values;
+  const { employeeId, hours, description, date, minutes, overtime } = values;
 
   const existingEntry = await prisma.employeeHours.findFirst({
     where: {
@@ -69,6 +69,7 @@ export const createEmployeeHours = async (
       name: existingEmployee?.name,
       hours,
       description,
+      overtime,
       date,
       minutes
     },
@@ -86,7 +87,7 @@ export const updateEmployeeHours = async (
     return { error: 'Invalid fields' };
   }
 
-  const { uuid, employeeId, hours, description, date, minutes } = values;
+  const { uuid, employeeId, hours, description, date, minutes, overtime } = values;
 
   const existingEmployee = await prisma.employee.findUnique({
     where: {
@@ -103,6 +104,7 @@ export const updateEmployeeHours = async (
       name: existingEmployee?.name,
       hours,
       description,
+      overtime,
       date,
       minutes
     },
