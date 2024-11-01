@@ -6,8 +6,8 @@ import { columns } from './datatable/columns';
 import { EmployeeHoursWithDetails, EmployeeWithDetails } from '@/types/EmployeeType';
 
 interface WorkHoursTrackingProps {
-  employee: EmployeeWithDetails;
-  hours: EmployeeHoursWithDetails[];
+  employee: any;
+  hours: any[];
 }
 
 interface MonthlySummary {
