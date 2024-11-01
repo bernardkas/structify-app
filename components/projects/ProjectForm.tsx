@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import {
   Form,
@@ -36,6 +36,8 @@ interface ProjectFormProps {
   isEditing?: boolean;
   clients?: ClientWithDetails[];
 }
+
+
 const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
   const initialDate = project?.date ? new Date(project.date) : new Date();
 
@@ -43,6 +45,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
     initialDate
   );
   const [loading, setLoading] = useState(false);
+  const [editorType, setEditorType] = useState<'hourly' | 'total'>('hourly');
 
   const [selectedClient, setSelectedClient] = useState<string | undefined>(
     project?.client?.uuid
@@ -59,6 +62,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
       description: project?.description || '',
       clientId: project?.client.uuid || selectedClient || '',
       hourlyRate: project?.hourlyRate || '',
+      totalBudget: project?.totalBudget || '',
       startDate: project?.startDate
         ? new Date(project.startDate)
         : selectedDate,
@@ -122,54 +126,113 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
     }
   };
 
+  useEffect(() => {
+    if (project?.hourlyRate) {
+      setEditorType('hourly');
+    } else if (project?.totalBudget) {
+      setEditorType('total');
+    }
+  }, [project]);
+
+
+  const handleSelectChange = (value: 'hourly' | 'total') => {
+    setEditorType(value);
+    // if (value === 'hourly') {
+    //   form.setValue('totalBudget', 0);
+    // } else {
+    //   form.setValue('hourlyRate', '');
+    // }
+  }
+
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(isCreating)}>
         <div className='space-y-5'>
-        <div className="flex flex-row gap-3 items-center">
-
-
-          <FormField
-            control={form.control}
-            name='name'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder='Name'
-                    name='fullname'
-                    type='text'
-                    className='text-black'
+          <div className='flex flex-row gap-3 items-center'>
+            <FormField
+              control={form.control}
+              name='name'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder='Name'
+                      name='fullname'
+                      type='text'
+                      className='text-black'
                     />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
+          </div>
 
-          <FormField
-            control={form.control}
-            name='hourlyRate'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Hourly Rate</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    placeholder='35'
-                    name='fullname'
-                    type='text'
-                    className='text-black'
-                    />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-            />
+          <div className='space-y-3'>
+            <Select onValueChange={handleSelectChange}>
+              <SelectTrigger className='w-[180px] text-black'>
+                <SelectValue placeholder='Hourly or total..' />
+              </SelectTrigger>
+              <SelectContent side='top'>
+                <SelectItem value='hourly'>Hourly rate</SelectItem>
+                <SelectItem value='total'>Total budget</SelectItem>
+              </SelectContent>
+            </Select>
 
-            </div>
+            <div className='flex flex-row gap-3 flex-wrap items-center'>
+
+          
+              <FormField
+                control={form.control}
+                name='hourlyRate'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Hourly Rate</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder='35'
+                        name='fullname'
+                        type='text'
+                        className='text-black'
+                        onFocus={() => form.setValue('totalBudget', 0)}
+                        disabled={editorType === 'total'}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            
+
+              <FormField
+              control={form.control}
+              name='totalBudget'
+              render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Total Budget</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder='3000'
+                        name='fullname'
+                        type='number'
+                        className='text-black'
+                        onFocus={() => form.setValue('hourlyRate', '')}
+                        disabled={editorType === 'hourly'}
+                        />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+                />
+
+</div>
+
+          </div>
           <div className='flex flex-row gap-3 items-center'>
             <FormField
               control={form.control}

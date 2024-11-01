@@ -11,6 +11,10 @@ export const CreateProjectSchema = z.object({
     projectStatus: z.string().optional(),
     clientId: z.string().optional(),
     hourlyRate: z.string().optional(),
+    totalBudget: z.preprocess(
+        (value) => Number(value),
+        z.number().optional()
+    ),
     address: z.object({
         id: z.string().optional(),
         street: z.string().min(1, 'This field is required'),

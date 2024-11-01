@@ -39,7 +39,7 @@ export default function NavigationMenuButton({onClose}: NaviagtionMenuButtonProp
       <NavigationMenuList>
       <NavigationMenuItem>
         {components.map(item => (
-            <Link onClick={onClose} href={item.href} legacyBehavior passHref>
+            <Link key={item.title} onClick={onClose} href={item.href} legacyBehavior passHref>
             <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-transparent rounded-full`}>
               {item.title}
             </NavigationMenuLink>

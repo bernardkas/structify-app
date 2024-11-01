@@ -177,6 +177,7 @@ model Project {
   color         String?
   startDate     DateTime?
   hourlyRate    String?
+  totalBudget   Float?
 
   client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
   clientId String
