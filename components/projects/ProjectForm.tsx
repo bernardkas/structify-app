@@ -117,7 +117,6 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
     form.setValue('startDate', date);
   };
 
-  console.log('projects',project)
 
   const handleSelectClient = (clientId: string) => {
     const client = clients?.find(c => c.uuid === clientId);

@@ -37,16 +37,16 @@ const SubpageProjectNavigation = ({ project }: NavigationProps) => {
           Materials
         </Button>
       </Link>
+      <Link href={`/projects/${project.uuid}/project-hours-tracking`}>
+        <Button variant='link' className={`${getButtonVariant('project-hours-tracking')}`}>
+          Project hours tracking
+        </Button>
+      </Link>
       <Link href={`/projects/${project.uuid}/plans-blueprints`}>
         <Button variant='link' className={`${getButtonVariant('plans-blueprints')}`}>
         Plans and Blueprints
         </Button>
       </Link>
-      {/* <Link href={`/projects/${project.uuid}/notes`}>
-        <Button variant='link' className={`${getButtonVariant('notes')}`}>
-        Notes
-        </Button>
-      </Link> */}
     </div>
   );
 };

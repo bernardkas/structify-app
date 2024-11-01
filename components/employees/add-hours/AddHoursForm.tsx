@@ -119,7 +119,6 @@ const AddHoursForm = ({
   const handleSelectClient = (employeeId: string) => {
     const client = employee?.find(c => c.uuid === employeeId);
     if (client) {
-        console.log('client', client)
         form.setValue('employeeId', employeeId as any);
         setSelectedEmployee(client.uuid);
         setIsSalaryEmployee(!!client?.salary

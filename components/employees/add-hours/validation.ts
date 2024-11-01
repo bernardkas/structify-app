@@ -17,5 +17,5 @@ export const CreateAddHoursEmployeeSchema = z.object({
         z.number().optional()
     ),
     description: z.string().min(1),
-    date: z.date().min(new Date()),
+    date: z.date().optional()
 })

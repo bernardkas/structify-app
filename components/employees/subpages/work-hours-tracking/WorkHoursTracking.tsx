@@ -48,7 +48,6 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
 
       const entryEarnings = (entryTotalMinutes / 60) * (employee.hourlyRate || 0);
       summaries[month].totalEarnings += entryEarnings;
-      console.log('employees', employee)
       
       if (employee.salary) {
         const overtimeHours = entry?.overtime ?? 0;
