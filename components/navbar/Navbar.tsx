@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/sheet';
 import UserButton from '../auth/user-button';
 import NavigationMenuButton  from './navbar-button';
+import { useRouter } from 'next/navigation';
 
 interface NavbarProps {
   currentUser: any;
@@ -26,6 +27,7 @@ const Navbar = ({ currentUser }: NavbarProps) => {
   const handleSheetClose = () => {
     setOpenSheet(false);
   };
+
 
   return (
     <div className='shadow-lg '>
@@ -51,9 +53,10 @@ const Navbar = ({ currentUser }: NavbarProps) => {
               Login
             </Link>
           ) : (
-            <>
+            <div className="flex flex-row gap-3 items-center">
+              <Link href='/price'>Price</Link>
               <UserButton currentUser={currentUser} />
-            </>
+            </div>
           )}
         </div>
 

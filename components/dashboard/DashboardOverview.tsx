@@ -90,7 +90,7 @@ const DashboardOverview = ({
   return (
     <div className='space-y-5 mx-3'>
       <div className='flex flex-row justify-between items-center mt-5'>
-        <Title>Dashboard</Title>
+        <Title>Armaturenbrett</Title>
         <FilterDashboard onChange={setTimeRange} />
       </div>
       <div className='grid gap-4  md:grid-cols-2 lg:grid-cols-4'>
