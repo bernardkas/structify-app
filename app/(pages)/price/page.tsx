@@ -56,7 +56,7 @@ const price = [
       '✅ Create Invoices',
       '✅ Remiander',
     ],
-    price: '29.99€',
+    price: '24.99€',
     timeFrame: '(monthly)',
     btnText: 'Choose plan',
     href: '',
