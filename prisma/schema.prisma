@@ -18,9 +18,9 @@ enum UserRole {
   ADMIN
 }
 
-enum Subscription {
+enum SubscriptionType {
   BASIC
-  PREMIUM
+  STANDARD
   ENTERPRISE
 }
 
@@ -34,13 +34,29 @@ model User {
   image             String?
   accounts          Account[]
   role              UserRole     @default(USER)
-  subscription      Subscription @default(BASIC)
+  stripeId        String?
+  subscriptions Subscription[]
   subscriptionsDate DateTime?
   client            Client[]
   employee          Employee[]
   createdAt         DateTime     @default(now())
   updatedAt         DateTime     @updatedAt
 }
+
+model Subscription {
+  id             String   @id @default(uuid())
+  userId         String
+  stripeSubscriptionId  String @unique
+  status         String
+  priceId        String
+  type                  SubscriptionType @default(BASIC)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+
 
 model Account {
   userId            String

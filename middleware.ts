@@ -8,6 +8,7 @@ import {
   authRoutes,
   apiAuthPrefix,
 } from '@/routes';
+import { NextRequest, NextResponse } from 'next/server';
 // @ts-ignore in the future to fix type error
 export default auth(req => {
   const { nextUrl } = req;
@@ -33,6 +34,10 @@ export default auth(req => {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT || '/dashboard', nextUrl));
     }
     return null;
+  }
+
+  if (nextUrl.pathname === '/api/webhook/stripe') {
+    return NextResponse.json({ status: 200 });
   }
 
   // In here you can change if you want isPublicRoute to make
