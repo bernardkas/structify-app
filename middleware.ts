@@ -21,6 +21,10 @@ export default auth(req => {
     return null; // Allow access without redirect or authentication
   }
 
+  if (nextUrl.pathname === '/api/webhook/stripe') {
+    return null;
+  }
+
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
@@ -31,14 +35,14 @@ export default auth(req => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT || '/dashboard', nextUrl));
+      return Response.redirect(
+        new URL(DEFAULT_LOGIN_REDIRECT || '/dashboard', nextUrl)
+      );
     }
     return null;
   }
 
-  if (nextUrl.pathname === '/api/webhook/stripe') {
-    return NextResponse.json({ status: 200 });
-  }
+  
 
   // In here you can change if you want isPublicRoute to make
   // all public or to make all private !isPublicRoute whatever you write in isPublicRoute
@@ -60,5 +64,9 @@ export default auth(req => {
 });
 
 export const config = {
-  matcher: ['/((?!.+\\.[\\w]+$|_next|api/cron/remainder).*)', '/', '/(api|trpc)(.*)'],
+  matcher: [
+    '/((?!.+\\.[\\w]+$|_next|api/cron/remainder|api/webhook/stripe).*)',
+    '/',
+    '/(api|trpc)(.*)',
+  ],
 };
