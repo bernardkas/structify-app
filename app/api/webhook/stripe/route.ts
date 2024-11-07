@@ -1,11 +1,11 @@
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
-import { price } from '../../../../components/price/Subscription';
+import { price } from './../../../../components/price/Subscription';
 import prisma from '@/db/db';
 import { SubscriptionType } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!);
 const webhhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 
@@ -36,42 +36,28 @@ export async function POST(req: Request) {
     return null;
   }
 }
-
-console.log('data', data)
-console.log('event', event)
-
-
   try {
     switch (event.type) {
       case 'checkout.session.completed': {  
         try {
           const session = await stripe.checkout.sessions.retrieve(
-            data.object,
+            data.object.id,
             { expand: ['line_items'] }
           );
       
-          const customerId = session?.customer_details?.email as any;
+          const customerId = session?.customer as any;
           const customer = await getCustomerEmail(customerId)
       
           let priceId: string | undefined;
           if (session?.line_items?.data?.[0]?.price?.id) {
             priceId = session.line_items.data[0].price.id;
-            console.log('Price ID:', priceId);
           } else {
             console.log('No price ID found in session.');
             break;
           }
       
-          const plan = price.find(item => item.priceId === priceId);
-          if (!plan) {
-            console.log('No matching plan found for price ID:', priceId);
-            break;
-          }
-      
           if (customer) {
-            const userEmail = customer as string;
-            console.log('Customer email:', userEmail);
-      
+            const userEmail = customer as string;      
             // Find the user by email
             const user = await prisma.user.findUnique({ where: { email: userEmail } });
             if (!user) {
@@ -90,14 +76,14 @@ console.log('event', event)
             }
       
             // Find or create the subscription
-            const subscription = await prisma.subscription.findUnique({
-              where: { stripeSubscriptionId: data.object.id }
+            const existingSubscription = await prisma.subscription.findFirst({
+              where: { userId: user.id, status: 'active' }
             });
       
-            if (subscription) {
-              console.log('Updating existing subscription for user:', userEmail);
+      
+            if (existingSubscription) {
               await prisma.subscription.update({
-                where: { id: subscription.id },
+                where: { id: existingSubscription.id },
                 data: {
                   type: subscriptionType,
                   status: 'active',
@@ -106,12 +92,11 @@ console.log('event', event)
                 }
               });
             } else {
-              console.log('Creating new subscription for user:', userEmail);
               await prisma.subscription.create({
                 data: {
                   userId: user.id,
                   stripeSubscriptionId: data.object.id,
-                  status: data?.object?.status,
+                  status: 'active',
                   priceId: priceId,
                   type: subscriptionType,
                   createdAt: new Date(),
@@ -124,11 +109,11 @@ console.log('event', event)
           console.error('Error handling checkout.session.completed:', err);
         }
 
-        return NextResponse.json({
-          message: 'Subscription updated successfully',
-        });
 
         break;
+      }
+      case 'customer.subscription.updated': {
+
       }
       
     case 'customer.subscription.deleted': {
@@ -144,13 +129,9 @@ console.log('event', event)
           await prisma.subscription.delete({
               where: { id: existingSubscription.id }
           });
-          console.log(`Subscription deleted and user set to inactive for user ID: ${existingSubscription.userId}`);
       } else {
           console.log(`No subscription found for stripeSubscriptionId: ${subscription.id}`);
       }
-
-      
-      return NextResponse.json({});
 
       break;
     }
