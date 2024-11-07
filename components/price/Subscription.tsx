@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 interface SubscriptionProps {
   session: any;
+  user: any;
   handleSubscription?: (priceId: string) => void;
   loading?: boolean;
 }
@@ -75,7 +76,8 @@ export const price = [
 ];
 
 
-const Subscription = ({ session}: SubscriptionProps) => {
+const Subscription = ({ session, user}: SubscriptionProps) => {
+  console.log('user', user)
   return (
     <div className='flex flex-row gap-5 items-center flex-wrap'>
         {price.map(item => (
