@@ -34,7 +34,6 @@ model User {
   image             String?
   accounts          Account[]
   role              UserRole     @default(USER)
-  stripeId        String?
   subscriptions Subscription[]
   subscriptionsDate DateTime?
   client            Client[]
@@ -49,6 +48,8 @@ model Subscription {
   stripeSubscriptionId  String @unique
   status         String
   priceId        String
+  isTrialActive         Boolean  @default(true)
+  trialEndDate          DateTime?
   type                  SubscriptionType @default(BASIC)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

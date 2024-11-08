@@ -39,7 +39,7 @@ export const sendReminderEmails = async () => {
 
     try {
       await resend.emails.send({
-        from: 'noreply@yourapp.com',
+        from: 'noreply@structifyapp.com',
         to: emailRecipient,
         subject: `Reminder from ${client.name}`,
         // @ts-ignore

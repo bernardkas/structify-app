@@ -35,6 +35,8 @@ export async function POST(req: Request) {
       return null;
     }
   }
+
+  let priceId: string | undefined;
   try {
     switch (event.type) {
       case 'checkout.session.completed': {
@@ -47,7 +49,7 @@ export async function POST(req: Request) {
           const customerId = session?.customer as any;
           const customer = await getCustomerEmail(customerId);
 
-          let priceId: string | undefined;
+         
           if (session?.line_items?.data?.[0]?.price?.id) {
             priceId = session.line_items.data[0].price.id;
           } else {
@@ -60,14 +62,27 @@ export async function POST(req: Request) {
             // Find the user by email
             const user = await prisma.user.findUnique({
               where: { email: userEmail },
+              include: { subscriptions: true },
             });
             if (!user) {
               console.log(`User not found with email: ${userEmail}`);
               break;
             }
 
+            const activeSubscription = user.subscriptions.find(
+              sub => sub.status === 'active'
+            );
+
+            const trialEligible = !activeSubscription;
+            const trialEndDate = trialEligible
+              ? new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+              : null;
+
             let subscriptionType: SubscriptionType;
-            if (priceId === 'price_1QH7jmGSj97UGaVByVJGDj7F') {
+            if (
+              priceId === 'price_1QH7jmGSj97UGaVByVJGDj7F' ||
+              priceId === 'price_1QIxRGGSj97UGaVB70TlD0Os'
+            ) {
               subscriptionType = SubscriptionType.STANDARD;
             } else if (priceId === 'price_1QH7kpGSj97UGaVBbhsehBCi') {
               subscriptionType = SubscriptionType.ENTERPRISE;
@@ -76,17 +91,13 @@ export async function POST(req: Request) {
               break;
             }
 
-            // Find or create the subscription
-            const existingSubscription = await prisma.subscription.findFirst({
-              where: { userId: user.id, status: 'active' },
-            });
-
-            if (existingSubscription) {
+            if (activeSubscription) {
               await prisma.subscription.update({
-                where: { id: existingSubscription.id },
+                where: { id: activeSubscription.id },
                 data: {
                   type: subscriptionType,
                   status: 'active',
+                  isTrialActive: false,
                   priceId: priceId,
                   updatedAt: new Date(),
                 },
@@ -98,6 +109,8 @@ export async function POST(req: Request) {
                   stripeSubscriptionId: data.object.id,
                   status: 'active',
                   priceId: priceId,
+                  isTrialActive: subscriptionType === 'ENTERPRISE' ? false : trialEligible,
+                  trialEndDate: subscriptionType === 'ENTERPRISE' ? null : trialEndDate,
                   type: subscriptionType,
                   createdAt: new Date(),
                   updatedAt: new Date(),
@@ -111,7 +124,29 @@ export async function POST(req: Request) {
 
         break;
       }
-      case 'customer.subscription.updated': {
+      case 'customer.updated': {
+        const subscriptionId = data.object.subscription;
+
+        const existingSubscription = await prisma.subscription.findUnique({
+          where: { stripeSubscriptionId: subscriptionId },
+        });
+
+        if (existingSubscription) {
+          await prisma.subscription.update({
+            where: { id: existingSubscription.id },
+            data: {
+              priceId: priceId,
+              isTrialActive: false, // Trial has ended, subscription is now paid
+              status: 'active',
+              updatedAt: new Date(),
+            },
+          });
+        } else {
+          console.log(
+            `No subscription found for subscription ID: ${subscriptionId}`
+          );
+        }
+        break;
       }
 
       case 'customer.subscription.deleted': {
@@ -130,6 +165,8 @@ export async function POST(req: Request) {
             where: { id: existingSubscription.id },
             data: {
               status: 'inactive',
+              updatedAt: new Date(),
+              isTrialActive: false,
             },
           });
         } else {
@@ -138,6 +175,19 @@ export async function POST(req: Request) {
           );
         }
 
+        break;
+      }
+      case 'setup_intent.created':
+      case 'setup_intent.succeeded':
+      case 'customer.created':
+      case 'payment_method.attached':
+      case 'invoice.created':
+      case 'invoice.finalized':
+      case 'invoice.paid':
+      case 'invoice.payment_succeeded':
+      case 'invoice.upcoming':
+      case 'customer.subscription.created': {
+        // Ignore these events for now
         break;
       }
       default: {
