@@ -65,7 +65,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.role = existingUser.role;
-      token.subscription = existingUser.subscription;
+      token.subscription = existingUser?.subscriptionType;
 
       return token;
     },

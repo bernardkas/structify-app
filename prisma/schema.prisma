@@ -36,7 +36,6 @@ model User {
   subscriptionType                  SubscriptionType @default(TRIAL)
   role              UserRole     @default(USER)
   subscriptions Subscription[]
-  subscriptionsDate DateTime?
   client            Client[]
   employee          Employee[]
   createdAt         DateTime     @default(now())
