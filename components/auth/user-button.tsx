@@ -17,6 +17,8 @@ interface UserButtonProps {
 }
 
 const UserButton = ({ onClose, currentUser }: UserButtonProps) => {
+  const customerPortalLink = 'https://billing.stripe.com/p/login/test_00g6pCdbxb5Gd2g9AA';
+
   return (
     <div>
       <DropdownMenu>
@@ -31,6 +33,13 @@ const UserButton = ({ onClose, currentUser }: UserButtonProps) => {
         <DropdownMenuContent className='w-[200px] space-y-2'>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <Link onClick={onClose} target="_blank" href={
+              customerPortalLink + "?prefilled_email=" + currentUser?.email
+            }>
+              Manage billing
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <Link onClick={onClose} href='/settings'>
               Settings

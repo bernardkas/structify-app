@@ -4,6 +4,7 @@ import { price } from './../../../../components/price/Subscription';
 import prisma from '@/db/db';
 import { SubscriptionType } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import { auth } from '@/auth';
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!);
 const webhhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -92,10 +93,16 @@ export async function POST(req: Request) {
             }
 
             if (activeSubscription) {
+              await prisma.user.update({
+                where: { id: user.id },
+                data: {
+                  subscriptionType: subscriptionType
+                }
+              })
+
               await prisma.subscription.update({
                 where: { id: activeSubscription.id },
                 data: {
-                  type: subscriptionType,
                   status: 'active',
                   isTrialActive: false,
                   priceId: priceId,
@@ -103,15 +110,20 @@ export async function POST(req: Request) {
                 },
               });
             } else {
+              await prisma.user.update({
+                where: { id: user.id },
+                data: {
+                  subscriptionType: subscriptionType
+                }
+              })
               await prisma.subscription.create({
                 data: {
                   userId: user.id,
-                  stripeSubscriptionId: data.object.id,
+                  customerId: customerId,
                   status: 'active',
                   priceId: priceId,
                   isTrialActive: subscriptionType === 'ENTERPRISE' ? false : trialEligible,
                   trialEndDate: subscriptionType === 'ENTERPRISE' ? null : trialEndDate,
-                  type: subscriptionType,
                   createdAt: new Date(),
                   updatedAt: new Date(),
                 },
@@ -124,42 +136,133 @@ export async function POST(req: Request) {
 
         break;
       }
-      case 'customer.updated': {
-        const subscriptionId = data.object.subscription;
+      case 'customer.subscription.updated': {
+        const subscription = await stripe.subscriptions.retrieve(data.object.id);
+        const priceId = subscription.items.data[0]?.price.id;
 
-        const existingSubscription = await prisma.subscription.findUnique({
-          where: { stripeSubscriptionId: subscriptionId },
+        const customerId = subscription?.customer as any;
+        const customer = await getCustomerEmail(customerId);
+
+        // Find the user by email
+        const user = await prisma.user.findUnique({
+          where: { email: customer as string },  
+          include: { subscriptions: true },
         });
-
+      
+        if (!priceId) {
+          console.log('No price ID found in subscription.');
+          break;
+        }
+      
+        let subscriptionType: SubscriptionType;
+        if (
+          priceId === 'price_1QH7jmGSj97UGaVByVJGDj7F'
+        ) {
+          subscriptionType = SubscriptionType.STANDARD;
+        } else if (priceId === 'price_1QH7kpGSj97UGaVBbhsehBCi') { 
+          subscriptionType = SubscriptionType.ENTERPRISE;
+        } else {
+          console.log('Unknown price ID, no subscription type matched.');
+          break;
+        }
+      
+        const existingSubscription = await prisma.subscription.findUnique({
+          where: { customerId: subscription.customer as string },
+        });
+      
         if (existingSubscription) {
+          await prisma.user.update({
+            where: { id: user?.id },
+            data: {
+              subscriptionType: subscriptionType
+            }
+          })
+
           await prisma.subscription.update({
             where: { id: existingSubscription.id },
             data: {
               priceId: priceId,
-              isTrialActive: false, // Trial has ended, subscription is now paid
               status: 'active',
               updatedAt: new Date(),
+              isTrialActive: false,
             },
           });
+
+          
+          console.log(`Subscription type updated to: ${subscriptionType}`);
         } else {
-          console.log(
-            `No subscription found for subscription ID: ${subscriptionId}`
-          );
+          console.log(`No subscription found for customer ID: ${subscription.customer}`);
         }
+      
         break;
       }
+      
+      
+      
+      // case 'customer.subscription.trial_will_end': {
+      //   const subscriptionId = data.object.id;  
+  
+      //   const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+
+      //   const customerId = subscription?.customer as any;
+      //   const customer = await getCustomerEmail(customerId);
+
+      //   // Find the user by email
+      //   const user = await prisma.user.findUnique({
+      //     where: { email: customer as string },  
+      //     include: { subscriptions: true },
+      //   });
+      
+      //   console.log('Subscription deleted:', subscription);
+      
+      //   // Find the subscription in the database
+      //   const existingSubscription = await prisma.subscription.findUnique({
+      //     where: { customerId: subscription.customer as string },
+      //   });
+      
+      //   if (existingSubscription) {
+      //     await prisma.subscription.update({
+      //       where: { id: existingSubscription.id },
+      //       data: {
+      //         status: 'active',
+      //         updatedAt: new Date(),
+      //         isTrialActive: false,
+      //       },
+      //     });      
+      //   } else {
+      //     console.log(
+      //       `No subscription found for subscription ID: ${subscriptionId}`
+      //     );
+      //   }
+      //   break;
+      // }
 
       case 'customer.subscription.deleted': {
         const subscription = await stripe.subscriptions.retrieve(
           data.object.id
         );
 
+        const customerId = subscription?.customer as any;
+        const customer = await getCustomerEmail(customerId);
+
+        // Find the user by email
+        const user = await prisma.user.findUnique({
+          where: { email: customer as string },  
+          include: { subscriptions: true },
+        });
+
         // Find the subscription in the database
         const existingSubscription = await prisma.subscription.findUnique({
-          where: { stripeSubscriptionId: subscription.id },
+          where: { customerId: subscription.customer as any },
         });
 
         if (existingSubscription) {
+          await prisma.user.update({
+            where: { id: user?.id },
+            data: {
+              subscriptionType: 'TRIAL'
+            }
+          })
           // Delete the subscription from the database
           await prisma.subscription.update({
             where: { id: existingSubscription.id },
@@ -175,19 +278,6 @@ export async function POST(req: Request) {
           );
         }
 
-        break;
-      }
-      case 'setup_intent.created':
-      case 'setup_intent.succeeded':
-      case 'customer.created':
-      case 'payment_method.attached':
-      case 'invoice.created':
-      case 'invoice.finalized':
-      case 'invoice.paid':
-      case 'invoice.payment_succeeded':
-      case 'invoice.upcoming':
-      case 'customer.subscription.created': {
-        // Ignore these events for now
         break;
       }
       default: {

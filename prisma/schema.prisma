@@ -19,7 +19,7 @@ enum UserRole {
 }
 
 enum SubscriptionType {
-  BASIC
+  TRIAL
   STANDARD
   ENTERPRISE
 }
@@ -33,6 +33,7 @@ model User {
   isOAuth           Boolean      @default(false)
   image             String?
   accounts          Account[]
+  subscriptionType                  SubscriptionType @default(TRIAL)
   role              UserRole     @default(USER)
   subscriptions Subscription[]
   subscriptionsDate DateTime?
@@ -45,12 +46,11 @@ model User {
 model Subscription {
   id             String   @id @default(uuid())
   userId         String
-  stripeSubscriptionId  String @unique
+  customerId  String @unique
   status         String
   priceId        String
   isTrialActive         Boolean  @default(true)
   trialEndDate          DateTime?
-  type                  SubscriptionType @default(BASIC)
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
