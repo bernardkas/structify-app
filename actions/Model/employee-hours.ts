@@ -63,6 +63,29 @@ export const createEmployeeHours = async (
     },
   });
 
+  const existingUser =  await auth()
+
+  const user = await prisma.user?.findUnique({
+    where: {
+      id: existingUser?.user?.id,
+    },
+    include: {
+      subscriptions: true
+    }
+  })
+
+  
+  // Check client count based on subscription type
+  const clientCount = await prisma.employeeHours.count({
+    where: { employeeId: existingEmployee?.id },
+  });
+
+  if (user?.subscriptionType === 'TRIAL') {
+    return { error: 'Please update to the Standard or enterprise plan to add clients.' };
+  } else if (user?.subscriptionType === 'STANDARD' && clientCount >= 100) {
+    return { error: 'Standard plan allows only up to 100 clients.' };
+  }
+
   await prisma.employeeHours.create({
     data: {
       employeeId: existingEmployee?.id,

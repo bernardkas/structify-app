@@ -2,12 +2,14 @@ import AddNewTemplate from '@/components/template-invoice/ui/add-new-template';
 import React from 'react';
 import TamplateOverview from '@/components/template-invoice/tamplate-overview';
 import { getInvoices } from '@/actions/Model/invoice';
+import Title from '@/components/ui-reusable/title';
 
 const TemplateInvoice = async () => {
   const invoices = await getInvoices()
   return (
     <div className='flex flex-col gap-5'>
-      <div className='flex justify-end mt-5 mr-5'>
+      <div className='flex flex-row justify-between items-center mt-5 mx-5'>
+        <Title>Invoice</Title>
         <AddNewTemplate />
       </div>
       <div className='border-[2px]'></div>

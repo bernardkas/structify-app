@@ -61,6 +61,27 @@ export const createClient = async (
     return { error: 'User not found' };
   }
 
+  const user = await prisma.user?.findUnique({
+    where: {
+      id: existingUser.user?.id,
+    },
+    include: {
+      subscriptions: true
+    }
+  })
+
+  
+  // Check client count based on subscription type
+  const clientCount = await prisma.client.count({
+    where: { userId: existingUser.user?.id },
+  });
+
+  if (user?.subscriptionType === 'TRIAL') {
+    return { error: 'Please update to the Standard or enterprise plan to add clients.' };
+  } else if (user?.subscriptionType === 'STANDARD' && clientCount >= 100) {
+    return { error: 'Standard plan allows only up to 100 clients.' };
+  }
+
   const {
     name,
     organization,
@@ -108,6 +129,7 @@ export const createClient = async (
   });
   
   redirect(`/clients/${client.uuid}/detail`);
+  
 };
 
 export const updateClient = async (
@@ -122,6 +144,7 @@ export const updateClient = async (
   if (!existingUser) {
     return { error: 'User not found' };
   }
+
 
   const {
     uuid,

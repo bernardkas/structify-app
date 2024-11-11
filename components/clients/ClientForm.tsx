@@ -64,7 +64,6 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
   const create = (values: z.infer<typeof CreateClientSchema>) => {
     setLoading(true)
     createClient(values).then(data => {
-      toast("Client created successfully", {type: 'success'});
       setLoading(false)
       if (data?.error) {
         toast(data?.error, {type: 'error'});

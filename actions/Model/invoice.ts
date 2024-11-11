@@ -4,6 +4,7 @@ import prisma from '@/db/db';
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { auth } from '@/auth';
 
 export const createInvocie = async (
   values: z.infer<typeof InvoiceTypeSchema>
@@ -12,6 +13,28 @@ export const createInvocie = async (
 
   if (!validetedFields.success) {
     return { error: 'Invalid fields' };
+  }
+  const existingUser = await auth()
+
+  const user = await prisma.user?.findUnique({
+    where: {
+      id: existingUser?.user?.id,
+    },
+    include: {
+      subscriptions: true
+    }
+  })
+
+  
+  // Check client count based on subscription type
+  const clientCount = await prisma.invoice.count({
+    where: { userId: existingUser?.user?.id },
+  });
+
+  if (user?.subscriptionType === 'TRIAL') {
+    return { error: 'Please update to the Standard or enterprise plan to add clients.' };
+  } else if (user?.subscriptionType === 'STANDARD' && clientCount >= 100) {
+    return { error: 'Standard plan allows only up to 100 clients.' };
   }
 
   const {
