@@ -21,13 +21,15 @@ interface DashboardOverviewProps {
   clients: any;
   employees: any;
   employeeHours: any
+  currentUser?: any
 }
 
 const DashboardOverview = ({
   projects,
   clients,
   employees,
-  employeeHours
+  employeeHours,
+  currentUser
 }: DashboardOverviewProps) => {
   const [timeRange, setTimeRange] = useState<string>('12');
   const [filteredProjects, setFilteredProjects] = useState<any[]>([]);
@@ -37,36 +39,20 @@ const DashboardOverview = ({
 
   useEffect(() => {
     setLoading(true);
-    const filteredProjects = filterDataByTimeRange(
-      projects,
-      timeRange,
-      'createdAt'
-    );
-    setFilteredProjects(filteredProjects);
+    
+    const filteredData = {
+      projects: filterDataByTimeRange(projects, timeRange, 'createdAt'),
+      clients: filterDataByTimeRange(clients, timeRange, 'createdAt'),
+      employees: filterDataByTimeRange(employees, timeRange, 'createdAt')
+    };
+  
+    setFilteredProjects(filteredData.projects);
+    setFilteredClients(filteredData.clients);
+    setFilteredEmployees(filteredData.employees);
+    
     setLoading(false);
-  }, [projects, timeRange]);
-
-  useEffect(() => {
-    setLoading(true);
-    const filteredClients = filterDataByTimeRange(
-      clients,
-      timeRange,
-      'createdAt'
-    );
-    setFilteredClients(filteredClients);
-    setLoading(false);
-  }, [clients, timeRange]);
-
-  useEffect(() => {
-    setLoading(true);
-    const filteredEmployees = filterDataByTimeRange(
-      employees,
-      timeRange,
-      'createdAt'
-    );
-    setFilteredEmployees(filteredEmployees);
-    setLoading(false);
-  }, [employees, timeRange]);
+  }, [projects, clients, employees, timeRange]);
+  
 
   const totalBudget = Array.isArray(filteredProjects)
     ? filteredProjects.reduce(
@@ -75,9 +61,28 @@ const DashboardOverview = ({
       )
     : 0;
 
+    const totalHours = Array.isArray(filteredProjects)
+  ? filteredProjects.reduce((acc, project) => {
+      const projectHoursTotal = Array.isArray(project.projectHours)
+        ? project.projectHours.reduce((hoursAcc: any, item: any) => {
+            const totalMinutes = item.hours * 60 + item.minutes;
+            return hoursAcc + totalMinutes; 
+          }, 0)
+        : 0;
+
+      const totalInHours = projectHoursTotal / 60;
+
+      const totalCost = totalInHours * (project?.hourlyRate || 0);
+
+      return acc + totalCost;
+    }, 0)
+  : 0;
+  
   const totalProjects = filteredProjects.length;
   const totalClients = filteredClients.length;
   const totalEmployees = filteredEmployees.length;
+
+  const totalRevenue = totalBudget + totalHours
 
   const monthlyBudgetData = getMonthlyBudgetData(
     filteredProjects,
@@ -114,7 +119,7 @@ const DashboardOverview = ({
               <Skeleton className='h-10 w-full' />
             ) : (
               <div className='text-2xl font-bold'>
-                € {totalBudget.toLocaleString()}
+                € {totalRevenue.toLocaleString()}
               </div>
             )}
           </CardContent>
@@ -218,7 +223,12 @@ const DashboardOverview = ({
             <CardTitle>Recent Employees hours</CardTitle>
           </CardHeader>
           <CardContent>
-            <RecentEmployeesHours employeeHours={employeeHours} />
+            {employeeHours?.length > 0 ? (
+              <RecentEmployeesHours employeeHours={employeeHours} />
+
+            ) : (
+              <p>No data</p>
+            )}
           </CardContent>
         </Card>
       </div>

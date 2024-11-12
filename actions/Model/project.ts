@@ -23,6 +23,7 @@ export const getProjects = async () => {
     include: {
       address: true,
       client: true,
+      projectHours: true
     },
     orderBy: {
       createdAt: 'desc',
