@@ -11,16 +11,25 @@ import {
 import React, { useState } from 'react';
 import { columns } from './datatable/columns';
 import AddProjectHoursForm from './AddProjectHoursForm';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface AddProjectHoursProps {
   projectHours: any;
   projects: any;
+  currentUser?: any
 }
 
-const AddProjectHours = ({ projects, projectHours }: AddProjectHoursProps) => {
+const AddProjectHours = ({ projects, projectHours, currentUser }: AddProjectHoursProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState<any | undefined>();
   const [isEditing, setIsEditing] = useState(false);
+
+  const isTrial = currentUser?.user?.subscription === 'TRIAL';
 
   const handleOpenCreateDialog = () => {
     setSelectedRow(undefined);
@@ -39,11 +48,28 @@ const AddProjectHours = ({ projects, projectHours }: AddProjectHoursProps) => {
         <Title>Project hours</Title>
         <div>
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogTrigger
-              onClick={handleOpenCreateDialog}
-              className='bg-blue-500 p-2 rounded-md text-sm'>
-              Add Project hours
-            </DialogTrigger>
+          <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <DialogTrigger
+                    onClick={handleOpenCreateDialog}
+                    className={`p-2 rounded-md text-sm ${
+                      isTrial 
+                        ? 'bg-blue-700 cursor-not-allowed'  
+                        : 'bg-blue-500 hover:bg-blue-600'
+                    }`}
+                    disabled={isTrial} 
+                  >
+                    Add Project hours
+                  </DialogTrigger>
+                </TooltipTrigger>
+                {isTrial && (
+                  <TooltipContent>
+                    Upgrade your plan to add new project hours.
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            </TooltipProvider>
             <DialogContent className='text-black'>  
               <AlertDialogHeader>
                 <DialogTitle>

@@ -7,15 +7,23 @@ import EmployeeForm from './EmployeeForm';
 import { DataTable } from '../ui-reusable/datatable/datatable';
 import { columns } from './datatable/columns';
 import { useRouter } from 'next/navigation';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface EmployeeOverviewProps {
     employees: any;
+    currentUser?: any
 }
 
-const EmployeeOverview = ({ employees }: EmployeeOverviewProps) => {
+const EmployeeOverview = ({ employees, currentUser }: EmployeeOverviewProps) => {
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedRow, setSelectedRow] = useState<any | undefined>();
     const [isEditing, setIsEditing] = useState(false);
+    const isTrial = currentUser?.user?.subscription === 'TRIAL';
   
     const handleOpenCreateDialog = () => {
       setSelectedRow(undefined);
@@ -33,11 +41,29 @@ const EmployeeOverview = ({ employees }: EmployeeOverviewProps) => {
         <Title>Employees</Title>
         <div>
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogTrigger
-              onClick={handleOpenCreateDialog}
-              className='bg-blue-500 p-2 rounded-md text-sm'>
-              Add Employee
-            </DialogTrigger>
+          <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <DialogTrigger
+                    onClick={handleOpenCreateDialog}
+                    className={`p-2 rounded-md text-sm ${
+                      isTrial 
+                        ? 'bg-blue-700 cursor-not-allowed'  
+                        : 'bg-blue-500 hover:bg-blue-600'
+                    }`}
+                    disabled={isTrial} 
+                  >
+                    Add Employee
+                  </DialogTrigger>
+                </TooltipTrigger>
+                {isTrial && (
+                  <TooltipContent>
+                    Upgrade your plan to add new employees.
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            </TooltipProvider>
+
             <DialogContent  className='text-black max-h-[650px] overflow-y-auto'>
               <AlertDialogHeader>
                 <DialogTitle>

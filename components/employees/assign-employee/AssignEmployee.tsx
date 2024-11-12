@@ -12,17 +12,25 @@ import React, { useState } from 'react';
 import { columns } from './datatable/columns';
 import AssignEmployeeForm from './AssignEmployeeForm';
 import { AssignEmployeeWithDetails } from '@/types/AssignEmployeeType';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface AssignEmployeesOverviewProps {
   employees: any;
   projects: any
   assignEmployees: AssignEmployeeWithDetails[]
+  currentUser?: any
 }
 
-const AssignEmployeesOverview = ({ employees, projects, assignEmployees }: AssignEmployeesOverviewProps) => {
+const AssignEmployeesOverview = ({ employees, projects, assignEmployees, currentUser }: AssignEmployeesOverviewProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState<any | undefined>();
   const [isEditing, setIsEditing] = useState(false);
+  const isTrial = currentUser?.subscription === 'TRIAL';
 
   const handleOpenCreateDialog = () => {
     setSelectedRow(undefined);
@@ -41,11 +49,28 @@ const AssignEmployeesOverview = ({ employees, projects, assignEmployees }: Assig
         <Title>Assign Employee to Project</Title>
         <div>
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogTrigger
-              onClick={handleOpenCreateDialog}
-              className='bg-blue-500 p-2 rounded-md text-sm'>
-              Assign Employee
-            </DialogTrigger>
+          <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <DialogTrigger
+                    onClick={handleOpenCreateDialog}
+                    className={`p-2 rounded-md text-sm ${
+                      isTrial 
+                        ? 'bg-blue-700 cursor-not-allowed'  
+                        : 'bg-blue-500 hover:bg-blue-600'
+                    }`}
+                    disabled={isTrial} 
+                  >
+                    Assign Employee
+                  </DialogTrigger>
+                </TooltipTrigger>
+                {isTrial && (
+                  <TooltipContent>
+                    Upgrade your plan to assign employee.
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            </TooltipProvider>
             <DialogContent className='text-black'>  
               <AlertDialogHeader>
                 <DialogTitle>

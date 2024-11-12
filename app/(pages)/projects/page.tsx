@@ -1,14 +1,17 @@
 'use server'
 import { getClients } from '@/actions/Model/clients'
 import { getProjects } from '@/actions/Model/project'
+import { auth } from '@/auth'
 import CreateProjectButton from '@/components/projects/CreateProjectButton'
 import ProjectsOverview from '@/components/projects/ProjectsOverview'
 import Title from '@/components/ui-reusable/title'
 import React from 'react'
+import { currentUser } from './../../../lib/auth';
 
 const Projects = async () => {
   const projects = await getProjects()
   const clients = await getClients()  
+  const currentUser = await auth()
   
   return (
     <div className="mx-5">
@@ -17,7 +20,7 @@ const Projects = async () => {
           Projects
         </Title>
         {/* @ts-ignore */}
-        <CreateProjectButton clients={clients} />
+        <CreateProjectButton clients={clients} currentUser={currentUser} />
       </div>
         <div className="border-[2px] my-5 w-full"></div>
       <div>

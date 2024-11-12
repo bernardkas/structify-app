@@ -11,13 +11,20 @@ import {
 import React, { useState } from 'react';
 import AddHoursForm from './AddHoursForm';
 import { columns } from './datatable/columns';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 interface AddHourProps {
   employeeHours: any;
   employees: any;
+  currentUser?: any
 }
 
-const AddHour = ({ employees, employeeHours }: AddHourProps) => {
+const AddHour = ({ employees, employeeHours, currentUser }: AddHourProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState<any | undefined>();
   const [isEditing, setIsEditing] = useState(false);
@@ -33,17 +40,37 @@ const AddHour = ({ employees, employeeHours }: AddHourProps) => {
     setIsEditing(true);
     setOpenDialog(true);
   };
+
+  const isTrial = currentUser?.subscription === 'TRIAL';
+
   return (
     <div className='mx-3 mt-3'>
       <div className='flex flex-row justify-between items-center'>
         <Title>Employee hours</Title>
         <div>
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
-            <DialogTrigger
-              onClick={handleOpenCreateDialog}
-              className='bg-blue-500 p-2 rounded-md text-sm'>
-              Add Employee hours
-            </DialogTrigger>
+          <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <DialogTrigger
+                    onClick={handleOpenCreateDialog}
+                    className={`p-2 rounded-md text-sm ${
+                      isTrial 
+                        ? 'bg-blue-700 cursor-not-allowed'  
+                        : 'bg-blue-500 hover:bg-blue-600'
+                    }`}
+                    disabled={isTrial} 
+                  >
+                    Add Employee hours
+                  </DialogTrigger>
+                </TooltipTrigger>
+                {isTrial && (
+                  <TooltipContent>
+                    Upgrade your plan to add new employees hours.
+                  </TooltipContent>
+                )}
+              </Tooltip>
+            </TooltipProvider>
             <DialogContent className='text-black'>  
               <AlertDialogHeader>
                 <DialogTitle>
