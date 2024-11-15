@@ -8,7 +8,7 @@ import logo from '@/assets/logo.png'
 const SignUpPage = async () => {
   return (
     <>
-      <div className="md:hidden">
+      <div className="">
         <Image
           src="/examples/authentication-light.png"
           width={1280}
