@@ -27,7 +27,7 @@ export async function checkTrialExpiry() {
         to: user?.email,
         subject: 'Your Free Trial Ends Tomorrow!',
         // @ts-ignore
-        body: `
+        html: `
             Hi ${user.name},
         
             We hope you've enjoyed using our services during your free trial. This is a friendly reminder that your trial period will end tomorrow, and your subscription will automatically renew on ${tomorrow.toLocaleDateString()}.
