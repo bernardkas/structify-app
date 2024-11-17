@@ -10,6 +10,8 @@ export const sendReminderEmails = async () => {
   const currentTime = format(now, 'HH:mm'); 
   const dayOfMonth = now.getDate().toString(); 
 
+  const formattedDayOfWeek = `{${dayOfWeek}}`;
+
   const reminders = await prisma.remainder.findMany({
     where: {
       status: 'ACTIVE',
@@ -17,7 +19,7 @@ export const sendReminderEmails = async () => {
         {
           frequency: 'weekly',
           daysOfWeek: {
-            has: dayOfWeek,
+            has: formattedDayOfWeek,
           },
         },
         {
