@@ -19,21 +19,27 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'react-toastify';
 import { BeatLoader } from 'react-spinners';
 import Autocomplete from '@/components/ui-reusable/autocomplete';
-import { EmployeeHoursWithDetails, EmployeeWithDetails } from '@/types/EmployeeType';
-import { createEmployeeHours, updateEmployeeHours } from '@/actions/Model/employee-hours';
+import {
+  EmployeeHoursWithDetails,
+  EmployeeWithDetails,
+} from '@/types/EmployeeType';
+import {
+  createEmployeeHours,
+  updateEmployeeHours,
+} from '@/actions/Model/employee-hours';
 
 interface AddHoursFormProps {
   employeeHours?: EmployeeHoursWithDetails;
-  employee: EmployeeWithDetails[]
+  employee: EmployeeWithDetails[];
   isEditing?: boolean;
-  setOpenDialog: (a: boolean) => void
+  setOpenDialog: (a: boolean) => void;
 }
 
 const AddHoursForm = ({
-    employeeHours,
+  employeeHours,
   isEditing,
   employee,
-  setOpenDialog
+  setOpenDialog,
 }: AddHoursFormProps) => {
   const initialDate = employeeHours?.date
     ? new Date(employeeHours.date)
@@ -48,17 +54,18 @@ const AddHoursForm = ({
   );
 
   const [loading, setLoading] = useState(false);
-  const [isSalaryEmployee, setIsSalaryEmployee] = useState<boolean>(false); 
+  const [isSalaryEmployee, setIsSalaryEmployee] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof CreateAddHoursEmployeeSchema>>({
     resolver: zodResolver(CreateAddHoursEmployeeSchema),
     // @ts-ignore
     defaultValues: employeeHours || {
-        // @ts-ignore
+      // @ts-ignore
       uuid: employeeHours?.employee?.uuid || '',
       employeeId: '',
       hours: 0,
       minutes: 0,
+      overtime: 0,
       description: '',
       date: selectedDate,
     },
@@ -67,17 +74,16 @@ const AddHoursForm = ({
   const create = (values: z.infer<typeof CreateAddHoursEmployeeSchema>) => {
     setLoading(true);
     createEmployeeHours(values).then(data => {
-        if (data?.success) { 
-            toast(data?.success, { type: 'success' });
-            setLoading(false);
-            setOpenDialog(false)
-        }
+      if (data?.success) {
+        toast(data?.success, { type: 'success' });
+        setLoading(false);
+        setOpenDialog(false);
+      }
       if (data?.error) {
         toast(data?.error, { type: 'error' });
         setLoading(false);
-    }
+      }
     });
-  
   };
 
   const update = (values: z.infer<typeof CreateAddHoursEmployeeSchema>) => {
@@ -86,18 +92,18 @@ const AddHoursForm = ({
       if (data?.success) {
         toast(data?.success, { type: 'success' });
         setLoading(false);
-        setOpenDialog(false)
+        setOpenDialog(false);
       }
       if (data.error) {
         toast(data?.error, { type: 'error' });
         setLoading(false);
-        setOpenDialog(false)
+        setOpenDialog(false);
       }
     });
-  
-  }; 
+  };
 
   const onSubmit = async (data: any) => {
+    console.log('data', data);
     const payload = {
       ...data,
     };
@@ -119,14 +125,14 @@ const AddHoursForm = ({
   const handleSelectClient = (employeeId: string) => {
     const client = employee?.find(c => c.uuid === employeeId);
     if (client) {
-        form.setValue('employeeId', employeeId as any);
-        setSelectedEmployee(client.uuid);
-        setIsSalaryEmployee(!!client?.salary
-        );
+      form.setValue('employeeId', employeeId as any);
+      setSelectedEmployee(client.uuid);
+      setIsSalaryEmployee(!!client?.salary);
     }
   };
 
-  
+  console.log("Validation Errors:", form.formState.errors);
+
   return (
     <div>
       <Form {...form}>
@@ -141,13 +147,13 @@ const AddHoursForm = ({
                   <FormItem>
                     <FormLabel>Employee</FormLabel>
                     <FormControl>
-                    <Autocomplete
-                      data={employee}
-                      placeholder='Search employees...'
-                      // @ts-ignore
-                      onSelect={handleSelectClient}
-                      modelValue={selectedEmployee}
-                    />
+                      <Autocomplete
+                        data={employee}
+                        placeholder='Search employees...'
+                        // @ts-ignore
+                        onSelect={handleSelectClient}
+                        modelValue={selectedEmployee}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -175,74 +181,73 @@ const AddHoursForm = ({
             </div>
 
             <div className='flex flex-row gap-2'>
-
-            {isSalaryEmployee ? (
-                            <FormField
-                                control={form.control}
-                                name='overtime'
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>*Overtime Hours</FormLabel>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                type='number'
-                                                placeholder='2'
-                                                className='text-black'
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        ) : (
-                            <div className='flex flex-row gap-2'>
-                                <FormField
-                                    control={form.control}
-                                    name='hours'
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>*Hours</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    {...field}
-                                                    type='number'
-                                                    placeholder='8'
-                                                    className='text-black'
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                                <FormField
-                                    control={form.control}
-                                    name='minutes'
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>Minutes (optional)</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    {...field}
-                                                    type='number'
-                                                    placeholder='30'
-                                                    className='text-black'
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                        )}
-              </div>
+              {isSalaryEmployee ? (
+                <FormField
+                  control={form.control}
+                  name='overtime'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>*Overtime Hours</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type='number'
+                          placeholder='2'
+                          className='text-black'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ) : (
+                <div className='flex flex-row gap-2'>
+                  <FormField
+                    control={form.control}
+                    name='hours'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>*Hours</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type='number'
+                            placeholder='8'
+                            className='text-black'
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name='minutes'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Minutes (optional)</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type='number'
+                            placeholder='30'
+                            className='text-black'
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              )}
+            </div>
 
             <FormField
               control={form.control}
               name='description'
               render={({ field }) => (
                 <FormItem className='flex flex-col'>
-                  <FormLabel>Description</FormLabel>   
+                  <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
@@ -250,12 +255,12 @@ const AddHoursForm = ({
                       className='text-black resize-none'
                       rows={5}
                       maxLength={1000}
-                      />
+                    />
                   </FormControl>
                   <FormMessage />
-                  </FormItem>
-                  )}
-                  />
+                </FormItem>
+              )}
+            />
 
             <div className='flex flex-row gap-2'>
               <Button className='flex items-end justify-end' type='submit'>
