@@ -5,7 +5,6 @@ import prisma from '@/db/db';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendReminderEmails = async () => {
-  console.log('is it working');
   const now = new Date();
   const dayOfWeek = format(now, 'EEEE').toLowerCase();
   const currentTime = format(now, 'HH:mm'); 
@@ -49,6 +48,7 @@ const monthlyReminders = await prisma.remainder.findMany({
 
 // Merge the results
 const reminders = [...weeklyReminders, ...monthlyReminders];
+
 
 
 
