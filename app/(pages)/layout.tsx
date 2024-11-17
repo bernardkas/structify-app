@@ -6,8 +6,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { cn } from '@/lib/utils';
 import { Poppins } from 'next/font/google';
+import { Metadata } from 'next';
 
 const font = Poppins({ subsets: ['latin'], weight: ['400'] });
+
 
 export default async function PagesLayout({
   children,
