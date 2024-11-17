@@ -360,7 +360,7 @@ const RemainderForm = ({
                 ) : isEditing ? (
                   'Update'
                 ) : (
-                  'Create client'
+                  'Create Remainder'
                 )}
               </Button>
             </div>
