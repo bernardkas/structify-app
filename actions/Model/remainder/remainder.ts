@@ -11,7 +11,7 @@ export const getRemainders = async (clientId: string) => {
   const existingClient = await prisma.client.findMany({
     where: {
       uuid: clientId
-    }
+    },
   })
   const remainders = await prisma.remainder.findMany({
     where: {
@@ -20,6 +20,9 @@ export const getRemainders = async (clientId: string) => {
     include: {
       client: true,
     },
+    orderBy: {
+      createdAt: 'desc'
+    }
 
   });
 
