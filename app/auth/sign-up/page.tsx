@@ -1,6 +1,4 @@
 import SignupForm from '@/components/auth/sign-up/signup-form';
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 import logo from '@/assets/logo.png'

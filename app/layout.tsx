@@ -7,8 +7,7 @@ const font = Poppins({ subsets: ['latin'], weight: ['400'] });
 import { SessionProvider } from 'next-auth/react';
 import 'react-toastify/dist/ReactToastify.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { ToastContainer } from 'react-toastify';
-import { cn } from '@/lib/utils';
+
 
 export const metadata: Metadata = {
   title: 'Structify',
