@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const cron = require('node-cron');
 
 
-export async function POST()  {
-    sendReminderEmails();
+export async function GET()  {
+    await sendReminderEmails();
   return NextResponse.json({ message: 'Reminder emails sent successfully' });
 };  
