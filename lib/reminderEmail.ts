@@ -10,8 +10,6 @@ export const sendReminderEmails = async () => {
   const currentTime = format(now, 'HH:mm'); 
   const dayOfMonth = now.getDate().toString(); 
 
-  console.log('RESEND_API_KEY:', process.env.RESEND_API_KEY);
-  console.log('is working');
 
 
 const weeklyReminders = await prisma.remainder.findMany({
