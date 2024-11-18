@@ -1,76 +1,141 @@
-import { Resend } from 'resend'; // Import your email provider
-import { format } from 'date-fns';
+// import { Resend } from 'resend'; // Import your email provider
+// import { format } from 'date-fns';
+// import prisma from '@/db/db';
+
+// const resend = new Resend(process.env.RESEND_API_KEY);
+
+// export const sendReminderEmails = async () => {
+//   const now = new Date();
+//   const dayOfWeek = format(now, 'EEEE').toLowerCase();
+//   const currentTime = format(now, 'HH:mm'); 
+//   const dayOfMonth = now.getDate().toString(); 
+
+
+
+// const weeklyReminders = await prisma.remainder.findMany({
+//   where: {
+//     status: 'ACTIVE',
+//     frequency: 'weekly',
+//     daysOfWeek: {
+//       has: dayOfWeek,
+//     },
+//     reminderTime: currentTime,
+//     startDate: {
+//       lte: now, 
+//     },
+//   },
+//   include: {
+//     client: true,
+//   },
+// });
+
+// // Query monthly reminders
+// const monthlyReminders = await prisma.remainder.findMany({
+//   where: {
+//     status: 'ACTIVE',
+//     frequency: 'monthly',
+//     daysOfMonth: {
+//       has: dayOfMonth, 
+//     },
+//     reminderTime: currentTime,
+//     startDate: {
+//       lte: now, 
+//     },
+//   },
+//   include: {
+//     client: true,
+//   },
+// });
+
+// // Merge the results
+// const reminders = [...weeklyReminders, ...monthlyReminders];
+
+// console.log('remainder', reminders)
+
+
+
+//   for (const reminder of reminders) {
+//     const { emailRecipient, reminderMessage, client } = reminder;
+    
+
+//     try {
+//       const res = await resend.emails.send({
+//         from: 'noreply@app.structifyapp.com',
+//         to: emailRecipient,
+//         subject: `Reminder from ${client.name}`,
+//         // @ts-ignore
+//         html: reminderMessage,
+//       });
+
+//       console.log('email seendd', res)
+
+//     } catch (error) {
+//       console.error(`Failed to send email to ${emailRecipient}: `, error);
+//     }
+//   }
+// };
+
+
+import { Resend } from 'resend';
+import { format, utcToZonedTime, addMinutes, subMinutes } from 'date-fns-tz';
 import prisma from '@/db/db';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendReminderEmails = async () => {
   const now = new Date();
-  const dayOfWeek = format(now, 'EEEE').toLowerCase();
-  const currentTime = format(now, 'HH:mm'); 
-  const dayOfMonth = now.getDate().toString(); 
+  const utcNow = utcToZonedTime(now, 'UTC'); // Ensure UTC for all operations
 
+  // Calculate time window (±1 minute)
+  const startTime = format(subMinutes(utcNow, 1), 'HH:mm'); // 1 minute before
+  const endTime = format(addMinutes(utcNow, 1), 'HH:mm');   // 1 minute after
+  const dayOfWeek = format(utcNow, 'EEEE').toLowerCase();
+  const dayOfMonth = utcNow.getDate().toString();
 
-  
-const weeklyReminders = await prisma.remainder.findMany({
-  where: {
-    status: 'ACTIVE',
-    frequency: 'weekly',
-    daysOfWeek: {
-      has: dayOfWeek,
+  const weeklyReminders = await prisma.remainder.findMany({
+    where: {
+      status: 'ACTIVE',
+      frequency: 'weekly',
+      daysOfWeek: { has: dayOfWeek },
+      reminderTime: {
+        gte: startTime,
+        lte: endTime, // Match within time window
+      },
+      startDate: { lte: utcNow },
     },
-    reminderTime: currentTime,
-    startDate: {
-      lte: now, 
+    include: { client: true },
+  });
+
+  const monthlyReminders = await prisma.remainder.findMany({
+    where: {
+      status: 'ACTIVE',
+      frequency: 'monthly',
+      daysOfMonth: { has: dayOfMonth },
+      reminderTime: {
+        gte: startTime,
+        lte: endTime, // Match within time window
+      },
+      startDate: { lte: utcNow },
     },
-  },
-  include: {
-    client: true,
-  },
-});
+    include: { client: true },
+  });
 
-// Query monthly reminders
-const monthlyReminders = await prisma.remainder.findMany({
-  where: {
-    status: 'ACTIVE',
-    frequency: 'monthly',
-    daysOfMonth: {
-      has: dayOfMonth, 
-    },
-    reminderTime: currentTime,
-    startDate: {
-      lte: now, 
-    },
-  },
-  include: {
-    client: true,
-  },
-});
-
-// Merge the results
-const reminders = [...weeklyReminders, ...monthlyReminders];
-
-console.log('remainder', reminders)
-
-
+  const reminders = [...weeklyReminders, ...monthlyReminders];
+  console.log('Reminders to send:', reminders);
 
   for (const reminder of reminders) {
     const { emailRecipient, reminderMessage, client } = reminder;
-    
 
     try {
-      const res = await resend.emails.send({
+      await resend.emails.send({
         from: 'noreply@app.structifyapp.com',
         to: emailRecipient,
         subject: `Reminder from ${client.name}`,
-        // @ts-ignore
         html: reminderMessage,
       });
-
-      console.log('email seendd', res)
-
+      console.log('Email sent successfully to:', emailRecipient);
     } catch (error) {
-      console.error(`Failed to send email to ${emailRecipient}: `, error);
+      console.error(`Failed to send email to ${emailRecipient}:`, error);
     }
   }
 };
