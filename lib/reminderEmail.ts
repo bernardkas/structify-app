@@ -11,7 +11,7 @@ export const sendReminderEmails = async () => {
   const dayOfMonth = now.getDate().toString(); 
 
 
-
+  
 const weeklyReminders = await prisma.remainder.findMany({
   where: {
     status: 'ACTIVE',
@@ -50,20 +50,24 @@ const monthlyReminders = await prisma.remainder.findMany({
 // Merge the results
 const reminders = [...weeklyReminders, ...monthlyReminders];
 
+console.log('remainder', reminders)
 
 
 
   for (const reminder of reminders) {
     const { emailRecipient, reminderMessage, client } = reminder;
+    
 
     try {
-      await resend.emails.send({
+      const res = await resend.emails.send({
         from: 'noreply@app.structifyapp.com',
         to: emailRecipient,
         subject: `Reminder from ${client.name}`,
         // @ts-ignore
         html: reminderMessage,
       });
+
+      console.log('email seendd', res)
 
     } catch (error) {
       console.error(`Failed to send email to ${emailRecipient}: `, error);
