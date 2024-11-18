@@ -77,20 +77,24 @@
 
 
 import { Resend } from 'resend';
-import { format, utcToZonedTime, addMinutes, subMinutes } from 'date-fns-tz';
+import { toDate, format } from 'date-fns-tz';
+import { addMinutes, subMinutes } from 'date-fns';
 import prisma from '@/db/db';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const timeZone = 'Europe/Berlin';
+
+
 export const sendReminderEmails = async () => {
   const now = new Date();
-  const utcNow = utcToZonedTime(now, 'UTC'); // Ensure UTC for all operations
+  const zonedDate = toDate(now, { timeZone });
 
   // Calculate time window (±1 minute)
-  const startTime = format(subMinutes(utcNow, 1), 'HH:mm'); // 1 minute before
-  const endTime = format(addMinutes(utcNow, 1), 'HH:mm');   // 1 minute after
-  const dayOfWeek = format(utcNow, 'EEEE').toLowerCase();
-  const dayOfMonth = utcNow.getDate().toString();
+  const startTime = format(subMinutes(zonedDate, 1), 'HH:mm'); // 1 minute before
+  const endTime = format(addMinutes(zonedDate, 1), 'HH:mm');   // 1 minute after
+  const dayOfWeek = format(zonedDate, 'EEEE').toLowerCase();
+  const dayOfMonth = zonedDate.getDate().toString();
 
   const weeklyReminders = await prisma.remainder.findMany({
     where: {
@@ -101,7 +105,7 @@ export const sendReminderEmails = async () => {
         gte: startTime,
         lte: endTime, // Match within time window
       },
-      startDate: { lte: utcNow },
+      startDate: { lte: zonedDate },
     },
     include: { client: true },
   });
@@ -115,7 +119,7 @@ export const sendReminderEmails = async () => {
         gte: startTime,
         lte: endTime, // Match within time window
       },
-      startDate: { lte: utcNow },
+      startDate: { lte: zonedDate },
     },
     include: { client: true },
   });
@@ -131,6 +135,7 @@ export const sendReminderEmails = async () => {
         from: 'noreply@app.structifyapp.com',
         to: emailRecipient,
         subject: `Reminder from ${client.name}`,
+        // @ts-ignore
         html: reminderMessage,
       });
       console.log('Email sent successfully to:', emailRecipient);
