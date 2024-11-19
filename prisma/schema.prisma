@@ -345,11 +345,11 @@ model Invoice {
   uuid       String    @unique @default(uuid())
   // Company information
   name String
-  invoiceNumber String
-  companyName String
-  address String
-  city String
-  postCode String
+  invoiceNumber String?
+  companyName String?
+  address String?
+  city String?
+  postCode String?
   companyPhone String
   email String?
   companyLogo String?
@@ -357,7 +357,7 @@ model Invoice {
   // Bill to
   clientName  String
   clientCompanyName String?
-  clientAddress String
+  clientAddress String?
   clientPhone String?
   clientEmail String?
   // Descriptio

@@ -14,6 +14,7 @@ export const createInvocie = async (
   if (!validetedFields.success) {
     return { error: 'Invalid fields' };
   }
+
   const existingUser = await auth()
 
   const user = await prisma.user?.findUnique({
@@ -67,6 +68,7 @@ export const createInvocie = async (
 
   const response = await prisma.invoice.create({
     data: {
+      userId: existingUser?.user?.id,
       name,
       invoiceNumber,
       companyName,

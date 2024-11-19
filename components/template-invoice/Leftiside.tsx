@@ -44,6 +44,14 @@ const Leftiside = ({
   loading,
   isEditing,
 }: LeftSideProps) => {
+  const initialDate = invoice?.date
+    ? new Date(invoice?.date) 
+    : new Date();
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    initialDate
+  );
+
+
   const form = useForm<z.infer<typeof InvoiceTypeSchema>>({
     resolver: zodResolver(InvoiceTypeSchema),
     defaultValues: {
@@ -57,7 +65,7 @@ const Leftiside = ({
       companyPhone: invoice?.companyPhone || '',
       email: invoice?.email || '',
       companyLogo: invoice?.companyLogo || '',
-      date: invoice?.date || '',
+      date: initialDate || '',
       richText: invoice?.richText || '',
 
       // Bill to
@@ -99,9 +107,7 @@ const Leftiside = ({
     name: 'descriptions',
   });
 
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
+
 
   const [logo, setLogo] = useState<File | null>(
     // @ts-ignore
@@ -157,7 +163,7 @@ const Leftiside = ({
     onSubmit({
       ...value,
       companyLogo: photoData?.fileName || value.companyLogo,
-      richText: content || value?.richText,
+      richText: content,
     });
   };
 
@@ -225,7 +231,7 @@ const Leftiside = ({
     setLogo(uploadedFile);
   };
 
- 
+ console.log('content', content);
 
   useEffect(() => {
     if (invoice?.richText) {
@@ -619,7 +625,7 @@ const Leftiside = ({
                 <div className="space-y-2">
                   <p>Write your description here</p>
                  <TipTapEditor
-                 isToolbar={false}
+                 isToolbar={true}
                  content={content}
                  onChange={(newContent: string) => handleContentChange(newContent)}
                  />
