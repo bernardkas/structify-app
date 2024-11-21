@@ -15,6 +15,7 @@ import { Overview } from './ui/overview';
 import { getMonthlyBudgetData } from '@/lib/monthly-budget-data';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import RecentEmployeesHours from './ui/recent-employees-hour';
+import { useTranslations } from 'next-intl';
 
 interface DashboardOverviewProps {
   projects: any;
@@ -36,6 +37,8 @@ const DashboardOverview = ({
   const [filteredClients, setFilteredClients] = useState<any[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true); 
+
+  const t = useTranslations('Dashboard');
 
   useEffect(() => {
     setLoading(true);
@@ -95,13 +98,13 @@ const DashboardOverview = ({
   return (
     <div className='space-y-5 mx-3'>
       <div className='flex flex-row justify-between items-center mt-5'>
-        <Title>Armaturenbrett</Title>
+        <Title>{t('title')}</Title>
         <FilterDashboard onChange={setTimeRange} />
       </div>
       <div className='grid gap-4  md:grid-cols-2 lg:grid-cols-4'>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Total Revenue</CardTitle>
+            <CardTitle className='text-sm font-medium'>{t('totalRevenue')}</CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -126,7 +129,9 @@ const DashboardOverview = ({
         </Card>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Clients</CardTitle>
+            <CardTitle className='text-sm font-medium'>
+              {t('totalClients')}
+            </CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -151,7 +156,9 @@ const DashboardOverview = ({
         </Card>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Projects</CardTitle>
+            <CardTitle className='text-sm font-medium'>
+              {t('totalProjects')}
+            </CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -175,7 +182,7 @@ const DashboardOverview = ({
         </Card>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Employees</CardTitle>
+            <CardTitle className='text-sm font-medium'>{t('totalEmployees')}</CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -200,7 +207,7 @@ const DashboardOverview = ({
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7'>
         <Card className='col-span-4'>
           <CardHeader>
-            <CardTitle>Overview</CardTitle>
+            <CardTitle>{t('overview')}</CardTitle>
             {/* <CardDescription>
             <Select onValueChange={handleYearChange}>
                 <SelectTrigger className='w-[180px] text-black'>
@@ -220,7 +227,7 @@ const DashboardOverview = ({
         </Card>
         <Card className='col-span-3'>
           <CardHeader>
-            <CardTitle>Recent Employees hours</CardTitle>
+            <CardTitle>{t('rectenEmployees')}</CardTitle>
           </CardHeader>
           <CardContent>
             {employeeHours?.length > 0 ? (

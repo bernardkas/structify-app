@@ -28,6 +28,7 @@ import { createRemainder, updateRemainder } from '@/actions/Model/remainder/rema
 import { toast } from 'react-toastify';
 import { BeatLoader } from 'react-spinners';
 import { RemainderWithDetials } from '@/types/RemainderType';
+import { useTranslations } from 'next-intl';
 
 interface RemainderFormProps {
   remainder?: RemainderWithDetials;
@@ -52,6 +53,8 @@ const RemainderForm = ({
   const [selectedFrequency, setSelectedFrequency] = useState<string>(remainder?.frequency || '');
   const [selectedDaysOfWeek, setSelectedDaysOfWeek] = useState<string[]>(remainder?.daysOfWeek || []);
   const [selectedDaysOfMonth, setSelectedDaysOfMonth] = useState<string[]>(remainder?.daysOfMonth || []);
+
+  const t = useTranslations('Remainders.form');
 
   const [loading, setLoading] = useState(false);
 
@@ -152,11 +155,11 @@ const RemainderForm = ({
                 name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Reminder Name</FormLabel>
+                    <FormLabel>{t('name')}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder='Reminder Name'
+                        placeholder='Name'
                         className='text-black'
                       />
                     </FormControl>
@@ -170,7 +173,7 @@ const RemainderForm = ({
                 name='startDate'
                 render={({ field }) => (
                   <FormItem className='flex flex-col'>
-                    <FormLabel>Start Date</FormLabel>
+                    <FormLabel>{t('startDate')}</FormLabel>
                     <FormControl>
                       <DatePicker
                         {...field}
@@ -191,7 +194,7 @@ const RemainderForm = ({
                 name='frequency'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Frequency</FormLabel>
+                    <FormLabel>{t('frequency')}</FormLabel>
                     <FormControl>
                       <Select
                         value={field.value}
@@ -203,8 +206,8 @@ const RemainderForm = ({
                           <SelectValue placeholder='Status..' />
                         </SelectTrigger>
                         <SelectContent side='top'>
-                          <SelectItem value='weekly'>Weekly</SelectItem>
-                          <SelectItem value='monthly'>Monthly</SelectItem>
+                          <SelectItem value='weekly'>{t('weekly')}</SelectItem>
+                          <SelectItem value='monthly'>{t('monthly')}</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -219,18 +222,18 @@ const RemainderForm = ({
                   name='daysOfWeek'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Select Days of the Week</FormLabel>
+                      <FormLabel>{t('daysOfTheWeek.title')}</FormLabel>
                       <FormControl>
                         <MultiSelect
                           placeholder='Select days'
                           options={[
-                            { label: 'Monday', value: 'monday' },
-                            { label: 'Tuesday', value: 'tuesday' },
-                            { label: 'Wednesday', value: 'wednesday' },
-                            { label: 'Thursday', value: 'thursday' },
-                            { label: 'Friday', value: 'friday' },
-                            { label: 'Saturday', value: 'saturday' },
-                            { label: 'Sunday', value: 'sunday' },
+                            { label: t('daysOfTheWeek.monday'), value: 'monday' },
+                            { label: t('daysOfTheWeek.tuesday'), value: 'tuesday' },
+                            { label: t('daysOfTheWeek.wednesday'), value: 'wednesday' },
+                            { label: t('daysOfTheWeek.thursday'), value: 'thursday' },
+                            { label: t('daysOfTheWeek.friday'), value: 'friday' },
+                            { label: t('daysOfTheWeek.saturday'), value: 'saturday' },
+                            { label: t('daysOfTheWeek.sunday'), value: 'sunday' },
                           ]}
                           selectedOptions={selectedDaysOfWeek}
                           // @ts-ignore
@@ -249,7 +252,7 @@ const RemainderForm = ({
                   name='daysOfMonth'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Select Days of the Month</FormLabel>
+                      <FormLabel>{t('daysOfTheMonth')}</FormLabel>
                       <FormControl>
                         <MultiSelect
                           placeholder='Select months date'
@@ -277,12 +280,12 @@ const RemainderForm = ({
               name='reminderTime'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Reminder Time</FormLabel>
+                  <FormLabel>{t('reminderTime')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       type='time'
-                      placeholder='Reminder Time'
+                      placeholder='Time'
                       className='text-black'
                     />
                   </FormControl>
@@ -297,7 +300,7 @@ const RemainderForm = ({
               name='emailRecipient'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Recipient</FormLabel>
+                  <FormLabel>{t('emailRecipient')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -316,7 +319,7 @@ const RemainderForm = ({
               name='reminderMessage'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Reminder Message</FormLabel>
+                  <FormLabel>{t('reminderMessage')}</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
@@ -335,16 +338,16 @@ const RemainderForm = ({
               name='status'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Status</FormLabel>
+                  <FormLabel>{t('status')}</FormLabel>
                   <FormControl>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger className='w-[180px] text-black'>
                         <SelectValue placeholder='Status..' />
                       </SelectTrigger>
                       <SelectContent side='top'>
-                        <SelectItem value='ACTIVE'>Active</SelectItem>
-                        <SelectItem value='INACTIVE'>Inactive</SelectItem>
-                        <SelectItem value='PAUSED'>Paused</SelectItem>
+                        <SelectItem value='ACTIVE'>{t('statusActive')}</SelectItem>
+                        <SelectItem value='INACTIVE'>{t('statuseInactive')}</SelectItem>
+                        <SelectItem value='PAUSED'>{t('statusPaused')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -358,9 +361,9 @@ const RemainderForm = ({
                 {loading ? (
                   <BeatLoader className='text-white' />
                 ) : isEditing ? (
-                  'Update'
+                  t('update')
                 ) : (
-                  'Create Remainder'
+                  t('create')
                 )}
               </Button>
             </div>

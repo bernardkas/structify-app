@@ -29,6 +29,7 @@ import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import { createClient, updateClient } from '@/actions/Model/clients';
 import { toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
 
 interface ClientFormProps {
   client?: any;
@@ -60,6 +61,9 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
       },
     },
   });
+
+  const t = useTranslations('Client.form');
+  const tAddress = useTranslations('Address');
 
   const create = (values: z.infer<typeof CreateClientSchema>) => {
     setLoading(true)
@@ -107,11 +111,11 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
             name='name'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>{t('name')}</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder='Name'
+                    placeholder={t('name')}
                     name='fullname'
                     type='text'
                     className="text-black"
@@ -126,11 +130,11 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
             name='organization'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Organization (optional)</FormLabel>
+                <FormLabel>{t('organization')} (optional)</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder='Organization name...'
+                    placeholder='Waxo...'
                     type='text'
                     className="text-black"
                   />
@@ -146,7 +150,7 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
               name='phone'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone </FormLabel>
+                  <FormLabel>{t('phone')} </FormLabel>
                   <FormControl>
                   <PhoneInput defaultCountry="at" {...field}/>
                   </FormControl>
@@ -159,7 +163,7 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
               name='email'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email (optional)</FormLabel>
+                  <FormLabel>{t('email')} (optional)</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder='Email' type='text' className="text-black" />
                   </FormControl>
@@ -176,15 +180,15 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
               name='status'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Status</FormLabel>
+                  <FormLabel>{t('status')}</FormLabel>
                   <FormControl>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger className='w-[180px] text-black'>
                         <SelectValue placeholder='Status..' />
                       </SelectTrigger>
                       <SelectContent side='top'>
-                        <SelectItem value='ACTIVE'>Active</SelectItem>
-                        <SelectItem value='INACTIVE'>Inactive</SelectItem>
+                        <SelectItem value='ACTIVE'>{t('statusActive')}</SelectItem>
+                        <SelectItem value='INACTIVE'>{t('statuseInactive')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -199,7 +203,7 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
                 name='color'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Color</FormLabel>
+                    <FormLabel>{t('color')}</FormLabel>
                     <FormControl>
                       <ColorInput {...field} modelValue={field.value} defaultColor='#000000' />
                     </FormControl>
@@ -216,7 +220,7 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
               name='address.street'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Street</FormLabel>
+                  <FormLabel>{tAddress('street')}</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder='Street' type='text' className="text-black" />
                   </FormControl>
@@ -229,7 +233,7 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
               name='address.city'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>City (optional)</FormLabel>
+                  <FormLabel>{tAddress('city')} (optional)</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder='City' type='text' className="text-black" />
                   </FormControl>
@@ -245,7 +249,7 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
               name='address.state'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>State (optional)</FormLabel>
+                  <FormLabel>{tAddress('state')} (optional)</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder='State' type='text' className="text-black" />
                   </FormControl>
@@ -258,7 +262,7 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
               name='address.zip'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Zip</FormLabel>
+                  <FormLabel>{tAddress('zip')}</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder='Zip' type='text' className="text-black" />
                   </FormControl>
@@ -271,7 +275,7 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
               name='address.country'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Country (optional)</FormLabel>
+                  <FormLabel>{tAddress('country')} (optional)</FormLabel>
                   <FormControl>
                     <Input {...field} placeholder='Country' type='text' className="text-black" />
                   </FormControl>
@@ -285,7 +289,7 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
             name='date'
             render={({ field }) => (
               <FormItem className='flex flex-col'>
-                <FormLabel>Date (optional)</FormLabel>
+                <FormLabel>{t('date')} (optional)</FormLabel>
                 <FormControl>
                   <div className="text-black">
 
@@ -306,9 +310,9 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
               {loading ? (
                 <BeatLoader className='text-white' />
               ) : isEditing ? (
-                'Update'
+                t('update')
               ) : (
-                'Create client'
+                t('create')
               )}
             </Button>
           </div>

@@ -7,6 +7,8 @@ const font = Poppins({ subsets: ['latin'], weight: ['400'] });
 import { SessionProvider } from 'next-auth/react';
 import 'react-toastify/dist/ReactToastify.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { getLocale, getMessages } from 'next-intl/server';
+import { NextIntlClientProvider } from 'next-intl';
 
 export const metadata: Metadata = {
   title: 'Structify',
@@ -18,12 +20,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+ 
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
+
   const session = await auth();
   return (
     <SessionProvider session={session}>
       <html lang='en'>
+      <NextIntlClientProvider  messages={messages}>
+
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS!} />
         <body>{children}</body>
+      </NextIntlClientProvider>
       </html>
     </SessionProvider>
   );

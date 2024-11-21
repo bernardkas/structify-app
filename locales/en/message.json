@@ -1,0 +1,73 @@
+{
+  "Address": {
+    "street": "Street",
+    "city": "City",
+    "state": "State",
+    "zip": "Zip",
+    "country": "Country"
+  },
+  "Navbar": {},
+  "Dashboard": {
+    "title": "Dashboard",
+    "totalRevenue": "Total Revenue",
+    "totalClients": "Clients",
+    "totalProjects": "Projects",
+    "totalEmployees": "Employees",
+    "overview": "Overview",
+    "rectenEmployees": "Recent Employees hours"
+},
+"Client": {
+  "title": "Clients",
+  "createNewClient": "Create new client",
+  "upgradePlan": "Upgrade your plan to add new clients",
+  "form": {
+    "name": "Name",
+    "organization": "Organization",
+    "phone": "Phone",
+    "email": "Email",
+    "status": "Status",
+    "statusActive": "Active",
+    "statuseInactive": "Inactive",
+    "color": "Color",
+    "date": "Date",
+    "update": "Update",
+    "create": "Create client"
+  },
+  "detail": "Detail"
+},
+"Remainders": {
+  "title": "Remainders",
+  "addRemiander": "Add Remainder",
+  "editRemainder": "Edit Remainder",
+  "form": {
+    "name": "Name",
+    "startDate": "Start date",
+    "frequency": "Frequency",
+    "weekly": "Weekly",
+    "monthly": "Monthly",
+    "daysOfTheWeek": {
+      "title": "Days of the week",
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday",
+      "sunday": "Sunday"
+    },
+    "daysOfTheMonth": "Days of the month",
+    "reminderTime": "Reminder Time",
+    "emailRecipient": "Email Recipient",
+    "reminderMessage": "Reminder Message",
+    "status": "Status",
+    "statusActive": "Active",
+    "statuseInactive": "Inactive",
+    "statusPaused": "Paused",
+    "update": "Update",
+    "create": "Create Remainder"
+  }
+  },
+  "Project": {
+    "title": "Projects"
+  }
+}

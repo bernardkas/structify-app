@@ -1,0 +1,15 @@
+{
+    "Navbar": {},
+    "Dashboard": {
+      "title": "Dashboard",
+      "totalClients": "Total clients",
+      "totalProjects": "Total projects",
+      "newClients": "New clients",
+      "newProjects": "New projects",
+      "activeClients": "Active clients",
+      "activeProjects": "Active projects",
+      "completedProjects": "Completed projects",
+      "completedTasks": "Completed tasks"
+  }
+  
+  }

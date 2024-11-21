@@ -1,33 +1,33 @@
-import { getClients } from '@/actions/Model/clients'
-import { auth } from '@/auth'
-import ClientOverview from '@/components/clients/ClientOverview'
-import CreateClientButton from '@/components/clients/CreateClientButton'
-import { columns } from '@/components/clients/datatable/columns'
-import { DataTable } from '@/components/ui-reusable/datatable/datatable'
-import Title from '@/components/ui-reusable/title'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import React from 'react'
+import { getClients } from '@/actions/Model/clients';
+import { auth } from '@/auth';
+import ClientOverview from '@/components/clients/ClientOverview';
+import CreateClientButton from '@/components/clients/CreateClientButton';
+import Title from '@/components/ui-reusable/title';
+import { useTranslations } from 'next-intl';
+import React from 'react';
 
 const Clients = async () => {
-  const clients = await getClients()
-  const currentUser = await auth()
+  const clients = await getClients();
+  const currentUser = await auth();
 
-  console.log('curremt user', currentUser)
+  const Header = () => {
+    const t = useTranslations('Client');
+    return <Title>{t('title')}</Title>;
+  };
+
+
   return (
-    <div className="mx-5">
+    <div className='mx-5'>
       <div className='flex flex-row justify-between items-center mt-3'>
-        <Title>
-          Clients
-        </Title>
+        <Header />
         <CreateClientButton currentUser={currentUser} />
       </div>
-        <div className="border-[2px] my-5 w-full"></div>
+      <div className='border-[2px] my-5 w-full'></div>
       <div>
-       <ClientOverview clients={clients} />
+        <ClientOverview clients={clients} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Clients
+export default Clients;

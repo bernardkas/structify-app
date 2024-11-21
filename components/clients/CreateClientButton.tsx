@@ -10,6 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useTranslations } from 'next-intl';
 
 interface CreateClientButtonProps {
   currentUser?: any;
@@ -18,6 +19,8 @@ interface CreateClientButtonProps {
 const CreateClientButton = ({ currentUser }: CreateClientButtonProps) => {
   const [open, setOpen] = useState(false);
   const isTrial = currentUser?.user?.subscription === 'TRIAL';
+
+  const t = useTranslations('Client');
   return (
     <div>
       <TooltipProvider>
@@ -27,12 +30,12 @@ const CreateClientButton = ({ currentUser }: CreateClientButtonProps) => {
               disabled={isTrial}
               onClick={() => setOpen(true)}
               variant='default'>
-              Create new clients
+              {t('createNewClient')}
             </Button>
           </TooltipTrigger>
           {isTrial && (
             <TooltipContent>
-              <p>Upgrade your plan to add new clients</p>
+              <p>{t('upgradePlan')}</p>
             </TooltipContent>
           )}
         </Tooltip>
@@ -42,8 +45,8 @@ const CreateClientButton = ({ currentUser }: CreateClientButtonProps) => {
         className='w-[60vh]'
         open={open}
         setOpenSheet={setOpen}
-        title='Create new client'
-        description='Create a new client'>
+        title={t('createNewClient')}
+        description={t('createNewClient')}>
         <ClientForm />
       </SheetWrapper>
     </div>

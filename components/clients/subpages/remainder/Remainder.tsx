@@ -14,6 +14,7 @@ import {
 import { AlertDialogHeader } from '@/components/ui/alert-dialog';
 import RemainderForm from './RemainderForm';
 import { RemainderWithDetials } from '@/types/RemainderType';
+import { useTranslations } from 'next-intl';
 
 interface RemainderProps {
   remainders?: any;
@@ -24,6 +25,8 @@ const Remainder = ({ remainders, clientId }: RemainderProps) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState<RemainderWithDetials | undefined>();
   const [isEditing, setIsEditing] = useState(false)
+
+  const t = useTranslations('Remainders');
 
   const handleOpenCreateDialog = () => {
     setSelectedRow(undefined);
@@ -40,15 +43,15 @@ const Remainder = ({ remainders, clientId }: RemainderProps) => {
   return (
     <div>
       <div className='flex flex-row justify-between items-center'>
-        <Title>Remainders</Title>
+        <Title>{t('title')}</Title>
         <div>
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger onClick={handleOpenCreateDialog} className="bg-blue-500 p-2 rounded-md text-sm">
-              Add Remainder
+            {t('addRemiander')}
             </DialogTrigger>
             <DialogContent className="text-black">
               <AlertDialogHeader>
-                <DialogTitle>{isEditing ? 'Edit Remainder' : 'Add Remainder'}</DialogTitle>
+                <DialogTitle>{isEditing ? t('editRemainder') : t('addRemiander')}</DialogTitle>
                 
                   <div>
                   <RemainderForm setOpenDialog={setOpenDialog} isEditing={isEditing} remainder={selectedRow} clientId={clientId} />

@@ -8,22 +8,27 @@ import { Client, Remainder } from "@prisma/client"
 import { toast } from "react-toastify"
 import { useFormattedDate } from "@/lib/use-formatted-date"
 import { deleteRemainder } from "@/actions/Model/remainder/remainder"
+import {useTranslations} from 'next-intl'
 
 
+const tr = (value: string) => {
+  const t = useTranslations('Remainders.form');
 
+  return t(value)
+}
 
 export const columns: ColumnDef<Remainder>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title={tr('name')} />
     ),
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
     accessorKey: "status",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
+      <DataTableColumnHeader column={column} title={tr('status')} />
     ),
     cell: ({ row }) => <div>{row.getValue("status")}</div>,
   },
@@ -31,7 +36,7 @@ export const columns: ColumnDef<Remainder>[] = [
   {
     accessorKey: "startDate",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Start date" />
+      <DataTableColumnHeader column={column} title={tr('startDate')} />
     ),
     cell: ({ row }) => {
         const date = row.getValue("startDate")
@@ -45,14 +50,14 @@ export const columns: ColumnDef<Remainder>[] = [
   {
     accessorKey: "frequency",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Frequency" />
+      <DataTableColumnHeader column={column} title={tr('frequency')} />
     ),
     cell: ({ row }) => <div>{row.getValue("frequency")}</div>,
   },
   {
     accessorKey: "reminderTime",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Reminder time" />
+      <DataTableColumnHeader column={column} title={tr('reminderTime')} />
     ),
     cell: ({ row }) => <div>{row.getValue("reminderTime")}</div>,
   },  

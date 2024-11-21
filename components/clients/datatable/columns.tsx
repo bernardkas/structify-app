@@ -7,9 +7,15 @@ import { DataTableRowActions } from "@/components/ui-reusable/datatable/datatabl
 import { Client } from "@prisma/client"
 import { archiveClient, deleteClient } from "@/actions/Model/clients"
 import { toast } from "react-toastify"
+import { useTranslations } from 'next-intl';
 
 
 
+const tr = (value: string) => {
+  const t = useTranslations('Client.form');
+
+  return t(value)
+}
 
 export const columns: ColumnDef<Client>[] = [
   {
@@ -48,7 +54,7 @@ export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title={tr("name")} />
     ),
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
@@ -56,7 +62,7 @@ export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "color",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Color" />
+      <DataTableColumnHeader column={column} title={tr("color")} />
     ),
     cell: ({ row }) => {
       const color = row.getValue("color") ;
@@ -69,14 +75,14 @@ export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "phone",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Phone" />
+      <DataTableColumnHeader column={column} title={tr("phone")} />
     ),
     cell: ({ row }) => <div>{row.getValue("phone")}</div>,
   },
   {
     accessorKey: "status",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
+      <DataTableColumnHeader column={column} title={tr("status")} />
     ),
     cell: ({ row }) => <div>{row.getValue("status")}</div>,
   },  
