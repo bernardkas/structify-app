@@ -14,8 +14,8 @@ export const sendReminderEmails = async () => {
   const zonedDate = toZonedTime(now, timeZone);
 
   // Calculate time window (±1 minute)
-  const startTime = format(subMinutes(zonedDate, 1), 'HH:mm'); // 1 minute before
-  const endTime = format(addMinutes(zonedDate, 1), 'HH:mm');   // 1 minute after
+  // const startTime = format(subMinutes(zonedDate, 1), 'HH:mm'); // 1 minute before
+  // const endTime = format(addMinutes(zonedDate, 1), 'HH:mm');   // 1 minute after
   const dayOfWeek = format(zonedDate, 'EEEE').toLowerCase();
   const dayOfMonth = zonedDate.getDate().toString();
 
@@ -24,10 +24,8 @@ export const sendReminderEmails = async () => {
       status: 'ACTIVE',
       frequency: 'weekly',
       daysOfWeek: { has: dayOfWeek },
-      reminderTime: {
-        gte: startTime,
-        lte: endTime, // Match within time window
-      },
+      // @ts-ignore
+      reminderTime: zonedDate,
       startDate: { lte: zonedDate },
     },
     include: { client: true },
@@ -38,10 +36,8 @@ export const sendReminderEmails = async () => {
       status: 'ACTIVE',
       frequency: 'monthly',
       daysOfMonth: { has: dayOfMonth },
-      reminderTime: {
-        gte: startTime,
-        lte: endTime, // Match within time window
-      },
+      // @ts-ignore
+      reminderTime: zonedDate,
       startDate: { lte: zonedDate },
     },
     include: { client: true },
@@ -53,6 +49,7 @@ export const sendReminderEmails = async () => {
 
 
   for (const reminder of uniqueReminders) {
+    // @ts-ignore
     const { emailRecipient, reminderMessage, client } = reminder;
 
     try {
