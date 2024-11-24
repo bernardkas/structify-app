@@ -1,6 +1,5 @@
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
-import { price } from './../../../../components/price/Subscription';
 import prisma from '@/db/db';
 import { SubscriptionType } from '@prisma/client';
 import { NextResponse } from 'next/server';
