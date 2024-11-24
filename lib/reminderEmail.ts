@@ -10,7 +10,10 @@ const timeZone = process.env.CUSTOM_TIMEZONE || 'UTC';
 
 export const sendReminderEmails = async () => {
   const now = new Date();
+  console.log("Current UTC Time:", now.toISOString());
+
   const zonedDate = toDate(now, { timeZone });
+  console.log("Zoned Date:", zonedDate);
 
   // Calculate time window (±1 minute)
   const startTime = format(subMinutes(zonedDate, 1), 'HH:mm'); // 1 minute before
