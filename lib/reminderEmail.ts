@@ -32,8 +32,6 @@ export const sendReminderEmails = async () => {
     include: { client: true },
   });
 
-  
-
   const monthlyReminders = await prisma.remainder.findMany({
     where: {
       status: 'ACTIVE',
@@ -51,9 +49,10 @@ export const sendReminderEmails = async () => {
   const reminders = [...weeklyReminders, ...monthlyReminders];
   const uniqueReminders = Array.from(new Map(reminders.map(r => [r.id, r])).values());
 
-  console.log('Reminders to send:', reminders);
+  console.log('Unique reminders to send:', uniqueReminders);
 
-  for (const reminder of uniqueReminders) {
+
+  for (const reminder of reminders) {
     const { emailRecipient, reminderMessage, client } = reminder;
 
     try {
