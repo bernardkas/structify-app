@@ -1,5 +1,5 @@
 import { Resend } from 'resend';
-import { toDate, format } from 'date-fns-tz';
+import { toDate, format, toZonedTime } from 'date-fns-tz';
 import { addMinutes, subMinutes } from 'date-fns';
 import prisma from '@/db/db';
 
@@ -12,8 +12,9 @@ export const sendReminderEmails = async () => {
   const now = new Date();
   console.log("Current UTC Time:", now.toISOString());
 
-  const zonedDate = toDate(now, { timeZone });
+  const zonedDate = toZonedTime(now, timeZone);
   console.log("Zoned Date:", zonedDate);
+  console.log("Server default timezone:", Intl.DateTimeFormat().resolvedOptions().timeZone);
 
   // Calculate time window (±1 minute)
   const startTime = format(subMinutes(zonedDate, 1), 'HH:mm'); // 1 minute before
