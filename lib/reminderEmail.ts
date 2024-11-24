@@ -1,6 +1,5 @@
 import { Resend } from 'resend';
 import { toDate, format, toZonedTime } from 'date-fns-tz';
-import { addMinutes, subMinutes } from 'date-fns';
 import prisma from '@/db/db';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -18,6 +17,7 @@ export const sendReminderEmails = async () => {
   // const endTime = format(addMinutes(zonedDate, 1), 'HH:mm');   // 1 minute after
   const dayOfWeek = format(zonedDate, 'EEEE').toLowerCase();
   const dayOfMonth = zonedDate.getDate().toString();
+  const currentTime = format(zonedDate, 'HH:mm');
 
   const weeklyReminders = await prisma.remainder.findMany({
     where: {
@@ -25,7 +25,7 @@ export const sendReminderEmails = async () => {
       frequency: 'weekly',
       daysOfWeek: { has: dayOfWeek },
       // @ts-ignore
-      reminderTime: zonedDate,
+      reminderTime: currentTime,
       startDate: { lte: zonedDate },
     },
     include: { client: true },
@@ -37,7 +37,7 @@ export const sendReminderEmails = async () => {
       frequency: 'monthly',
       daysOfMonth: { has: dayOfMonth },
       // @ts-ignore
-      reminderTime: zonedDate,
+      reminderTime: currentTime,
       startDate: { lte: zonedDate },
     },
     include: { client: true },
