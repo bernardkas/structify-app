@@ -10,11 +10,8 @@ const timeZone = process.env.CUSTOM_TIMEZONE || 'UTC';
 
 export const sendReminderEmails = async () => {
   const now = new Date();
-  console.log("Current UTC Time:", now.toISOString());
 
   const zonedDate = toZonedTime(now, timeZone);
-  console.log("Zoned Date:", zonedDate);
-  console.log("Server default timezone:", Intl.DateTimeFormat().resolvedOptions().timeZone);
 
   // Calculate time window (±1 minute)
   const startTime = format(subMinutes(zonedDate, 1), 'HH:mm'); // 1 minute before
@@ -53,10 +50,9 @@ export const sendReminderEmails = async () => {
   const reminders = [...weeklyReminders, ...monthlyReminders];
   const uniqueReminders = Array.from(new Map(reminders.map(r => [r.id, r])).values());
 
-  console.log('Unique reminders to send:', uniqueReminders);
 
 
-  for (const reminder of reminders) {
+  for (const reminder of uniqueReminders) {
     const { emailRecipient, reminderMessage, client } = reminder;
 
     try {
