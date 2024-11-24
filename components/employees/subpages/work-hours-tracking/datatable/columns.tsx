@@ -24,7 +24,7 @@ export const columns: ColumnDef<EmployeeHours>[] = [
   {
     accessorKey: "date",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title={tr(date)} />
+      <DataTableColumnHeader column={column} title={tr('date')} />
     ),
     cell: ({ row }) => {
       const date = row.getValue("date")
