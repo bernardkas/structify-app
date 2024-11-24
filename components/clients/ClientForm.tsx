@@ -53,6 +53,7 @@ const ClientForm = ({ client, isEditing }: ClientFormProps) => {
       phone: client?.phone || '',
       email: client?.email || '',
       address: {
+        id: client?.address?.id,
         street: client?.address?.street || '',
         city: client?.address?.city || '',
         state: client?.address?.state || '',

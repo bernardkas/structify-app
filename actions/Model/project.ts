@@ -170,6 +170,8 @@ export const updateProject = async (
     address: { id, street, city, state, zip, country },
   } = values;
 
+  console.log("values", values)
+
   const client = await prisma.client.findUnique({
     where: { uuid: clientId },
   });
@@ -186,6 +188,9 @@ export const updateProject = async (
     return { error: 'Project not found' };
   }
 
+  try {
+
+  
   await prisma.project.update({
     where: { uuid },
     data: {
@@ -205,7 +210,7 @@ export const updateProject = async (
       address: {
         upsert: {
           where: {
-            id: id || ''
+            id: id
           },
           create: {
             street,
@@ -225,6 +230,11 @@ export const updateProject = async (
       },
     },
   });
+
+} catch (error) {
+  console.log("error", error)
+  return { error: 'Error updating project' };
+}
 
   revalidatePath(`/projects/${uuid}/detail`);
   return { success: 'Projects updated successfully' };

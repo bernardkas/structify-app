@@ -67,6 +67,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
       totalBudget: project?.totalBudget || '',
       startDate: initialDate,
       address: {
+        id: project?.address?.id,
         street: project?.address?.street || '',
         city: project?.address?.city || '',
         state: project?.address?.state || '',
