@@ -12,8 +12,7 @@ import {
 import { filterDataByTimeRange } from '@/lib/filters/project-data-by-time-range';
 import { Skeleton } from '../ui/skeleton';
 import { Overview } from './ui/overview';
-import { getMonthlyBudgetData } from '@/lib/monthly-budget-data';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { getMonthlyBudgetAndHoursData } from '@/lib/monthly-budget-data';
 import RecentEmployeesHours from './ui/recent-employees-hour';
 import { useTranslations } from 'next-intl';
 
@@ -87,11 +86,15 @@ const DashboardOverview = ({
 
   const totalRevenue = totalBudget + totalHours
 
-  const monthlyBudgetData = getMonthlyBudgetData(
+
+  const monthlyBudgetData = getMonthlyBudgetAndHoursData(
     filteredProjects,
-    'createdAt',
-    'totalBudget',
+    'createdAt', 
+    'totalBudget', 
+    'hours', 
+    'minutes' 
   );
+
 
 
 

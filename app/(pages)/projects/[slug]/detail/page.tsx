@@ -12,10 +12,10 @@ const Detail = async ({params}: DetailProps) => {
   const project = await getProjectById(params)
   const clients = await getClients()  
   const Header = () => {
-    const t = useTranslations('Project')
+    const t = useTranslations('Project.SubpageNav')
 
     return   <Title>
-    {t('detailTitle')}
+    {t('detail')}
   </Title>
   }
 

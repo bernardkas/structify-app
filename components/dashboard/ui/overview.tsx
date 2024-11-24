@@ -1,7 +1,7 @@
 "use client"
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts"
-
+  
 interface OverviewProps {
     monthlyBudgetData: any
 }
@@ -24,10 +24,17 @@ export function Overview({monthlyBudgetData}: OverviewProps) {
           tickFormatter={(value) => `€${value}`}
         />
         <Bar
-          dataKey="total"
+          dataKey="totalBudget"
           fill="currentColor"
           radius={[4, 4, 0, 0]}
           className="fill-primary"
+          name="Budget"
+        />
+        <Bar
+          dataKey="totalHours"
+          fill="#82ca9d"
+          radius={[4, 4, 0, 0]}
+          name="Hours"
         />
       </BarChart>
     </ResponsiveContainer>
