@@ -181,7 +181,7 @@ const SettingsForm = ({ currentUser }: SettingsFormProps) => {
             <AlertDialogTrigger asChild>
               <Button variant='destructive'>Delete account</Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
+            <AlertDialogContent className='text-black'>
               <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
