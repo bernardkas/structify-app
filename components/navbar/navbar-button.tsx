@@ -13,44 +13,50 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { useTranslations } from 'next-intl';
 
 interface NaviagtionMenuButtonProps {
     onClose?: () => void
+    className?: string
+    linkClassName?: string
 }
 
-const components: { title: string; href: string}[] = [
-  {
-    title: "Dashboard",
-    href: "/dashboard",
-  },
-  {
-    title: "Clients",
-    href: "/clients",
-  },
-]
 
-export default function NavigationMenuButton({onClose}: NaviagtionMenuButtonProps) {
+export default function NavigationMenuButton({onClose, className, linkClassName}: NaviagtionMenuButtonProps) {
+  
+  const t = useTranslations('Navbar');
+  
+  const components: { title: string; href: string}[] = [
+    {
+      title: t('dashboard'),
+      href: "/dashboard",
+    },
+    {
+      title: t('clients'),
+      href: "/clients",
+    },
+  ]
   return (
     <NavigationMenu>
-      <NavigationMenuList>
+      <NavigationMenuList className={cn(className)}>
       <NavigationMenuItem>
         {components.map(item => (
             <Link key={item.title} onClick={onClose} href={item.href} legacyBehavior passHref>
-            <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-transparent rounded-full`}>
+            <NavigationMenuLink className={`${cn(navigationMenuTriggerStyle(), linkClassName)} bg-transparent rounded-full`}>
               {item.title}
             </NavigationMenuLink>
           </Link>
         ))}
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-transparent">Projects</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="bg-transparent">{t('projects.title')}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] grid-cols-1">
-              <ListItem onClick={onClose} href="/projects" title="Projects"> 
-               Projects
+              <ListItem onClick={onClose} href="/projects" title={t('projects.title')}> 
+               {t('projects.description')}
               </ListItem>
-              <ListItem onClick={onClose} href="/projects/add-hours" title="Add hours">
-              Add project hours
+              <ListItem onClick={onClose} href="/projects/add-hours" title={t('projects.addHours')}>
+              {t('projects.addHoursDescription')}
               </ListItem>
             </ul>
           </NavigationMenuContent>
@@ -58,24 +64,24 @@ export default function NavigationMenuButton({onClose}: NaviagtionMenuButtonProp
 
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger className="bg-transparent">Employee</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="bg-transparent">{t('employees.title')}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] grid-cols-1">
               <ListItem onClick={onClose} href="/employees" title="Employee">
-               Manage employee
+               {t('employees.desc')}
               </ListItem>
-              <ListItem onClick={onClose} href="/employees/add-hours" title="Add hours">
-              Add employee daily hours worked
+              <ListItem onClick={onClose} href="/employees/add-hours" title={t('employees.addHours')}>
+              {t('employees.addHoursDescription')}
               </ListItem>
-              <ListItem onClick={onClose} href="/employees/assign-employee" title="Assign employees">
-              Assign Employees for a project
+              <ListItem onClick={onClose} href="/employees/assign-employee" title={t('employees.assignEmployee')}>
+              {t('employees.assignEmployeeDescription')}
               </ListItem>
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
         <Link onClick={onClose} href='/invoice' legacyBehavior passHref>
             <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-transparent rounded-full`}>
-              Invoice
+              {t('invoice')}
             </NavigationMenuLink>
           </Link>
 

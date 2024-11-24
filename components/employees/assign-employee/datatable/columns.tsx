@@ -6,7 +6,14 @@ import { DataTableRowActions } from "@/components/ui-reusable/datatable/datatabl
 import {  AssignEmployee } from "@prisma/client"
 import { toast } from "react-toastify"
 import { deleteAssignEmployee } from "@/actions/Model/assign-employee"
+import { useTranslations } from "next-intl"
 
+
+const tr = (value: string) => {
+  const t = useTranslations('AssignEmployee.form');
+
+  return t(value)
+}
 
 
 
@@ -14,7 +21,7 @@ export const columns: ColumnDef<AssignEmployee>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Employee Name" />
+      <DataTableColumnHeader column={column} title={tr('employee')} />
     ),
     cell: ({ row }) => {
       // @ts-ignore
@@ -25,7 +32,7 @@ export const columns: ColumnDef<AssignEmployee>[] = [
   {
     accessorKey: "project.name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Project Name" />
+      <DataTableColumnHeader column={column} title={tr('project')} />
     ),
     cell: ({ row }) => {
       // @ts-ignore

@@ -8,6 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useTranslations } from 'next-intl';
 
 interface AddNewTemplateProps {
   currentUser?: any
@@ -19,6 +20,9 @@ const AddNewTemplate = ({currentUser}: AddNewTemplateProps) => {
         router.push('/invoice/new')
     }
     const isTrial = currentUser?.subscription === 'TRIAL';
+
+    const t = useTranslations('Invoice');
+
   return (
     <div >
          <TooltipProvider>
@@ -28,12 +32,12 @@ const AddNewTemplate = ({currentUser}: AddNewTemplateProps) => {
               disabled={isTrial}
               onClick={createNewTemplate}
               variant='default'>
-              Add new template
+            {t('addNewInvoice')}
             </Button>
           </TooltipTrigger>
           {isTrial && (
             <TooltipContent>
-              <p>Upgrade your plan to add new clients</p>
+              <p>{t('upgradePlan')}</p>
             </TooltipContent>
           )}
         </Tooltip>

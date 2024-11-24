@@ -24,6 +24,7 @@ import {
   updateProjectHours,
 } from '@/actions/Model/project-hours';
 import { ProjectHoursWithDetails, ProjectWithDetails } from '@/types/ProjectType';
+import { useTranslations } from 'next-intl';
 
 interface AddProjectHoursFormProps {
   projectHours?: ProjectHoursWithDetails;
@@ -65,6 +66,8 @@ const AddProjectHoursForm = ({
       date: selectedDate,
     },
   });
+
+  const t = useTranslations('ProjectHours.form');
 
   const create = (values: z.infer<typeof CreateAddHoursProjectSchema>) => {
     setLoading(true);
@@ -136,11 +139,11 @@ const AddProjectHoursForm = ({
                 name='projectId'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Project</FormLabel>
+                    <FormLabel>{t('name')}</FormLabel>
                     <FormControl>
                       <Autocomplete
                         data={projects}
-                        placeholder='Search project...'
+                        placeholder={t('name')}
                         // @ts-ignore
                         onSelect={handleSelectProject}
                         modelValue={selectedProject}
@@ -156,13 +159,13 @@ const AddProjectHoursForm = ({
                 name='date'
                 render={({ field }) => (
                   <FormItem className='flex flex-col'>
-                    <FormLabel>Date</FormLabel>
+                    <FormLabel>{t('date')}</FormLabel>
                     <FormControl>
                       <DatePicker
                         {...field}
                         selectedDate={selectedDate}
                         onDateChange={handleDateChange}
-                        buttonText='Select a date'
+                        buttonText={t('date')}
                       />
                     </FormControl>
                     <FormMessage />
@@ -177,7 +180,7 @@ const AddProjectHoursForm = ({
                 name='hours'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>*Hours</FormLabel>
+                    <FormLabel>*{t('hours')}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -195,7 +198,7 @@ const AddProjectHoursForm = ({
                 name='minutes'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Minutes (optional)</FormLabel>
+                    <FormLabel>{t('minutes')} (optional)</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -215,7 +218,7 @@ const AddProjectHoursForm = ({
               name='description'
               render={({ field }) => (
                 <FormItem className='flex flex-col'>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t('description')}</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
@@ -235,9 +238,9 @@ const AddProjectHoursForm = ({
                 {loading ? (
                   <BeatLoader className='text-white' />
                 ) : isEditing ? (
-                  'Update'
+                  t('update')
                 ) : (
-                  'Add employee hours'
+                  t('create')
                 )}
               </Button>
             </div>

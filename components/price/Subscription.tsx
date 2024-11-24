@@ -5,6 +5,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { Star } from 'lucide-react';
 import { UserWithDetials } from '@/types/UserType';
+import { useTranslations } from 'next-intl';
 
 interface SubscriptionProps {
   session: any;
@@ -13,55 +14,58 @@ interface SubscriptionProps {
   loading?: boolean;
 }
 
-export const price = [
+
+
+const Subscription = ({ session, user }: SubscriptionProps) => {
+  const t = useTranslations('Price');
+
+const price = [
   {
     priceId: 'price_1QH7jmGSj97UGaVByVJGDj7F',
     freeTrialPriceId: 'price_1QIxRGGSj97UGaVB70TlD0Os',
-    name: 'Standard',
-    description: 'Most popular',
+    name: t('name1'),
+    description: t('description1'),
     color: '#7872f4',
     features: [
-      '✅ 100 Client',
-      '✅ 500 Projects',
-      '✅ 500 Employees',
-      '✅ Track employees hours',
-      '✅ Track projects hours',
-      '✅ Budget and cost tracking',
-      '✅ Create Invoices',
-      '✅ Remiander',
-    ],
+      t('f1'),
+      t('f2'),
+      t('f3'),
+      t('f4'),
+      t('f5'),
+      t('f6'),
+      t('f7'),
+      t('f8'),
+    ], 
     price: '9.99€',
-    timeFrame: 'per month',
-    btnText: 'Choose plan',
-    free: '7 days free then',
+    timeFrame: t('timeFrame1'),
+    btnText: t('btnText1'),
+    free: t('free1'),
     freeTrialLink: 'https://buy.stripe.com/test_dR67vjh14bYuaC428a',
     href: '',
     link: 'https://buy.stripe.com/test_8wMeXL6mq4w26lO288',
   },
   {
     priceId: 'price_1QH7kpGSj97UGaVBbhsehBCi',
-    name: 'Enterprise',
-    description: 'Used more for large companies',
+    name: t('name2'),
+    description: t('description2'),
     color: '#c66eef',
     features: [
-      '✅ Unlimited Clients',
-      '✅ Unlimited Projects',
-      '✅ Unlimited Employees',
-      '✅ Track employees hours',
-      '✅ Track projects hours',
-      '✅ Budget and cost tracking',
-      '✅ Create Invoices',
-      '✅ Remiander',
+      t('f9'),
+      t('f10'),
+      t('f11'),
+      t('f12'),
+      t('f13'),
+      t('f14'),
+      t('f15'),
+      t('f16'),
     ],
     price: '24.99€',
-    timeFrame: 'per month',
-    btnText: 'Choose plan',
+    timeFrame: t('timeFrame2'),
+    btnText: t('btnText2'),
     href: '',
     link: 'https://buy.stripe.com/test_eVa4j78uy6Ea4dG001',
   },
-];
-
-const Subscription = ({ session, user }: SubscriptionProps) => {
+]; 
   const activeSubscription = user?.subscriptions.find(
     sub => sub?.status === 'active'
   );
@@ -84,7 +88,7 @@ const Subscription = ({ session, user }: SubscriptionProps) => {
               hasUsedTrial &&
               !isEnterprise && (
                 <div className='absolute top-0 right-0 p-2 '>
-                  <p className='text-sm text-slate-300'>Free trial is active</p>
+                  <p className='text-sm text-slate-300'>{t('freeTrialActive')}</p>
                 </div>
               )}
             {activePriceId === item.priceId && (
@@ -126,7 +130,7 @@ const Subscription = ({ session, user }: SubscriptionProps) => {
                     '?prefilled_email=' +
                     session?.user?.email
                   }>
-                  Free trial
+                  {t('freeTrial')}
                 </Link>
               </Button>
             ) : (

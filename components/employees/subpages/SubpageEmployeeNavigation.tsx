@@ -6,6 +6,7 @@ import { Client, Employee, Project } from '@prisma/client';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
+import { useTranslations } from "next-intl"
 
 interface NavigationProps {
   employee: EmployeeWithDetails | any;
@@ -16,16 +17,17 @@ const SubpageEmployeeNavigation = ({ employee }: NavigationProps) => {
   const getButtonVariant = (path: string) =>
     pathname.includes(path) ? 'underline text-white' : 'text-white';
 
+  const t = useTranslations('Employee');
   return (
     <div>
       <Link href={`/employees/${employee.uuid}/detail`}>
         <Button variant='link' className={`${getButtonVariant('detail')}`}>
-          Detail
+          {t('detail')}
         </Button>
       </Link>
       <Link href={`/employees/${employee.uuid}/work-hours-tracking`}>
         <Button variant='link' className={`${getButtonVariant('work-hours-tracking')}`}>
-        Work Hours Tracking
+        {t('workHoursTracking')}
         </Button>
       </Link>
     </div>

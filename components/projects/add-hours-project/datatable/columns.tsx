@@ -9,15 +9,20 @@ import { toast } from "react-toastify"
 import { useFormattedDate } from "@/lib/use-formatted-date"
 import { deleteEmployeeHours } from "@/actions/Model/employee-hours"
 import { deleteProjectHours } from "@/actions/Model/project-hours"
+import { useTranslations } from "next-intl"
 
 
+const tr = (value: string) => {
+  const t = useTranslations('ProjectHours.form');
 
+  return t(value)
+}
 
 export const columns: ColumnDef<ProjectHours>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Project Name" />
+      <DataTableColumnHeader column={column} title={tr('name')} />
     ),
     cell: ({ row }) => {
       // @ts-ignore
@@ -28,21 +33,21 @@ export const columns: ColumnDef<ProjectHours>[] = [
   {
     accessorKey: "hours",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Hours" />
+      <DataTableColumnHeader column={column} title={tr('hours')} />
     ),
     cell: ({ row }) => <div>{row.getValue("hours")}</div>,
   },
   {
     accessorKey: "minutes",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Minutes" />
+      <DataTableColumnHeader column={column} title={tr('minutes')} />
     ),
     cell: ({ row }) => <div>{row.getValue("minutes") || "N/A"}</div>,
   },
   {
     accessorKey: "date",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Date" />
+      <DataTableColumnHeader column={column} title={tr('date')} />
     ),
     cell: ({ row }) => {
         const date = row.getValue("date")

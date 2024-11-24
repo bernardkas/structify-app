@@ -30,6 +30,7 @@ import {
 import TipTapEditor from '../ui-reusable/tip-tap-editor/tip-tap-editor';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
+import { useTranslations } from 'next-intl';
 
 interface LeftSideProps {
   invoice?: any;
@@ -262,6 +263,11 @@ const Leftiside = ({
   const handleContentChange = (reason: any) => {
     setContent(reason)
   }
+
+  const t = useTranslations('Invoice.form');
+  const tAddress = useTranslations('Address');
+
+
   return (
     <div className='mt-10 w-full h-[80vh] overflow-y-auto pr-4 custom-scrollbar'>
       {/* Step Indicators */}
@@ -300,7 +306,7 @@ const Leftiside = ({
           {step === 1 && (
             <div className='mb-4 space-y-3'>
               <h2 className='text-xl font-semibold mb-2'>
-                Company Information
+                {t('companyInformation')}
               </h2>
 
               {/* Company Name */}
@@ -310,11 +316,11 @@ const Leftiside = ({
                   name='name'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>*Name</FormLabel>
+                      <FormLabel>*{t('name')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Name'
+                          placeholder={t('name')}
                           type='text'
                           className='text-black'
                         />
@@ -328,11 +334,11 @@ const Leftiside = ({
                   name='invoiceNumber'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>*Invoice Number</FormLabel>
+                      <FormLabel>*{t('invoiceNumber')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Invoice Number'
+                          placeholder={t('invoiceNumber')}
                           type='text'
                           className='text-black'
                         />
@@ -346,11 +352,11 @@ const Leftiside = ({
                   name='companyName'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>*Company Name</FormLabel>
+                      <FormLabel>*{t('companyName')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Company Name'
+                          placeholder={t('companyName')}
                           type='text'
                           className='text-black'
                         />
@@ -367,11 +373,11 @@ const Leftiside = ({
                   name='address'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>*Address</FormLabel>
+                      <FormLabel>*{t('address')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Address'
+                          placeholder={t('address')}
                           type='text'
                           className='text-black'
                         />
@@ -387,7 +393,7 @@ const Leftiside = ({
                   name='city'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>*City</FormLabel>
+                      <FormLabel>*{tAddress('city')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -407,11 +413,11 @@ const Leftiside = ({
                   name='postCode'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>*Post Code</FormLabel>
+                      <FormLabel>*{tAddress('zip')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Post Code'
+                          placeholder={tAddress('zip')}
                           type='text'
                           className='text-black'
                         />
@@ -428,7 +434,7 @@ const Leftiside = ({
                   name='companyPhone'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>*Company Phone</FormLabel>
+                      <FormLabel>*{t('companyPhone')}</FormLabel>
                       <FormControl>
                       <PhoneInput defaultCountry="at" {...field}/>
                       </FormControl>
@@ -443,11 +449,11 @@ const Leftiside = ({
                   name='email'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>{t('email')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Email'
+                          placeholder={t('email')}
                           type='email'
                           className='text-black'
                         />
@@ -463,11 +469,11 @@ const Leftiside = ({
                   name='date'
                   render={({ field }) => (
                     <FormItem className='flex flex-col mt-2 '>
-                      <FormLabel>Date</FormLabel>
+                      <FormLabel>{t('date')}</FormLabel>
                       <FormControl>
                         <div className='text-black'>
                           <DatePicker
-                            buttonText='Select a date'
+                            buttonText={t('date')}
                             selectedDate={selectedDate}
                             onDateChange={handleDateChange}
                           />
@@ -483,7 +489,7 @@ const Leftiside = ({
                 name='companyLogo'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Logo</FormLabel>
+                    <FormLabel>{t('companyLogo')}</FormLabel>
                     <FormControl>
                       <ImageUploader
                         //  @ts-ignore
@@ -512,7 +518,7 @@ const Leftiside = ({
                   name='clientName'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>*Client Name</FormLabel>
+                      <FormLabel>*{t('clientName')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -532,11 +538,11 @@ const Leftiside = ({
                   name='clientCompanyName'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Client Company Name</FormLabel>
+                      <FormLabel>{t('clientCompnayName')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Client Company Name'
+                          placeholder={t('clientCompnayName')}
                           type='text'
                           className='text-black'
                         />
@@ -552,11 +558,11 @@ const Leftiside = ({
                   name='clientAddress'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>*Client Address</FormLabel>
+                      <FormLabel>*{t('clientAddress')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Client Address'
+                          placeholder={t('clientAddress')}
                           type='text'
                           className='text-black'
                         />
@@ -573,7 +579,7 @@ const Leftiside = ({
                 name='clientPhone'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Client Phone</FormLabel>
+                    <FormLabel>{t('clientPhone')}</FormLabel>
                     <FormControl>
                     <PhoneInput defaultCountry="at" {...field}/>
                     </FormControl>
@@ -588,11 +594,11 @@ const Leftiside = ({
                 name='clientEmail'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Client Email</FormLabel>
+                    <FormLabel>{t('clientEmail')}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder='Client Email'
+                        placeholder={t('clientEmail')}
                         type='email'
                         className='text-black'
                       />
@@ -607,7 +613,7 @@ const Leftiside = ({
           {/* Step 3: Description */}
           {step === 3 && (
             <div className='mb-4 space-y-3'>
-              <h2 className='text-xl font-semibold mb-2'>Description</h2>
+              <h2 className='text-xl font-semibold mb-2'>{t('description')}</h2>
 
             {!isEditing && (
               <Select onValueChange={handleSelectChange}>
@@ -615,15 +621,15 @@ const Leftiside = ({
                   <SelectValue placeholder='Choose..' />
                 </SelectTrigger>
                 <SelectContent side='top'>
-                  <SelectItem value='description'>Only Description</SelectItem>
-                  <SelectItem value='with-price'>With Price</SelectItem>
+                  <SelectItem value='description'>{t('onlyDescription')}</SelectItem>
+                  <SelectItem value='with-price'>{t('withPrice')}</SelectItem>
                 </SelectContent>
               </Select>
               )}
 
               {editorType === 'description' ? (
                 <div className="space-y-2">
-                  <p>Write your description here</p>
+                  <p>{t('writeDesc')}</p>
                  <TipTapEditor
                  isToolbar={true}
                  content={content}
@@ -638,11 +644,11 @@ const Leftiside = ({
                       name={`descriptions.${index}.description`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>*Description</FormLabel>
+                          <FormLabel>*{t('description')}</FormLabel>
                           <FormControl>
                             <Textarea
                               {...field}
-                              placeholder='Description'
+                              placeholder={t('description')}
                               className='text-black resize-none '
                             />
                           </FormControl>
@@ -658,11 +664,11 @@ const Leftiside = ({
                         name={`descriptions.${index}.quantity`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Quantity</FormLabel>
+                            <FormLabel>{t('quantity')}</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
-                                placeholder='Quantity'
+                                placeholder={t('quantity')}
                                 type='number'
                                 className='text-black'
                                 value={field.value || ''}
@@ -686,11 +692,11 @@ const Leftiside = ({
                         name={`descriptions.${index}.unitPrice`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Unit Price</FormLabel>
+                            <FormLabel>{t('unitPrice')}</FormLabel>
                             <FormControl>
                               <Input
                                 {...field}
-                                placeholder='Unit Price'
+                                placeholder={t('unitPrice')}
                                 type='number'
                                 className='text-black'
                                 value={field.value || ''}
@@ -715,12 +721,12 @@ const Leftiside = ({
                       name={`descriptions.${index}.totalPrice`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Total Price</FormLabel>
+                          <FormLabel>{t('totalPrice')}</FormLabel>
                           <FormControl>
                             <Input
                               disabled
                               {...field}
-                              placeholder='Total Price'
+                              placeholder={t('totalPrice')}
                               type='number'
                               className='text-black'
                               onChange={e =>
@@ -737,11 +743,11 @@ const Leftiside = ({
                         type='button'
                         variant='secondary'
                         onClick={appendDescription}>
-                        Add description
+                        {t('addDescription')}
                       </Button>
                       {index > 0 && (
                         <Button type='button' onClick={() => remove(index)}>
-                          DELETE
+                          {t('deleteDescription')}
                         </Button>
                       )}
                     </div>
@@ -753,7 +759,7 @@ const Leftiside = ({
           {/* Step 4: Payment */}
           {step === 4 && (
             <div className='mb-4 space-y-3'>
-              <h2 className='text-xl font-semibold mb-2'>Payment</h2>
+              <h2 className='text-xl font-semibold mb-2'>{t('payment')}</h2>
 
               {/* Subtotal */}
               <div className='flex flex-row flex-wrap gap-3'>
@@ -762,11 +768,11 @@ const Leftiside = ({
                   name='subtotal'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Subtotal</FormLabel>
+                      <FormLabel>{t('subtotal')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Subtotal'
+                          placeholder={t('subtotal')}
                           type='number'
                           className='text-black'
                           onChange={e => {
@@ -786,11 +792,11 @@ const Leftiside = ({
                   name='taxRate'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Tax Rate</FormLabel>
+                      <FormLabel>{t('taxRate')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Tax Rate'
+                          placeholder={t('taxRate')}
                           type='number'
                           className='text-black'
                           onChange={e => {
@@ -811,11 +817,11 @@ const Leftiside = ({
                 name='totalTax'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Total Tax</FormLabel>
+                    <FormLabel>{t('totalTax')}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder='Total Tax'
+                        placeholder={t('totalTax')}
                         type='number'
                         className='text-black'
                         onChange={e => {
@@ -834,11 +840,11 @@ const Leftiside = ({
                 name='fullPrice'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Price</FormLabel>
+                    <FormLabel>{t('fullPrice')}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder='Full Price'
+                        placeholder={t('fullPrice')}
                         type='number'
                         className='text-black'
                         onChange={e => {
@@ -855,7 +861,7 @@ const Leftiside = ({
                 <Button
                   type='submit'
                   className='bg-blue-500 text-white py-2 px-4 rounded'>
-                  {loading ? <BeatLoader /> : isEditing ? 'Update' : 'Create'}
+                  {loading ? <BeatLoader /> : isEditing ? t('update') : t('create')}
                 </Button>
               </div>
             </div>
@@ -872,14 +878,14 @@ const Leftiside = ({
                   : 'bg-gray-500 text-white'
               }`}
               disabled={step === 1}>
-              Back
+              {t('back')}
             </Button>
             {step < 4 ? (
               <Button
                 type='button'
                 onClick={handleNext}
                 className='bg-blue-500 text-white py-2 px-4 rounded'>
-                Next
+                {t('next')}
               </Button>
             ) : // Submit button already rendered on step 4
             null}

@@ -11,6 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useTranslations } from 'next-intl';
 
 interface CreateProjectButtonProps {
   clients?: ClientWithDetails[]
@@ -21,6 +22,9 @@ interface CreateProjectButtonProps {
 const CreateProjectButton = ({ clients, currentUser }: CreateProjectButtonProps) => {
   const [open, setOpen] = useState(false);
   const isTrial = currentUser?.user?.subscription === 'TRIAL';
+
+  const t = useTranslations('Project'); 
+
   return (
     <div>
 
@@ -33,13 +37,13 @@ const CreateProjectButton = ({ clients, currentUser }: CreateProjectButtonProps)
                 onClick={() => setOpen(true)}
                 variant='default'
               >
-                Create new projects
+                {t('createNewProject')}
               </Button>
             </div>
           </TooltipTrigger>
           {isTrial && (
             <TooltipContent>
-              <p>Upgrade your plan to add new projects</p>
+              <p>{t('upgradePlan')}</p>
             </TooltipContent>
           )}
         </Tooltip>

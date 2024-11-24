@@ -23,6 +23,7 @@ import {
 import { CreateAssignEmployeeSchema } from './validation';
 import { ProjectWithDetails } from '@/types/ProjectType';
 import { AssignEmployeeWithDetails } from '@/types/AssignEmployeeType';
+import { useTranslations } from "next-intl"
 
 interface AssignEmployeeFormProps {
   assignEmployee?: AssignEmployeeWithDetails;
@@ -58,6 +59,9 @@ const AssignEmployeeForm = ({
       projectId: '',
     },
   });
+
+  
+  const t = useTranslations('AssignEmployee.form');
 
   const create = (values: z.infer<typeof CreateAssignEmployeeSchema>) => {
     setLoading(true);
@@ -130,11 +134,11 @@ const AssignEmployeeForm = ({
                 name='employeeId'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Employee</FormLabel>
+                    <FormLabel>{t('employee')}</FormLabel>
                     <FormControl>
                       <Autocomplete
                         data={employee}
-                        placeholder='Search employees...'
+                        placeholder={`Search ${t('employee')}...`}
                         // @ts-ignore
                         onSelect={handleSelectClient}
                         modelValue={selectedEmployee}
@@ -150,11 +154,11 @@ const AssignEmployeeForm = ({
                   name='projectId'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Projects</FormLabel>
+                      <FormLabel>{t('project')}</FormLabel>
                       <FormControl>
                         <Autocomplete
                           data={projects}
-                          placeholder='Search projects...'
+                          placeholder={`Search ${t('project')}...`}
                           // @ts-ignore
                           onSelect={handleSelectProject}
                           modelValue={selectedProject}
@@ -171,9 +175,9 @@ const AssignEmployeeForm = ({
                 {loading ? (
                   <BeatLoader className='text-white' />
                 ) : isEditing ? (
-                  'Update'
+                  t('update')
                 ) : (
-                  'Assign employee'
+                  t('create')
                 )}
               </Button>
             </div>

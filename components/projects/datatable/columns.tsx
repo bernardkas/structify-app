@@ -8,9 +8,14 @@ import { Client } from "@prisma/client"
 import { archiveClient, deleteClient } from "@/actions/Model/clients"
 import { toast } from "react-toastify"
 import { deleteProject } from "@/actions/Model/project"
+import { useTranslations } from "next-intl"
 
 
+const tr = (value: string) => {
+  const t = useTranslations('Project.form');
 
+  return t(value)
+}
 
 export const columns: ColumnDef<Client>[] = [
   {
@@ -49,7 +54,7 @@ export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title={tr('name')} />
     ),
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
@@ -57,7 +62,7 @@ export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "color",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Color" />
+      <DataTableColumnHeader column={column} title={tr('color')} />
     ),
     cell: ({ row }) => {
       const color = row.getValue("color") ;
@@ -70,7 +75,7 @@ export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "client.name", 
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Client name" />
+      <DataTableColumnHeader column={column} title={tr('client')} />
     ),
     cell: ({ row }) => {
       // @ts-ignore
@@ -81,14 +86,14 @@ export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: "projectType",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Project type" />
+      <DataTableColumnHeader column={column} title={tr('projectType')} />
     ),
     cell: ({ row }) => <div>{row.getValue("projectType")}</div>,
   },  
   {
     accessorKey: "projectStatus",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Project status" />
+      <DataTableColumnHeader column={column} title={tr('status')} />
     ),
     cell: ({ row }) => <div>{row.getValue("projectStatus")}</div>,
   },  

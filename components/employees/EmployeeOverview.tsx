@@ -13,6 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useTranslations } from "next-intl"
 
 interface EmployeeOverviewProps {
     employees: any;
@@ -34,11 +35,13 @@ const EmployeeOverview = ({ employees, currentUser }: EmployeeOverviewProps) => 
     const handleRowClick = (row: any) => {
       router.push(`/employees/${row.uuid}/detail`)
     }
+
+    const t = useTranslations('Employee');
   
   return (
     <div className='space-y-5 my-5'>
       <div className='flex flex-row justify-between items-center'>
-        <Title>Employees</Title>
+        <Title>{t('title')}</Title>
         <div>
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
           <TooltipProvider>
@@ -53,12 +56,12 @@ const EmployeeOverview = ({ employees, currentUser }: EmployeeOverviewProps) => 
                     }`}
                     disabled={isTrial} 
                   >
-                    Add Employee
+                    {t('addEmployee')}
                   </DialogTrigger>
                 </TooltipTrigger>
                 {isTrial && (
                   <TooltipContent>
-                    Upgrade your plan to add new employees.
+                   {t('upgradePlan')}
                   </TooltipContent>
                 )}
               </Tooltip>
@@ -67,7 +70,7 @@ const EmployeeOverview = ({ employees, currentUser }: EmployeeOverviewProps) => 
             <DialogContent  className='text-black max-h-[650px] overflow-y-auto'>
               <AlertDialogHeader>
                 <DialogTitle>
-                    Add Employee
+                    {t('addEmployee')}
                 </DialogTitle>
 
                 <div>

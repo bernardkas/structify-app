@@ -6,7 +6,27 @@
     "zip": "Zip",
     "country": "Country"
   },
-  "Navbar": {},
+  "Navbar": {
+    "dashboard": "Dashboard",
+    "clients": "Clients",
+    "projects": {
+      "title": "Projects",
+      "description": "Projects",
+      "addHours": "Add hours",
+      "addHoursDescription": "Add hours to projects"
+    },
+    "employees": {
+      "title": "Employees",
+      "desc": "Manage employee",
+      "addHours": "Add hours",
+      "addHoursDescription": "Add hours to employees",
+      "assignEmployee": "Assign employee",
+      "assignEmployeeDescription": "Assign employee to projects"
+    }, 
+    "invoice": "Invoice",
+    "price": "Price",
+    "login": "Login"
+  },
   "Dashboard": {
     "title": "Dashboard",
     "totalRevenue": "Total Revenue",
@@ -68,6 +88,221 @@
   }
   },
   "Project": {
-    "title": "Projects"
+    "title": "Projects",
+    "createNewProject": "Create new project",
+    "upgradePlan": "Upgrade your plan to add new projects",
+    "form": {
+      "name": "Name",
+      "hourlyRate": "Hourly Rate",
+      "totalBudget": "Total Budget",
+      "status": "Status",
+      "statusStarted": "Not Started",
+      "statusInProgress": "In Progress",
+      "statusCompleted": "Completed",
+      "projectType": "Project type",
+      "newConstruction": "New Construction",
+      "renovation": "Renovation",
+      "maintenance": "Maintenance",
+      "client": "Client",
+      "color": "Color",
+      "projectSite": "Project Site",
+      "date": "Start date",
+      "description": "Description",
+      "update": "Update",
+      "create": "Create project"
+    },
+    "SubpageNav": {
+      "detail": "Detial",
+      "employee": "Employees",
+      "budgetAndCost": "Budget & Cost tracking",
+      "materials": "Materials",
+      "projectHours": "Project hours tracking",
+      "plansBlueprints": "Plans & Blueprints"
+    }
+  },
+  "BudgetAndCost": {
+    "title": "Budget & Cost tracking",
+    "addBudgetCost": "Add budget and cost",
+    "editBudgetCost": "Edit budget and cost",
+    "form": {
+      "name": "Name",
+      "totalBudget": "Total Budget",
+      "costIncurred": "Costs Incurred",
+      "costOverruns": "Cost Overruns",
+      "type": "Type",
+      "amount": "Amount",
+      "update": "Update Budget",
+      "create": "Create Budget"
+    }
+  },
+  "Material": {
+    "title": "Materials",
+    "addMaterial": "Add material",
+    "editMaterial": "Edit material",
+    "form": {
+      "name": "Name",
+      "supplier": "Supplier",
+      "status":"Status",
+      "paid": "Paid",
+      "unpaid": "Unpaid",
+      "patially": "Partially",
+      "date": "Date",
+      "description": "Description",
+      "materialName": "Material Name",
+      "price": "Price",
+      "update": "Update Material",
+      "create": "Create Material"
+    }
+  },
+  "ProjectHours": {
+    "projectHours": "Project hours",
+    "addProjectHours": "Add project hours",
+    "editProjectHours": "Edit project hours",
+    "upgradePlan": "Upgrade your plan to add new project hours",
+    "form": {
+      "name": "Project",
+      "date": "Date",
+      "hours": "Hours",
+      "minutes": "Minutes",
+      "description": "Description",
+      "update": "Update Project hours",
+      "create": "Add Project hours"
+    },
+    "totalEarnings": "Total Earnings",
+    "totalHours": "Total Hours"
+  },
+  "PlansAndBlueprint": {
+    "title": "Plans & Blueprint",
+    "addPlansBlueprints": "Add plans & blueprints",
+    "editPlansBlueprints": "Edit plans & blueprints",
+    "form": {
+      "name": "File Name",
+      "files": "Files",
+      "type": "Type",
+      "create": "Add Plans & blueprints"
+    },
+    "uploadFile": "Upload file"
+  },
+  "Employee": {
+    "title": "Employees",
+    "addEmployee": "Add Employee",
+    "upgradePlan": "Upgrade your plan to add new employees.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "color": "Color",
+      "phone": "Phone",
+      "hourlyRate": "Hourly rate",
+      "salary": "Salary",
+      "overtime": "Overtime",
+      "jobTitle": "Job title",
+      "date": "Started month",
+      "employeeAddress": "Employee Address",
+      "update": "Update Employee",
+      "create":"Create Employee"
+    },
+    "detail": "Detail",
+    "workHoursTracking": "Work Hours Tracking",
+    "overtimeHours": "Overtime Hours:",
+    "overtimeTotal": "Overtime Total",
+    "totalHours": "Total Hours:",
+    "totalEarning": "Total Earnings:"
+  },
+  "EmployeeHours": {
+    "title": "Employee hours",
+    "addEmployeeHours": "Add Employee hours",
+    "editEmployeeHours": "Edit Employee hours",
+    "upgradePlan":"Upgrade your plan to add new employees hours.",
+    "form": {
+      "employee": "Employee",
+      "date": "Date",
+      "overtimeHours": "Overtime hours",
+      "hours": "Hours",
+      "minutes":"Minutes",
+      "description": "Description"
+    }
+  },
+  "AssignEmployee": {
+    "title": "Assign Employee to Project",
+    "upgradePlan": "Upgrade your plan to assign employee.",
+    "addEmployee":"Assign employee",
+    "editEmployee": "Edit assign employee",
+    "form": {
+      "employee":"Employee",
+      "project": "Project",
+      "update": "Update",
+      "create": "Assign employee"
+    }
+  },
+  "Invoice": {
+    "title": "Invoice",
+    "addNewInvoice":"Add new invoice",
+    "upgradePlan": "Upgrade your plan to add new invoice",
+    "form": {
+      "companyInformation": "Company Information",
+      "name": "Name",
+      "invoiceNumber": "Invoice Number",
+      "companyName": "Company Name",
+      "address": "Address",
+      "city": "City",
+      "postCode": "Post Code",
+      "companyPhone": "Company Phone",
+      "email": "Email",
+      "date": "Date",
+      "companyLogo": "Company Logo",
+      "clientName": "Client Name",
+      "clientCompnayName": "Client company name",
+      "clientAddress": "Client address",
+      "clientPhone": "Client phone",
+      "clientEmail": "Client email",
+      "description": "Description",
+      "onlyDescription": "Only Description",
+      "withPrice": "With Price",
+      "writeDesc": "Write your description here",
+      "quantity": "Quantity",
+      "unitPrice": "Unit price",
+      "totalPrice": "Total price",
+      "addDescription": "Add description",
+      "deleteDescription": "Delete",
+      "payment":"Payment",
+      "subtotal": "Subtotal",
+      "taxRate": "Tax rate",
+      "totalTax": "Total tax",
+      "fullPrice": "Full price",
+      "update": "Update",
+      "create": "Create",
+      "back": "Back",
+      "next": "Next"
+    }
+  },
+  "Price": {
+    "name1": "Standard",
+    "description1": "Most popular",
+    "f1": "✅ 100 Client",
+    "f2": "✅ 500 Projects",
+    "f3": "✅ 500 Employees",
+    "f4": "✅ Track employees hours",
+    "f5": "✅ Track projects hours",
+    "f6": "✅ Budget and cost tracking",
+    "f7": "✅ Create Invoices",
+    "f8": "✅ Reminder",
+    "timeFrame1": "per month",
+    "btnText1": "Choose plan",
+    "free1": "7 days free then",
+    "name2": "Enterprise",
+    "description2": "Used more for large companies",
+    "f9": "✅ Unlimited Clients",
+    "f10": "✅ Unlimited Projects",
+    "f11": "✅ Unlimited Employees",
+    "f12": "✅ Track employees hours",
+    "f13": "✅ Track projects hours",
+    "f14": "✅ Budget and cost tracking",
+    "f15": "✅ Create Invoices",
+    "f16": "✅ Reminder",
+    "btnText2": "Choose plan",
+    "timeFrame2": "per month",
+    "freeTrialActive": "Free trial is active",
+    "freeTrial": "Free trial"
   }
+  
 }

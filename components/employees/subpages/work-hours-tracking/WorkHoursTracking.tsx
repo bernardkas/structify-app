@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React, { useEffect, useState } from 'react';
 import { columns } from './datatable/columns';
 import { EmployeeHoursWithDetails, EmployeeWithDetails } from '@/types/EmployeeType';
+import { useTranslations } from "next-intl"
 
 interface WorkHoursTrackingProps {
   employee: any;
@@ -69,6 +70,8 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
     setLoading(false);
   }, [hours, employee.hourlyRate, employee.salary]);
 
+  const t = useTranslations('Employee');
+
   return (
     <div>
       <DataTable data={hours} columns={columns} />
@@ -103,11 +106,11 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
                 {employee.salary ? (
                   <>
                     <div className="flex justify-between">
-                      <span className="text-stone-700">Overtime Hours:</span>
+                      <span className="text-stone-700">{t('overtimeHours')}</span>
                       <span className="font-bold">{summary.overtimeHours} h</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-stone-700">Overtime Total:</span>
+                      <span className="text-stone-700">{t('overtimeTotal')}</span>
                       <span className="font-bold">
                         {summary.totalOvertime.toFixed(2)} €
                       </span>
@@ -116,7 +119,7 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
                 ) : (
                   <>
                     <div className="flex justify-between">
-                      <span className="text-stone-700">Total Hours:</span>
+                      <span className="text-stone-700">{t('totalHours')}</span>
                       <span className="font-bold">
                         {summary.totalHours} h
                         {summary.totalMinutes > 0 && ` ${summary.totalMinutes} m`}
@@ -126,7 +129,7 @@ const WorkHoursTracking = ({ employee, hours }: WorkHoursTrackingProps) => {
                 )}
 
                   <div className='flex justify-between'>
-                    <span className='text-stone-700'>Total Earnings:</span>
+                    <span className='text-stone-700'>{t('totalEarning')}</span>
                     <span className='font-bold'>
                       {summary.totalEarnings.toFixed(2)} €
                     </span>

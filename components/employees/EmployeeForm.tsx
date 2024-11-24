@@ -23,6 +23,7 @@ import ColorInput from '../ui-reusable/color-input';
 import 'react-international-phone/style.css';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { EmployeeWithDetails } from '@/types/EmployeeType';
+import { useTranslations } from "next-intl"
 
 
 interface EmployeeFormProps {
@@ -130,6 +131,9 @@ const EmployeeForm = ({
     setEditorType(value);
   }
 
+  const t = useTranslations('Employee.form');
+  const tAddress = useTranslations('Address');
+
   return (
     <div className='max-w-[600px]'>
       <Form {...form}>
@@ -141,7 +145,7 @@ const EmployeeForm = ({
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name*</FormLabel>
+                  <FormLabel>{t('name')}*</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -159,7 +163,7 @@ const EmployeeForm = ({
               name='email'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t('email')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -179,7 +183,7 @@ const EmployeeForm = ({
                 name='color'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Color</FormLabel>
+                    <FormLabel>{t('color')}</FormLabel>
                     <FormControl>
                       <ColorInput
                         {...field}
@@ -197,7 +201,7 @@ const EmployeeForm = ({
                 name='phone'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone*</FormLabel>
+                    <FormLabel>{t('phone')}*</FormLabel>
                     <FormControl>
                       <PhoneInput defaultCountry='at' {...field} />
                     </FormControl>
@@ -212,8 +216,8 @@ const EmployeeForm = ({
                 <SelectValue placeholder='Hourly or salary..' />
               </SelectTrigger>
               <SelectContent side='top'>
-                <SelectItem value='hourly'>Hourly rate</SelectItem>
-                <SelectItem value='salary'>Salary</SelectItem>
+                <SelectItem value='hourly'>{t('hourlyRate')}</SelectItem>
+                <SelectItem value='salary'>{t('salary')}</SelectItem>
               </SelectContent>
             </Select>
 
@@ -224,7 +228,7 @@ const EmployeeForm = ({
               name='hourlyRate'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Hourly Rate</FormLabel>
+                  <FormLabel>{t('hourlyRate')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -244,7 +248,7 @@ const EmployeeForm = ({
               name='salary'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Salary</FormLabel>
+                  <FormLabel>{t('salary')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -266,7 +270,7 @@ const EmployeeForm = ({
               name='overtime'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Overtime</FormLabel>
+                  <FormLabel>{t('overtime')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -284,7 +288,7 @@ const EmployeeForm = ({
               name='jobTitle'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Job Title</FormLabel>
+                  <FormLabel>{t('jobTitle')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -302,7 +306,7 @@ const EmployeeForm = ({
               name='startedMonth'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Started Month</FormLabel>
+                  <FormLabel>{t('date')}</FormLabel>
                   <FormControl>
                     <div className='text-black'>
                       <DatePicker
@@ -318,14 +322,14 @@ const EmployeeForm = ({
               )}
             />
 
-            <h1 className='font-bold'>Employee Address</h1>
+            <h1 className='font-bold'>{t('employeeAddress')}</h1>
             <div className='flex flex-row gap-3 items-center'>
               <FormField
                 control={form.control}
                 name='address.street'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Street*</FormLabel>
+                    <FormLabel>{tAddress('street')}*</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -343,7 +347,7 @@ const EmployeeForm = ({
                 name='address.city'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>City (optional)</FormLabel>
+                    <FormLabel>{tAddress('city')}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -364,7 +368,7 @@ const EmployeeForm = ({
                 name='address.state'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>State (optional)</FormLabel>
+                    <FormLabel>{tAddress('state')} </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -382,7 +386,7 @@ const EmployeeForm = ({
                 name='address.zip'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Zip*</FormLabel>
+                    <FormLabel>{tAddress('zip')}*</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -400,7 +404,7 @@ const EmployeeForm = ({
                 name='address.country'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Country (optional)</FormLabel>
+                    <FormLabel>{tAddress('country')} (optional)</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -420,9 +424,9 @@ const EmployeeForm = ({
                 {loading ? (
                   <BeatLoader className='text-white' />
                 ) : isEditing ? (
-                  'Update Employee'
+                  t('update')
                 ) : (
-                  'Create Employee'
+                  t("create")
                 )}
               </Button>
             </div>

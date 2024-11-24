@@ -1,15 +1,305 @@
 {
-    "Navbar": {},
-    "Dashboard": {
-      "title": "Dashboard",
-      "totalClients": "Total clients",
-      "totalProjects": "Total projects",
-      "newClients": "New clients",
-      "newProjects": "New projects",
-      "activeClients": "Active clients",
-      "activeProjects": "Active projects",
-      "completedProjects": "Completed projects",
-      "completedTasks": "Completed tasks"
+  "Address": {
+    "street": "Straße",
+    "city": "Stadt",
+    "state": "Bundesland",
+    "zip": "Postleitzahl",
+    "country": "Land"
+  },
+  "Navbar": {
+    "dashboard": "Dashboard",
+    "clients": "Kunden",
+    "projects": {
+      "title": "Projekte",
+      "description": "Projekte",
+      "addHours": "Stunden hinzufügen",
+      "addHoursDescription": "Stunden zu Projekten hinzufügen"
+    },
+    "employees": {
+      "title": "Mitarbeiter",
+      "desc": "Mitarbeiter verwalten",
+      "addHours": "Stunden hinzufügen",
+      "addHoursDescription": "Stunden zu Mitarbeitern hinzufügen",
+      "assignEmployee": "Mitarbeiter zuweisen",
+      "assignEmployeeDescription": "Mitarbeiter zu Projekten zuweisen"
+    }, 
+    "invoice": "Rechnung",
+    "price": "Preis",
+    "login": "Anmelden"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "totalRevenue": "Gesamteinnahmen",
+    "totalClients": "Kunden",
+    "totalProjects": "Projekte",
+    "totalEmployees": "Mitarbeiter",
+    "overview": "Übersicht",
+    "rectenEmployees": "Kürzlich hinzugefügte Mitarbeiterstunden"
+  },
+  "Client": {
+    "title": "Kunden",
+    "createNewClient": "Neuen Kunden erstellen",
+    "upgradePlan": "Aktualisieren Sie Ihren Plan, um neue Kunden hinzuzufügen",
+    "form": {
+      "name": "Name",
+      "organization": "Organisation",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "status": "Status",
+      "statusActive": "Aktiv",
+      "statuseInactive": "Inaktiv",
+      "color": "Farbe",
+      "date": "Datum",
+      "update": "Aktualisieren",
+      "create": "Kunde erstellen"
+    },
+    "detail": "Details"
+  },
+  "Remainders": {
+    "title": "Erinnerungen",
+    "addRemiander": "Erinnerung hinzufügen",
+    "editRemainder": "Erinnerung bearbeiten",
+    "form": {
+      "name": "Name",
+      "startDate": "Startdatum",
+      "frequency": "Frequenz",
+      "weekly": "Wöchentlich",
+      "monthly": "Monatlich",
+      "daysOfTheWeek": {
+        "title": "Wochentage",
+        "monday": "Montag",
+        "tuesday": "Dienstag",
+        "wednesday": "Mittwoch",
+        "thursday": "Donnerstag",
+        "friday": "Freitag",
+        "saturday": "Samstag",
+        "sunday": "Sonntag"
+      },
+      "daysOfTheMonth": "Tage des Monats",
+      "reminderTime": "Erinnerungszeit",
+      "emailRecipient": "E-Mail-Empfänger",
+      "reminderMessage": "Erinnerungsnachricht",
+      "status": "Status",
+      "statusActive": "Aktiv",
+      "statuseInactive": "Inaktiv",
+      "statusPaused": "Pausiert",
+      "update": "Aktualisieren",
+      "create": "Erinnerung erstellen"
+    }
+  },
+  "Project": {
+    "title": "Projekte",
+    "createNewProject": "Neues Projekt erstellen",
+    "upgradePlan": "Aktualisieren Sie Ihren Plan, um neue Projekte hinzuzufügen",
+    "form": {
+      "name": "Name",
+      "hourlyRate": "Stundensatz",
+      "totalBudget": "Gesamtbudget",
+      "status": "Status",
+      "statusStarted": "Nicht begonnen",
+      "statusInProgress": "In Bearbeitung",
+      "statusCompleted": "Abgeschlossen",
+      "projectType": "Projekttyp",
+      "newConstruction": "Neubau",
+      "renovation": "Renovierung",
+      "maintenance": "Wartung",
+      "client": "Kunde",
+      "color": "Farbe",
+      "projectSite": "Projektstandort",
+      "date": "Startdatum",
+      "description": "Beschreibung",
+      "update": "Aktualisieren",
+      "create": "Projekt erstellen"
+    },
+    "SubpageNav": {
+      "detail": "Details",
+      "employee": "Mitarbeiter",
+      "budgetAndCost": "Budget- & Kostennachverfolgung",
+      "materials": "Materialien",
+      "projectHours": "Projektstunden",
+      "plansBlueprints": "Pläne & Blaupausen"
+    }
+  },
+  "BudgetAndCost": {
+    "title": "Budget- & Kostennachverfolgung",
+    "addBudgetCost": "Budget und Kosten hinzufügen",
+    "editBudgetCost": "Budget und Kosten bearbeiten",
+    "form": {
+      "name": "Name",
+      "totalBudget": "Gesamtbudget",
+      "costIncurred": "Angefallene Kosten",
+      "costOverruns": "Kostenüberschreitungen",
+      "type": "Typ",
+      "amount": "Betrag",
+      "update": "Budget aktualisieren",
+      "create": "Budget erstellen"
+    }
+  },
+  "Material": {
+    "title": "Materialien",
+    "addMaterial": "Material hinzufügen",
+    "editMaterial": "Material bearbeiten",
+    "form": {
+      "name": "Name",
+      "supplier": "Lieferant",
+      "status": "Status",
+      "paid": "Bezahlt",
+      "unpaid": "Unbezahlt",
+      "patially": "Teilweise",
+      "date": "Datum",
+      "description": "Beschreibung",
+      "materialName": "Materialname",
+      "price": "Preis",
+      "update": "Material aktualisieren",
+      "create": "Material erstellen"
+    }
+  },
+  "ProjectHours": {
+    "projectHours": "Projektstunden",
+    "addProjectHours": "Projektstunden hinzufügen",
+    "editProjectHours": "Projektstunden bearbeiten",
+    "upgradePlan": "Aktualisieren Sie Ihren Plan, um neue Projektstunden hinzuzufügen",
+    "form": {
+      "name": "Projekt",
+      "date": "Datum",
+      "hours": "Stunden",
+      "minutes": "Minuten",
+      "description": "Beschreibung",
+      "update": "Projektstunden aktualisieren",
+      "create": "Projektstunden hinzufügen"
+    },
+    "totalEarnings": "Gesamteinnahmen",
+    "totalHours": "Gesamtstunden"
+  },
+  "PlansAndBlueprint": {
+    "title": "Pläne & Blaupausen",
+    "addPlansBlueprints": "Pläne & Blaupausen hinzufügen",
+    "editPlansBlueprints": "Pläne & Blaupausen bearbeiten",
+    "form": {
+      "name": "Dateiname",
+      "files": "Dateien",
+      "type": "Typ",
+      "create": "Pläne & Blaupausen hinzufügen"
+    },
+    "uploadFile": "Datei hochladen"
+  },
+  "Employee": {
+    "title": "Mitarbeiter",
+    "addEmployee": "Mitarbeiter hinzufügen",
+    "upgradePlan": "Aktualisieren Sie Ihren Plan, um neue Mitarbeiter hinzuzufügen.",
+    "form": {
+      "name": "Name",
+      "email": "E-Mail",
+      "color": "Farbe",
+      "phone": "Telefon",
+      "hourlyRate": "Stundensatz",
+      "salary": "Gehalt",
+      "overtime": "Überstunden",
+      "jobTitle": "Berufsbezeichnung",
+      "date": "Beginnmonat",
+      "employeeAddress": "Mitarbeiteradresse",
+      "update": "Mitarbeiter aktualisieren",
+      "create": "Mitarbeiter erstellen"
+    },
+    "detail": "Details",
+    "workHoursTracking": "Arbeitszeiterfassung",
+    "overtimeHours": "Überstunden:",
+    "overtimeTotal": "Überstunden Gesamt",
+    "totalHours": "Gesamtstunden:",
+    "totalEarning": "Gesamteinnahmen:"
+  },
+  "EmployeeHours": {
+    "title": "Mitarbeiterstunden",
+    "addEmployeeHours": "Mitarbeiterstunden hinzufügen",
+    "editEmployeeHours": "Mitarbeiterstunden bearbeiten",
+    "upgradePlan": "Aktualisieren Sie Ihren Plan, um neue Mitarbeiterstunden hinzuzufügen.",
+    "form": {
+      "employee": "Mitarbeiter",
+      "date": "Datum",
+      "overtimeHours": "Überstunden",
+      "hours": "Stunden",
+      "minutes": "Minuten",
+      "description": "Beschreibung"
+    }
+  },
+  "AssignEmployee": {
+    "title": "Mitarbeiter einem Projekt zuweisen",
+    "upgradePlan": "Aktualisieren Sie Ihren Plan, um Mitarbeiter zuzuweisen.",
+    "addEmployee": "Mitarbeiter zuweisen",
+    "editEmployee": "Zugewiesenen Mitarbeiter bearbeiten",
+    "form": {
+      "employee": "Mitarbeiter",
+      "project": "Projekt",
+      "update": "Aktualisieren",
+      "create": "Mitarbeiter zuweisen"
+    }
+  },
+  "Invoice": {
+    "title": "Rechnung",
+    "addNewInvoice": "Neue Rechnung hinzufügen",
+    "upgradePlan": "Aktualisieren Sie Ihren Plan, um neue Rechnungen hinzuzufügen",
+    "form": {
+      "companyInformation": "Firmeninformationen",
+      "name": "Name",
+      "invoiceNumber": "Rechnungsnummer",
+      "companyName": "Firmenname",
+      "address": "Adresse",
+      "city": "Stadt",
+      "postCode": "Postleitzahl",
+      "companyPhone": "Firmentelefon",
+      "email": "E-Mail",
+      "date": "Datum",
+      "companyLogo": "Firmenlogo",
+      "clientName": "Kundenname",
+      "clientCompnayName": "Kundenfirma",
+      "clientAddress": "Kundenadresse",
+      "clientPhone": "Kundentelefon",
+      "clientEmail": "Kunden-E-Mail",
+      "description": "Beschreibung",
+      "onlyDescription": "Nur Beschreibung",
+      "withPrice": "Mit Preis",
+      "writeDesc": "Schreiben Sie Ihre Beschreibung hier",
+      "quantity": "Menge",
+      "unitPrice": "Einzelpreis",
+      "totalPrice": "Gesamtpreis",
+      "addDescription": "Beschreibung hinzufügen",
+      "deleteDescription": "Löschen",
+      "payment": "Zahlung",
+      "subtotal": "Zwischensumme",
+      "taxRate": "Steuersatz",
+      "totalTax": "Gesamtsteuer",
+      "fullPrice": "Gesamtpreis",
+      "update": "Aktualisieren",
+      "create": "Erstellen",
+      "back": "Zurück",
+      "next": "Weiter"
+    }
+  },
+  "Price": {
+    "name1": "Standard",
+    "description1": "Am beliebtesten",
+    "f1": "✅ 100 Kunden",
+    "f2": "✅ 500 Projekte",
+    "f3": "✅ 500 Mitarbeiter",
+    "f4": "✅ Mitarbeiterstunden verfolgen",
+    "f5": "✅ Projektstunden verfolgen",
+    "f6": "✅ Budget- und Kostenverfolgung",
+    "f7": "✅ Rechnungen erstellen",
+    "f8": "✅ Erinnerung",
+    "timeFrame1": "pro Monat",
+    "btnText1": "Plan wählen",
+    "free1": "7 Tage kostenlos, dann",
+    "name2": "Enterprise",
+    "description2": "Eher für große Unternehmen",
+    "f9": "✅ Unbegrenzte Kunden",
+    "f10": "✅ Unbegrenzte Projekte",
+    "f11": "✅ Unbegrenzte Mitarbeiter",
+    "f12": "✅ Mitarbeiterstunden verfolgen",
+    "f13": "✅ Projektstunden verfolgen",
+    "f14": "✅ Budget- und Kostenverfolgung",
+    "f15": "✅ Rechnungen erstellen",
+    "f16": "✅ Erinnerung",
+    "btnText2": "Plan wählen",
+    "timeFrame2": "pro Monat"
   }
-  
-  }
+}

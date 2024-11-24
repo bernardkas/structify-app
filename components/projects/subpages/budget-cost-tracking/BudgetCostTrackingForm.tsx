@@ -20,6 +20,7 @@ import {
 } from '@/actions/Model/budget-cost-tracking';
 import { toast } from 'react-toastify';
 import { PlusCircleIcon, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface BudgetCostTrackingFormProps {
   budgetCostData?: any;
@@ -46,6 +47,8 @@ const BudgetCostTrackingForm = ({
       estimatedCosts: [{ type: '', amount: 0 }],
     },
   });
+
+  const t = useTranslations('BudgetAndCost.form')
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -105,11 +108,11 @@ const BudgetCostTrackingForm = ({
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Budget Name</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder='Enter budget name'
+                      placeholder={t('name')}
                       className='text-black'
                     />
                   </FormControl>
@@ -124,12 +127,12 @@ const BudgetCostTrackingForm = ({
               name='totalBudget'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Total Budget</FormLabel>
+                  <FormLabel>{t('totalBudget')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       type='number'
-                      placeholder='Enter total budget'
+                      placeholder={t('totalBudget')}
                       className='text-black'
                     />
                   </FormControl>
@@ -144,12 +147,12 @@ const BudgetCostTrackingForm = ({
               name='costsIncurred'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Costs Incurred</FormLabel>
+                  <FormLabel>{t('costIncurred')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       type='number'
-                      placeholder='Enter costs incurred'
+                      placeholder={t('costIncurred')}
                       className='text-black'
                     />
                   </FormControl>
@@ -164,12 +167,12 @@ const BudgetCostTrackingForm = ({
               name='costOverruns'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Cost Overruns</FormLabel>
+                  <FormLabel>{t('costOverruns')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
                       type='number'
-                      placeholder='Enter cost overruns'
+                      placeholder={t('costOverruns')}
                       className='text-black'
                     />
                   </FormControl>
@@ -186,11 +189,11 @@ const BudgetCostTrackingForm = ({
                     name={`estimatedCosts.${index}.type`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Type</FormLabel>
+                        <FormLabel>{t('type')}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
-                            placeholder="Cost type (e.g., Materials, Labor)"
+                            placeholder={`${t('type')} (e.g., Materials, Labor)`}
                             className="text-black"
                           />
                         </FormControl>
@@ -205,7 +208,7 @@ const BudgetCostTrackingForm = ({
                     name={`estimatedCosts.${index}.amount`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Amount</FormLabel>
+                        <FormLabel>{t('amount')}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -241,9 +244,9 @@ const BudgetCostTrackingForm = ({
                 {loading ? (
                   <BeatLoader className='text-white' />
                 ) : isEditing ? (
-                  'Update Budget'
+                  t('update')
                 ) : (
-                  'Create Budget'
+                  t('create')
                 )}
               </Button>
             </div>

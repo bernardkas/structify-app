@@ -11,29 +11,34 @@ import { deleteProject } from "@/actions/Model/project"
 import { BudgetWithDetials } from "@/types/BudgetCostTracking"
 import { deleteBudgetAndCost } from "@/actions/Model/budget-cost-tracking"
 import { deleteMaterial } from "@/actions/Model/material"
+import { useTranslations } from "next-intl"
 
 
+const tr = (value: string) => {
+  const t = useTranslations('Material.form');
 
+  return t(value)
+}
 
 export const columns: ColumnDef<Material>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title={tr('name')} />
     ),
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
     accessorKey: "status",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Status" />
+      <DataTableColumnHeader column={column} title={tr('status')} />
     ),
     cell: ({ row }) => <div>{row.getValue("status")}</div>,
   },
   {
     accessorKey: "supplier",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Supplier" />
+      <DataTableColumnHeader column={column} title={tr('supplier')} />
     ),
     cell: ({ row }) => <div>{row.getValue("supplier")}</div>,
   },

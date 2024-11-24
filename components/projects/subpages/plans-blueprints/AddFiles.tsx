@@ -23,6 +23,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { s3Upload } from '@/actions/upload-s3';
 import { uploadFileToS3 } from '@/lib/upload-file-s3';
+import { useTranslations } from 'next-intl';
 
 interface AddFilesProps {
   file?: any;
@@ -78,6 +79,8 @@ const AddFiles = ({ file, projectId, handleCloseDialog }: AddFilesProps) => {
   const handleFileUpload = (uploadedFile: File | null) => {
     setUploadFile(uploadedFile);
   };
+
+  const t = useTranslations('PlansAndBlueprint.form');
   return (
     <div>
       <Form {...form}>
@@ -89,7 +92,7 @@ const AddFiles = ({ file, projectId, handleCloseDialog }: AddFilesProps) => {
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>File Name</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -107,7 +110,7 @@ const AddFiles = ({ file, projectId, handleCloseDialog }: AddFilesProps) => {
               name='file'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Files</FormLabel>
+                  <FormLabel>{t('files')}</FormLabel>
                   <FormControl>
                     <FileUploader
                       maxFileSize={5}
@@ -121,7 +124,7 @@ const AddFiles = ({ file, projectId, handleCloseDialog }: AddFilesProps) => {
 
             <div className='flex flex-row gap-2'>
               <Button className='flex items-end justify-end' type='submit'>
-                {loading ? <BeatLoader className='text-white' /> : 'Add file'}
+                {loading ? <BeatLoader className='text-white' /> : t('create')}
               </Button>
             </div>
           </div>

@@ -12,6 +12,7 @@ import AddFiles from './AddFiles';
 import { Download } from 'lucide-react';
 import { DataTable } from '@/components/ui-reusable/datatable/datatable';
 import { columns } from './datatable/columns';
+import { useTranslations } from 'next-intl';
 
 interface PlansBlueprintsProps {
   getPlansBlueprints: any;
@@ -42,22 +43,24 @@ const PlansBlueprints = ({
     }
   };
 
+  const t = useTranslations('PlansAndBlueprint');
+
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
   return (
     <div className='space-y-5'>
       <div className='flex flex-row justify-between items-center'>
-        <Title>Plans & Blueprints</Title>
+        <Title>{t('title')}</Title>
         <Dialog open={openDialog} onOpenChange={setOpenDialog}>
           <DialogTrigger
             onClick={handleOpenCreateDialog}
             className='bg-blue-500 p-2 rounded-md text-sm'>
-            Add plans and blueprints
+            {t('addPlansBlueprints')}
           </DialogTrigger>
           <DialogContent className='text-black max-h-[650px] overflow-y-auto'>
             <AlertDialogHeader>
-              <DialogTitle>{'Add plans and blueprints'}</DialogTitle>
+              <DialogTitle>{t('addPlansBlueprints')}</DialogTitle>
 
               <div>
                 <AddFiles projectId={projectId} handleCloseDialog={handleCloseDialog} />

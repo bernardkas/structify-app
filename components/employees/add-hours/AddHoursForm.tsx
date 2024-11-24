@@ -27,6 +27,7 @@ import {
   createEmployeeHours,
   updateEmployeeHours,
 } from '@/actions/Model/employee-hours';
+import { useTranslations } from "next-intl"
 
 interface AddHoursFormProps {
   employeeHours?: EmployeeHoursWithDetails;
@@ -70,6 +71,8 @@ const AddHoursForm = ({
       date: selectedDate,
     },
   });
+
+  const t = useTranslations('EmployeeHours.form');
 
   const create = (values: z.infer<typeof CreateAddHoursEmployeeSchema>) => {
     setLoading(true);
@@ -145,11 +148,11 @@ const AddHoursForm = ({
                 name='employeeId'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Employee</FormLabel>
+                    <FormLabel>{t('employee')}</FormLabel>
                     <FormControl>
                       <Autocomplete
                         data={employee}
-                        placeholder='Search employees...'
+                        placeholder={`Search ${t('employee')}...`}
                         // @ts-ignore
                         onSelect={handleSelectClient}
                         modelValue={selectedEmployee}
@@ -165,13 +168,13 @@ const AddHoursForm = ({
                 name='date'
                 render={({ field }) => (
                   <FormItem className='flex flex-col'>
-                    <FormLabel>Date</FormLabel>
+                    <FormLabel>{t('date')}</FormLabel>
                     <FormControl>
                       <DatePicker
                         {...field}
                         selectedDate={selectedDate}
                         onDateChange={handleDateChange}
-                        buttonText='Select a date'
+                        buttonText={t("date")}
                       />
                     </FormControl>
                     <FormMessage />
@@ -187,7 +190,7 @@ const AddHoursForm = ({
                   name='overtime'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>*Overtime Hours</FormLabel>
+                      <FormLabel>{t('overtimeHours')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -207,7 +210,7 @@ const AddHoursForm = ({
                     name='hours'
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>*Hours</FormLabel>
+                        <FormLabel>*{t('hours')}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -225,7 +228,7 @@ const AddHoursForm = ({
                     name='minutes'
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Minutes (optional)</FormLabel>
+                        <FormLabel>{t('minutes')}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -247,11 +250,11 @@ const AddHoursForm = ({
               name='description'
               render={({ field }) => (
                 <FormItem className='flex flex-col'>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t('description')}</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
-                      placeholder='Description'
+                      placeholder={t('description')}
                       className='text-black resize-none'
                       rows={5}
                       maxLength={1000}

@@ -18,6 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useTranslations } from "next-intl"
 
 interface AssignEmployeesOverviewProps {
   employees: any;
@@ -43,10 +44,12 @@ const AssignEmployeesOverview = ({ employees, projects, assignEmployees, current
     setIsEditing(true);
     setOpenDialog(true);
   };
+
+  const t = useTranslations('AssignEmployee');
   return (
     <div className='mx-3 mt-3'>
       <div className='flex flex-row justify-between items-center'>
-        <Title>Assign Employee to Project</Title>
+        <Title>{t('title')}</Title>
         <div>
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
           <TooltipProvider>
@@ -61,12 +64,12 @@ const AssignEmployeesOverview = ({ employees, projects, assignEmployees, current
                     }`}
                     disabled={isTrial} 
                   >
-                    Assign Employee
+                    {t('addEmployee')}
                   </DialogTrigger>
                 </TooltipTrigger>
                 {isTrial && (
                   <TooltipContent>
-                    Upgrade your plan to assign employee.
+                    {t('upgradePlan')}
                   </TooltipContent>
                 )}
               </Tooltip>
@@ -74,7 +77,7 @@ const AssignEmployeesOverview = ({ employees, projects, assignEmployees, current
             <DialogContent className='text-black'>  
               <AlertDialogHeader>
                 <DialogTitle>
-                  {isEditing ? 'Edit assign employee' : 'Assign employee'}
+                  {isEditing ? t('editEmployee') : t('addEmployee')}
                 </DialogTitle>
 
                 <div>

@@ -30,6 +30,7 @@ import { Textarea } from '../ui/textarea';
 import { createProject, updateProject } from '@/actions/Model/project';
 import Autocomplete from '../ui-reusable/autocomplete';
 import { ClientWithDetails } from '@/types/ClientType';
+import { useTranslations } from 'next-intl';
 
 interface ProjectFormProps {
   project?: any;
@@ -40,7 +41,8 @@ interface ProjectFormProps {
 
 const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
   const initialDate = project?.startDate ? new Date(project.startDate) : new Date();
-
+  const t = useTranslations('Project.form'); 
+  const tAddress = useTranslations('Address'); 
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     initialDate
   );
@@ -153,7 +155,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>{t('name')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -175,8 +177,8 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
                 <SelectValue placeholder='Hourly or total..' />
               </SelectTrigger>
               <SelectContent side='top'>
-                <SelectItem value='hourly'>Hourly rate</SelectItem>
-                <SelectItem value='total'>Total budget</SelectItem>
+                <SelectItem value='hourly'>{t('hourlyRate')}</SelectItem>
+                <SelectItem value='total'>{t('totalBudget')}</SelectItem>
               </SelectContent>
             </Select>
 
@@ -188,7 +190,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
                 name='hourlyRate'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Hourly Rate</FormLabel>
+                    <FormLabel>{t('hourlyRate')}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -211,7 +213,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
               name='totalBudget'
               render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Total Budget</FormLabel>
+                    <FormLabel>{t('totalBudget')}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -237,16 +239,16 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
               name='projectStatus'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Status</FormLabel>
+                  <FormLabel>{t('status')}</FormLabel>
                   <FormControl>
                     <Select value={field.value} onValueChange={field.onChange}>
                       <SelectTrigger className='w-[180px] text-black'>
                         <SelectValue placeholder='Status..' />
                       </SelectTrigger>
                       <SelectContent side='top'>
-                        <SelectItem value='not-started'>Not started</SelectItem>
-                        <SelectItem value='in-progress'>In Progress</SelectItem>
-                        <SelectItem value='completed'>Completed</SelectItem>
+                        <SelectItem value='not-started'>{t('statusStarted')}</SelectItem>
+                        <SelectItem value='in-progress'>{t('statusInProgress')}</SelectItem>
+                        <SelectItem value='completed'>{t('statusCompleted')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -291,7 +293,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
                   <FormControl>
                     <Autocomplete
                       data={clients}
-                      placeholder='Search clients...'
+                      placeholder={`Search ${t('client')}...`}
                       // @ts-ignore
                       onSelect={handleSelectClient}
                       modelValue={selectedClient}
@@ -308,7 +310,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
                 name='color'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Color</FormLabel>
+                    <FormLabel>{t('color')}</FormLabel>
                     <FormControl>
                       <ColorInput
                         {...field}
@@ -323,14 +325,14 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
             </div>
           </div>
 
-          <h1 className='font-bold'>Project site</h1>
+          <h1 className='font-bold'>{t('projectSite')}</h1>
           <div className='flex flex-row gap-3 items-center'>
             <FormField
               control={form.control}
               name='address.street'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Street</FormLabel>
+                  <FormLabel>{tAddress('street')}*</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -348,7 +350,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
               name='address.city'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>City (optional)</FormLabel>
+                  <FormLabel>{tAddress('city')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -369,7 +371,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
               name='address.state'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>State (optional)</FormLabel>
+                  <FormLabel> {tAddress("state")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -387,7 +389,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
               name='address.zip'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Zip</FormLabel>
+                  <FormLabel>{tAddress('zip')}*</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -405,7 +407,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
               name='address.country'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Country (optional)</FormLabel>
+                  <FormLabel>{tAddress('country')}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -424,7 +426,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
             name='startDate'
             render={({ field }) => (
               <FormItem className='flex flex-col'>
-                <FormLabel>Start date (optional)</FormLabel>
+                <FormLabel>{t('date')}</FormLabel>
                 <FormControl>
                   <div className='text-black'>
                     <DatePicker
@@ -445,7 +447,7 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
             name='description'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Description (optional)</FormLabel>
+                <FormLabel>{t('description')} </FormLabel>
                 <FormControl>
                   <Textarea
                     {...field}
@@ -462,9 +464,9 @@ const ProjectForm = ({ project, isEditing, clients }: ProjectFormProps) => {
               {loading ? (
                 <BeatLoader className='text-white' />
               ) : isEditing ? (
-                'Update'
+                t('update')
               ) : (
-                'Create project'
+                t('create')
               )}
             </Button>
           </div>

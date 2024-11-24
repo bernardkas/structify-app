@@ -9,22 +9,27 @@ import { archiveClient, deleteClient } from "@/actions/Model/clients"
 import { toast } from "react-toastify"
 import { deleteProject } from "@/actions/Model/project"
 import { deletePlansBlueprint } from "@/actions/Model/plans-blueprints"
+import { useTranslations } from "next-intl"
 
 
+const tr = (value: string) => {
+  const t = useTranslations('BudgetAndCost.form');
 
+  return t(value)
+}
 
 export const columns: ColumnDef<Documents>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title={tr('name')} />
     ),
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
     accessorKey: "type",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Type" />
+      <DataTableColumnHeader column={column} title={tr('type')} />
     ),
     cell: ({ row }) => <div>{row.getValue("type")}</div>,
   },

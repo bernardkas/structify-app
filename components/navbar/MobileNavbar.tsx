@@ -3,6 +3,7 @@ import React from 'react';
 import UserButton from '../auth/user-button';
 import { auth } from '@/auth';
 import NavigationMenuButton from './navbar-button';
+import LanguageSwitcher from '../ui-reusable/dropdown';
 
 interface MobileNavbarProps {
   currentUser: any;
@@ -23,8 +24,9 @@ const MobileNavbar = ({ currentUser, onClose }: MobileNavbarProps) => {
         ) : (
           <>
           <div className='flex flex-col gap-2 text-dark'>
-            <NavigationMenuButton onClose={onClose} />
+            <NavigationMenuButton className="flex flex-col items-start" onClose={onClose} linkClassName="flex flex-col" />
             <UserButton currentUser={currentUser} onClose={onClose} />
+            <LanguageSwitcher />
           </div>
           </>
         )}

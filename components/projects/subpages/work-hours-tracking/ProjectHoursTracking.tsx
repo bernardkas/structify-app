@@ -3,6 +3,7 @@ import { DataTable } from '@/components/ui-reusable/datatable/datatable';
 import { Card, CardContent} from '@/components/ui/card';
 import React, { useEffect, useState } from 'react';
 import { columns } from './datatable/columns';
+import { useTranslations } from 'next-intl';
 
 interface ProjectHoursTrackingProps {
   project: any;
@@ -60,6 +61,8 @@ const ProjectHoursTracking = ({ project, hours }: ProjectHoursTrackingProps) => 
     setLoading(false);
   }, [hours, project.hourlyRate, project.salary]);
 
+  const t = useTranslations('ProjectHours');
+
   return (
     <div>
       <DataTable data={hours} columns={columns} />
@@ -92,7 +95,7 @@ const ProjectHoursTracking = ({ project, hours }: ProjectHoursTrackingProps) => 
                 <h3 className='text-lg font-bold'>{summary.month}</h3>
                 <div className='flex flex-col mt-2'>
                 <div className="flex justify-between">
-                      <span className="text-stone-700">Total Hours:</span>
+                      <span className="text-stone-700">{t('totalHours')}:</span>
                       <span className="font-bold">
                         {summary.totalHours} h
                         {summary.totalMinutes > 0 && ` ${summary.totalMinutes} m`}
@@ -100,7 +103,7 @@ const ProjectHoursTracking = ({ project, hours }: ProjectHoursTrackingProps) => 
                     </div>
 
                   <div className='flex justify-between'>
-                    <span className='text-stone-700'>Total Earnings:</span>
+                    <span className='text-stone-700'>{t('totalEarnings')}:</span>
                     <span className='font-bold'>
                       {summary.totalEarnings.toFixed(2)} €
                     </span>

@@ -7,6 +7,7 @@ import { Material } from '@prisma/client'
 import React, { useState } from 'react'
 import { columns } from './datatable/columns'
 import MaterialForm from './MaterialForm'
+import { useTranslations } from 'next-intl'
 
 interface MaterialsProps {
     materials: Material[]
@@ -29,21 +30,24 @@ const Materials = ({ materials, projectId }: MaterialsProps) => {
       setIsEditing(true);
       setOpenDialog(true);
     }
+
+    const t = useTranslations('Material'); 
+
   return (
     <div className='space-y-5 mb-5'>
       <div className='flex flex-row justify-between items-center'>
-        <Title>Materials</Title>
+        <Title>{t('title')}</Title>
         <div>
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
             <DialogTrigger
               onClick={handleOpenCreateDialog}
               className='bg-blue-500 p-2 rounded-md text-sm'>
-              Add material
+              {t('addMaterial')}
             </DialogTrigger>
             <DialogContent  className='text-black max-h-[650px] overflow-y-auto'>
               <AlertDialogHeader>
                 <DialogTitle>
-                  {isEditing ? 'Edit material' : 'Add material'} 
+                  {isEditing ? t('editMaterial') : t('addMaterial')} 
                 </DialogTitle>
 
                 <div>

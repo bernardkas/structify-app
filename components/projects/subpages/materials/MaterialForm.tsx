@@ -26,6 +26,7 @@ import {
 } from '@/components/ui/select';
 import DatePicker from '@/components/ui/date-picker';
 import { Textarea } from '@/components/ui/textarea';
+import { useTranslations } from 'next-intl';
 
 interface MaterialFormProps {
   material?: any;
@@ -60,6 +61,8 @@ const MaterialForm = ({
       materialInfo: [{ name: '', price: 0 }],
     },
   });
+
+  const t = useTranslations('Material.form'); 
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -125,7 +128,7 @@ const MaterialForm = ({
                 name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>{t('name')}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -142,7 +145,7 @@ const MaterialForm = ({
                 name='supplier'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Supplier</FormLabel>
+                    <FormLabel>{t('supplier')}</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -160,7 +163,7 @@ const MaterialForm = ({
               name='status'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Status</FormLabel>
+                  <FormLabel>{t('status')}</FormLabel>
                   <FormControl>
                     <Select
                       value={field.value}
@@ -168,12 +171,12 @@ const MaterialForm = ({
                         field.onChange(value);
                       }}>
                       <SelectTrigger className='w-[180px] text-black'>
-                        <SelectValue placeholder='Status..' />
+                        <SelectValue placeholder={t('status')} />
                       </SelectTrigger>
                       <SelectContent side='top'>
-                        <SelectItem value='paid'>Paid</SelectItem>
-                        <SelectItem value='unpaid'>Unpaid</SelectItem>
-                        <SelectItem value='partially'>Partially</SelectItem>
+                        <SelectItem value='paid'>{t('paid')}</SelectItem>
+                        <SelectItem value='unpaid'>{t('unpaid')}</SelectItem>
+                        <SelectItem value='partially'>{t('patially')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -187,13 +190,13 @@ const MaterialForm = ({
               name='date'
               render={({ field }) => (
                 <FormItem className='flex flex-col'>
-                  <FormLabel>Date</FormLabel>
+                  <FormLabel>{t('date')}</FormLabel>
                   <FormControl>
                     <DatePicker
                       {...field}
                       selectedDate={selectedDate}
                       onDateChange={handleDateChange}
-                      buttonText='Select a date'
+                      buttonText={t('date')}
                     />
                   </FormControl>
                   <FormMessage />
@@ -206,11 +209,11 @@ const MaterialForm = ({
               name='description'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>{t('description')}</FormLabel>
                   <FormControl>
                     <Textarea
                       {...field}
-                      placeholder='Description..'
+                      placeholder={t('description')}
                       className='text-black resize-none'
                     />
                   </FormControl>
@@ -226,11 +229,11 @@ const MaterialForm = ({
                   name={`materialInfo.${index}.name`}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel>{t('materialName')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
-                          placeholder='Hammer...'
+                          placeholder={t('materialName')}
                           className='text-black'
                         />
                       </FormControl>
@@ -244,12 +247,12 @@ const MaterialForm = ({
                   name={`materialInfo.${index}.price`}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Price</FormLabel>
+                      <FormLabel>{t('price')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           type='number'
-                          placeholder='Price'
+                          placeholder={t('price')}
                           className='text-black'
                         />
                       </FormControl>
@@ -281,9 +284,9 @@ const MaterialForm = ({
                 {loading ? (
                   <BeatLoader className='text-white' />
                 ) : isEditing ? (
-                  'Update Material'
+                  t('update')
                 ) : (
-                  'Create Material'
+                  t('create')
                 )}
               </Button>
             </div>

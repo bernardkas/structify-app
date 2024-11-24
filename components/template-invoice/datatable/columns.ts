@@ -7,6 +7,14 @@ import { Button } from "@/components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { toast } from "react-toastify"
 import { deleteInvocieById } from "@/actions/Model/invoice"
+import { useTranslations } from "next-intl"
+
+
+const tr = (value: string) => {
+  // const t = useTranslations('Invoice.form');
+
+  return value
+}
 
 export type Payment = {
   id: string
@@ -18,23 +26,23 @@ export type Payment = {
 export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: tr('name'),
   },
   {
     accessorKey: "invoiceNumber",
-    header: "Invoide Number",
+    header: tr('invoiceNumber'),
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: tr('email'),
   },
   {
     accessorKey: "companyName",
-    header: "companyName",
+    header: tr("companyName"),
   },
   {
     accessorKey: "city",
-    header: "city",
+    header: tr('city'),
   },
   {
     accessorKey: "actions",

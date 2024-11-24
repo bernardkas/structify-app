@@ -10,36 +10,41 @@ import { toast } from "react-toastify"
 import { deleteProject } from "@/actions/Model/project"
 import { BudgetWithDetials } from "@/types/BudgetCostTracking"
 import { deleteBudgetAndCost } from "@/actions/Model/budget-cost-tracking"
+import { useTranslations } from "next-intl"
 
 
+const tr = (value: string) => {
+  const t = useTranslations('BudgetAndCost.form');
 
+  return t(value)
+}
 
 export const columns: ColumnDef<BudgetWithDetials>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title={tr('name')} />
     ),
     cell: ({ row }) => <div>{row.getValue("name")}</div>,
   },
   {
     accessorKey: "totalBudget",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Total Budget" />
+      <DataTableColumnHeader column={column} title={tr('totalBudget')} />
     ),
     cell: ({ row }) => <div>{row.getValue("totalBudget")}</div>,
   },
   {
     accessorKey: "costsIncurred",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Costs Incurred" />
+      <DataTableColumnHeader column={column} title={tr('costIncurred')} />
     ),
     cell: ({ row }) => <div>{row.getValue("costsIncurred")}</div>,
   },
   {
     accessorKey: "costOverruns",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Cost Overruns" />
+      <DataTableColumnHeader column={column} title={tr('costOverruns')} />
     ),
     cell: ({ row }) => <div>{row.getValue("costOverruns")}</div>,
   },

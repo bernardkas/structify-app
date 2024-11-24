@@ -8,7 +8,14 @@ import {  EmployeeHours } from "@prisma/client"
 import { toast } from "react-toastify"
 import { useFormattedDate } from "@/lib/use-formatted-date"
 import { deleteEmployeeHours } from "@/actions/Model/employee-hours"
+import { useTranslations } from "next-intl"
 
+
+const tr = (value: string) => {
+  const t = useTranslations('EmployeeHours.form');
+
+  return t(value)
+}
 
 
 
@@ -16,7 +23,7 @@ export const columns: ColumnDef<EmployeeHours>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Employee Name" />
+      <DataTableColumnHeader column={column} title={tr('employee')} />
     ),
     cell: ({ row }) => {
       // @ts-ignore
@@ -27,21 +34,21 @@ export const columns: ColumnDef<EmployeeHours>[] = [
   {
     accessorKey: "hours",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Hours" />
+      <DataTableColumnHeader column={column} title={tr('hours')} />
     ),
     cell: ({ row }) => <div>{row.getValue("hours")}</div>,
   },
   {
     accessorKey: "minutes",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Minutes" />
+      <DataTableColumnHeader column={column} title={tr('minutes')} />
     ),
     cell: ({ row }) => <div>{row.getValue("minutes") || "N/A"}</div>,
   },
   {
     accessorKey: "date",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Date" />
+      <DataTableColumnHeader column={column} title={tr('date')} />
     ),
     cell: ({ row }) => {
         const date = row.getValue("date")

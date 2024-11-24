@@ -15,7 +15,8 @@ import {
 } from '@/components/ui/sheet';
 import UserButton from '../auth/user-button';
 import NavigationMenuButton  from './navbar-button';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import LanguageSwitcher from '../ui-reusable/dropdown';
 
 interface NavbarProps {
   currentUser: any;
@@ -27,6 +28,8 @@ const Navbar = ({ currentUser }: NavbarProps) => {
   const handleSheetClose = () => {
     setOpenSheet(false);
   };
+
+  const t = useTranslations('Navbar');
 
 
   return (
@@ -50,12 +53,13 @@ const Navbar = ({ currentUser }: NavbarProps) => {
             <Link
               className='mx-2 font-noto-sans font-[500] text-base text-white bg-orange-500 p-1 rounded-sm w-[100px] text-center'
               href='/auth/sign-in'>
-              Login
+              {t('login')}
             </Link>
           ) : (
             <div className="flex flex-row gap-3 items-center">
-              <Link href='/price'>Price</Link>
+              <Link href='/price'>{t('price')}</Link>
               <UserButton currentUser={currentUser} />
+              <LanguageSwitcher />
             </div>
           )}
         </div>
@@ -65,9 +69,9 @@ const Navbar = ({ currentUser }: NavbarProps) => {
             <SheetTrigger className='text-gray-800 lg:hidden flex flex-row items-center gap-5'>
               <Menu />
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className='text-black'>
               <SheetHeader>
-                <SheetTitle>Foundlostx</SheetTitle>
+                <SheetTitle>Menu</SheetTitle>
                 <SheetDescription>
                   <MobileNavbar
                     currentUser={currentUser}

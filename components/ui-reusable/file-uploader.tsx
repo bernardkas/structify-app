@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { UploadIcon, XCircleIcon } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { Button } from '../ui/button';
+import { useTranslations } from 'next-intl';
 
 interface FileUploaderProps {
   acceptedFileTypes?: string[]; // Array of accepted file types (default: PDF and JPG)
@@ -57,6 +58,8 @@ const FileUploader = ({
     }
   };
 
+  const t = useTranslations('PlansAndBlueprint');
+
   return (
     <div className="flex flex-col items-center gap-4">
       {/* Conditionally show the upload input if no file is uploaded */}
@@ -70,7 +73,7 @@ const FileUploader = ({
           />
           <div className="flex flex-col items-center text-gray-500">
             <UploadIcon className="w-10 h-10 mb-2" />
-            <span className="text-sm">Upload File</span>
+            <span className="text-sm">{t('uploadFile')}</span>
           </div>
         </label>
       ) : (

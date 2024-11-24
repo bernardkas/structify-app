@@ -17,6 +17,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useTranslations } from "next-intl"
 
 interface AddHourProps {
   employeeHours: any;
@@ -41,12 +42,14 @@ const AddHour = ({ employees, employeeHours, currentUser }: AddHourProps) => {
     setOpenDialog(true);
   };
 
+  const t = useTranslations('EmployeeHours');
+
   const isTrial = currentUser?.subscription === 'TRIAL';
 
   return (
     <div className='mx-3 mt-3'>
       <div className='flex flex-row justify-between items-center'>
-        <Title>Employee hours</Title>
+        <Title>{t('title')}</Title>
         <div>
           <Dialog open={openDialog} onOpenChange={setOpenDialog}>
           <TooltipProvider>
@@ -61,12 +64,12 @@ const AddHour = ({ employees, employeeHours, currentUser }: AddHourProps) => {
                     }`}
                     disabled={isTrial} 
                   >
-                    Add Employee hours
+                    {t('addEmployeeHours')}
                   </DialogTrigger>
                 </TooltipTrigger>
                 {isTrial && (
                   <TooltipContent>
-                    Upgrade your plan to add new employees hours.
+                    {t('upgradePlan')}
                   </TooltipContent>
                 )}
               </Tooltip>
@@ -74,7 +77,7 @@ const AddHour = ({ employees, employeeHours, currentUser }: AddHourProps) => {
             <DialogContent className='text-black'>  
               <AlertDialogHeader>
                 <DialogTitle>
-                  {isEditing ? 'Edit Hours' : 'Add Hours'}
+                  {isEditing ? t('editEmployeeHours') : t('addEmployeeHours')}
                 </DialogTitle>
 
                 <div>
