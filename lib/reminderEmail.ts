@@ -11,10 +11,6 @@ export const sendReminderEmails = async () => {
   const now = new Date();
 
   const zonedDate = toZonedTime(now, timeZone);
-
-  // Calculate time window (±1 minute)
-  // const startTime = format(subMinutes(zonedDate, 1), 'HH:mm'); // 1 minute before
-  // const endTime = format(addMinutes(zonedDate, 1), 'HH:mm');   // 1 minute after
   const dayOfWeek = format(zonedDate, 'EEEE').toLowerCase();
   const dayOfMonth = zonedDate.getDate().toString();
   const currentTime = format(zonedDate, 'HH:mm');
@@ -60,7 +56,6 @@ export const sendReminderEmails = async () => {
         // @ts-ignore
         html: reminderMessage,
       });
-      console.log('Email sent successfully to:', emailRecipient);
     } catch (error) {
       console.error(`Failed to send email to ${emailRecipient}:`, error);
     }
