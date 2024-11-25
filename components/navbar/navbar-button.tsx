@@ -67,7 +67,7 @@ export default function NavigationMenuButton({onClose, className, linkClassName}
           <NavigationMenuTrigger className="bg-transparent">{t('employees.title')}</NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] grid-cols-1">
-              <ListItem onClick={onClose} href="/employees" title="Employee">
+              <ListItem onClick={onClose} href="/employees" title={t('employees.title')}>
                {t('employees.desc')}
               </ListItem>
               <ListItem onClick={onClose} href="/employees/add-hours" title={t('employees.addHours')}>

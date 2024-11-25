@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 export default function LanguageSwitcher() {
   const router = useRouter();
-  const [locale, setLocale] = useState('de'); // Default to 'en'
+  const [locale, setLocale] = useState('de'); // Default to 'de'
 
   useEffect(() => {
     // Load saved locale from localStorage on mount
