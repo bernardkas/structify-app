@@ -69,8 +69,6 @@ const Subscription = ({ session, user }: SubscriptionProps) => {
   const isEnterprise = user?.subscriptionType === 'ENTERPRISE';
   const showFreeTrial = user?.subscriptionType === 'TRIAL';
 
-  console.log('price', price)
-
 
   return (
     <div className='flex flex-row gap-5 items-center flex-wrap'>
