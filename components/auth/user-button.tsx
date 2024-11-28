@@ -17,7 +17,7 @@ interface UserButtonProps {
 }
 
 const UserButton = ({ onClose, currentUser }: UserButtonProps) => {
-  const customerPortalLink = 'https://billing.stripe.com/p/login/test_00g6pCdbxb5Gd2g9AA';
+  const customerPortalLink = process.env.BILLING_PORTAL_LINK;
 
   return (
     <div>
