@@ -80,11 +80,10 @@ export async function POST(req: Request) {
 
             let subscriptionType: SubscriptionType;
             if (
-              priceId === 'price_1QH7jmGSj97UGaVByVJGDj7F' ||
-              priceId === 'price_1QIxRGGSj97UGaVB70TlD0Os'
+              priceId === process.env.STANDARD_PRICE_ID
             ) {
               subscriptionType = SubscriptionType.STANDARD;
-            } else if (priceId === 'price_1QH7kpGSj97UGaVBbhsehBCi') {
+            } else if (priceId === process.env.ENTERPRIES_PRICE_ID) {
               subscriptionType = SubscriptionType.ENTERPRISE;
             } else {
               console.log('Unknown price ID, no subscription type matched.');
@@ -155,10 +154,10 @@ export async function POST(req: Request) {
       
         let subscriptionType: SubscriptionType;
         if (
-          priceId === 'price_1QH7jmGSj97UGaVByVJGDj7F'
+          priceId === process.env.STANDARD_PRICE_ID
         ) {
           subscriptionType = SubscriptionType.STANDARD;
-        } else if (priceId === 'price_1QH7kpGSj97UGaVBbhsehBCi') { 
+        } else if (priceId === process.env.ENTERPRIES_PRICE_ID) {
           subscriptionType = SubscriptionType.ENTERPRISE;
         } else {
           console.log('Unknown price ID, no subscription type matched.');
