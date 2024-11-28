@@ -17,7 +17,8 @@ interface UserButtonProps {
 }
 
 const UserButton = ({ onClose, currentUser }: UserButtonProps) => {
-  const customerPortalLink = process.env.BILLING_PORTAL_LINK;
+  const customerPortalLink = process.env.NEXT_PUBLIC_BILLING_PORTAL_LINK || "";
+
 
   return (
     <div>
