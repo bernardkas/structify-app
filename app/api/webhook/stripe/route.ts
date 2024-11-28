@@ -80,10 +80,10 @@ export async function POST(req: Request) {
 
             let subscriptionType: SubscriptionType;
             if (
-              priceId === process.env.STANDARD_PRICE_ID
+              priceId === process.env.NEXT_PUBLIC_STANDARD_PRICE_ID
             ) {
               subscriptionType = SubscriptionType.STANDARD;
-            } else if (priceId === process.env.ENTERPRIES_PRICE_ID) {
+            } else if (priceId === process.env.NEXT_PUBLIC_ENTERPRIES_PRICE_ID) {
               subscriptionType = SubscriptionType.ENTERPRISE;
             } else {
               console.log('Unknown price ID, no subscription type matched.');
@@ -154,10 +154,10 @@ export async function POST(req: Request) {
       
         let subscriptionType: SubscriptionType;
         if (
-          priceId === process.env.STANDARD_PRICE_ID
+          priceId === process.env.NEXT_PUBLIC_STANDARD_PRICE_ID
         ) {
           subscriptionType = SubscriptionType.STANDARD;
-        } else if (priceId === process.env.ENTERPRIES_PRICE_ID) {
+        } else if (priceId === process.env.NEXT_PUBLIC_ENTERPRIES_PRICE_ID) {
           subscriptionType = SubscriptionType.ENTERPRISE;
         } else {
           console.log('Unknown price ID, no subscription type matched.');

@@ -18,7 +18,7 @@ const Subscription = ({ session, user }: SubscriptionProps) => {
 
   const price = [
     {
-      priceId: process.env.STANDARD_PRICE_ID || 'price_1QH7jmGSj97UGaVByVJGDj7F',
+      priceId: process.env.NEXT_PUBLIC_STANDARD_PRICE_ID || 'price_1QH7jmGSj97UGaVByVJGDj7F',
       name: t('name1'),
       description: t('description1'),
       color: '#7872f4',
@@ -37,10 +37,10 @@ const Subscription = ({ session, user }: SubscriptionProps) => {
       btnText: t('btnText1'),
       free: t('free1'),
       href: '',
-      link: process.env.STANDARD_PAYEMNT_LINK || 'https://buy.stripe.com/test_8wMeXL6mq4w26lO288',
+      link: process.env.NEXT_PUBLIC_STANDARD_PAYEMNT_LINK || 'https://buy.stripe.com/test_8wMeXL6mq4w26lO288',
     },
     {
-      priceId: process.env.ENTERPRIES_PRICE_ID || 'price_1QH7kpGSj97UGaVBbhsehBCi',
+      priceId: process.env.NEXT_PUBLIC_ENTERPRIES_PRICE_ID || 'price_1QH7kpGSj97UGaVBbhsehBCi',
       name: t('name2'),
       description: t('description2'),
       color: '#c66eef',
@@ -58,7 +58,7 @@ const Subscription = ({ session, user }: SubscriptionProps) => {
       timeFrame: t('timeFrame2'),
       btnText: t('btnText2'),
       href: '',
-      link: process.env.ENTERPRIES_PAYMENT_LINK || 'https://buy.stripe.com/test_eVa4j78uy6Ea4dG001',
+      link: process.env.NEXT_PUBLIC_ENTERPRIES_PAYMENT_LINK || 'https://buy.stripe.com/test_eVa4j78uy6Ea4dG001',
     },
   ];
   const activeSubscription = user?.subscriptions.find(
