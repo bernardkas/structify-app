@@ -69,6 +69,8 @@ const Subscription = ({ session, user }: SubscriptionProps) => {
   const isEnterprise = user?.subscriptionType === 'ENTERPRISE';
   const showFreeTrial = user?.subscriptionType === 'TRIAL';
 
+  console.log('activePriceId', activePriceId)
+  console.log('hasUsedTrial', user)
 
   return (
     <div className='flex flex-row gap-5 items-center flex-wrap'>
@@ -88,7 +90,7 @@ const Subscription = ({ session, user }: SubscriptionProps) => {
                   </p>
                 </div>
               )}
-            {activePriceId === item.priceId && showFreeTrial && (
+            {activePriceId === item.priceId && !hasUsedTrial && (
               <div className='absolute top-0 right-0 p-2 '>
                 <Star className='text-2xl font-sans font-bold text-yellow-500' />
               </div>
