@@ -4,11 +4,11 @@ import { useRouter } from 'next/navigation';
 
 export default function LanguageSwitcher() {
   const router = useRouter();
-  const [locale, setLocale] = useState('de'); // Default to 'de'
+  const [locale, setLocale] = useState<string | null>(null); // Initialize as null to avoid mismatch during initial render
 
   useEffect(() => {
     // Load saved locale from localStorage on mount
-    const savedLocale = localStorage.getItem('locale') || 'de';
+    const savedLocale = localStorage.getItem('locale') || 'de'; // Default to 'de' if nothing is saved
     setLocale(savedLocale);
   }, []);
 
@@ -22,11 +22,14 @@ export default function LanguageSwitcher() {
     router.refresh();
   };
 
+  // Prevent rendering the select until locale is loaded
+  if (locale === null) return null;
+
   return (
     <select
       value={locale}
       onChange={(e) => changeLanguage(e.target.value)}
-      className="p-1 border rounded bg-slate-900 text-white" // Tailwind styles for a basic dropdown
+      className="p-2 border rounded bg-slate-900 text-white"
     >
       <option value="en">EN</option>
       <option value="de">DE</option>
