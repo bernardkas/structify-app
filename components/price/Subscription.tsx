@@ -111,7 +111,7 @@ const Subscription = ({ session, user }: SubscriptionProps) => {
             <p className='text-xl font-bold font-sans mb-2'>
               {item.price} <label className='text-sm'>{item.timeFrame}</label>{' '}
             </p>
-            {user?.subscriptions?.length === 0  && showFreeTrial ? (
+            {item.priceId === process.env.NEXT_PUBLIC_STANDARD_PRICE_ID && user?.subscriptions?.length === 0  && showFreeTrial ? (
               <Button className='rounded-[50px]'>
                 <Link
                   target='_blank'
