@@ -42,6 +42,7 @@ const DashboardOverview = ({
   useEffect(() => {
     setLoading(true);
     
+
     const filteredData = {
       projects: filterDataByTimeRange(projects, timeRange, 'createdAt'),
       clients: filterDataByTimeRange(clients, timeRange, 'createdAt'),
@@ -225,7 +226,13 @@ const DashboardOverview = ({
             </CardDescription> */}
           </CardHeader>
           <CardContent className='pl-2'>
-            <Overview monthlyBudgetData={monthlyBudgetData} />
+          {loading ? (
+              <Skeleton className='h-10 w-full' />
+            ) : (
+
+              <Overview monthlyBudgetData={monthlyBudgetData} />
+            )
+          }
           </CardContent>
         </Card>
         <Card className='col-span-3'>
@@ -233,12 +240,18 @@ const DashboardOverview = ({
             <CardTitle>{t('rectenEmployees')}</CardTitle>
           </CardHeader>
           <CardContent>
-            {employeeHours?.length > 0 ? (
-              <RecentEmployeesHours employeeHours={employeeHours} />
-
+          {loading ? (
+              <Skeleton className='h-10 w-full' />
             ) : (
-              <p>No data</p>
-            )}
+
+              employeeHours?.length > 0 ? (
+                <RecentEmployeesHours employeeHours={employeeHours} />
+                
+              ) : (
+                <p>No data</p>
+              )
+            )  
+          }
           </CardContent>
         </Card>
       </div>
