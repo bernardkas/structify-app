@@ -15,6 +15,7 @@ import { Overview } from './ui/overview';
 import { getMonthlyBudgetAndHoursData } from '@/lib/monthly-budget-data';
 import RecentEmployeesHours from './ui/recent-employees-hour';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 interface DashboardOverviewProps {
   projects: any;
@@ -255,6 +256,9 @@ const DashboardOverview = ({
           </CardContent>
         </Card>
       </div>
+      <Link href='/privacy-policy'>
+          Pricacy Policy
+        </Link>
     </div>
   );
 };
