@@ -257,7 +257,7 @@ const DashboardOverview = ({
         </Card>
       </div>
       <Link href='/privacy-policy'>
-          Pricacy Policy
+          Privacy Policy
         </Link>
     </div>
   );
