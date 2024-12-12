@@ -35,6 +35,10 @@ export default function NavigationMenuButton({onClose, className, linkClassName}
       title: t('clients'),
       href: "/clients",
     },
+    {
+      title: 'Privacy Policy',
+      href: "/privacy-policy",
+    },
   ]
   return (
     <NavigationMenu>
