@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { getLocale, getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
+import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
   title: 'Structify',
@@ -33,7 +34,7 @@ export default async function RootLayout({
       <NextIntlClientProvider  messages={messages}>
 
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS!} />
-        <body>{children}</body>
+        <body className={cn('bg-slate-900 text-white ', font.className)}>{children}</body> 
       </NextIntlClientProvider>
       </html>
     </SessionProvider>

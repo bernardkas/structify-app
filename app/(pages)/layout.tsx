@@ -19,13 +19,14 @@ export default async function PagesLayout({
   const session = await auth();
   return (
     <SessionProvider session={session}>
-      <html lang='en'>
-      <body className={cn('bg-slate-900 text-white ', font.className)}>
+      <div className={cn(' ', font.className)}>
+     
+
           <Navbar currentUser={session?.user} />
           {children}
           <ToastContainer autoClose={5000} pauseOnHover={false} theme='dark' />
-        </body>
-      </html>
+       
+        </div>
     </SessionProvider>
   );
 }

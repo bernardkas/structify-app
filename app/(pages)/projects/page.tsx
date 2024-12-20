@@ -1,4 +1,3 @@
-'use server'
 import { getClients } from '@/actions/Model/clients'
 import { getProjects } from '@/actions/Model/project'
 import { auth } from '@/auth'
