@@ -25,7 +25,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { RegisterSchema } from '@/schemas';
-import { Eye, EyeOff } from 'lucide-react';da
+import { Eye, EyeOff } from 'lucide-react';
 
 const SignupForm = () => {
   const [error, setError] = useState<string | undefined>('');
