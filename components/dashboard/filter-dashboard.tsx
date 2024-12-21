@@ -32,7 +32,7 @@ const FilterDashboard = ({ onChange }: FilterDashboardProps) => {
                 </SelectTrigger>
                 <SelectContent side='top'>
                     {timeRanges?.map(({label, value}) => (
-                        <SelectItem value={value}>{label}</SelectItem>
+                        <SelectItem key={value} value={value}>{label}</SelectItem>
                     ))}
                 </SelectContent>
               </Select>

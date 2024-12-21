@@ -25,11 +25,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { RegisterSchema } from '@/schemas';
+import { Eye, EyeOff } from 'lucide-react';da
 
 const SignupForm = () => {
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -111,13 +113,25 @@ const SignupForm = () => {
                       <FormItem>
                         <FormLabel>Password</FormLabel>
                         <FormControl>
-                          <Input
-                            {...field}
-                            className='mb-2 outline-0'
-                            name='password'
-                            type='password'
-                            placeholder='******'
-                          />
+                          <div className='relative'>
+                            <Input
+                              {...field}
+                              className='mb-2 outline-0'
+                              name='password'
+                              type={showPassword ? 'text' : 'password'}
+                              placeholder='******'
+                            />
+                            <div
+                              className='absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer'
+                              onClick={() => setShowPassword(!showPassword)}
+                            >
+                              {showPassword ? (
+                                <EyeOff className='h-5 w-5 text-gray-500' />
+                              ) : (
+                                <Eye className='h-5 w-5 text-gray-500' />
+                              )}
+                            </div>
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
