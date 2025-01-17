@@ -22,7 +22,7 @@
       "addHoursDescription": "Stunden zu Mitarbeitern hinzufügen",
       "assignEmployee": "Mitarbeiter zuweisen",
       "assignEmployeeDescription": "Mitarbeiter zu Projekten zuweisen"
-    }, 
+    },
     "invoice": "Rechnung",
     "price": "Preis",
     "login": "Anmelden"
@@ -300,6 +300,8 @@
     "f15": "✅ Rechnungen erstellen",
     "f16": "✅ Erinnerung",
     "btnText2": "Plan wählen",
-    "timeFrame2": "pro Monat"
+    "timeFrame2": "pro Monat",
+    "freeTrialActive": "Kostenlose Testversion ist aktiv",
+    "freeTrial": "Kostenlose Testversion"
   }
 }

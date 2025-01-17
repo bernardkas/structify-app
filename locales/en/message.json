@@ -22,7 +22,7 @@
       "addHoursDescription": "Add hours to employees",
       "assignEmployee": "Assign employee",
       "assignEmployeeDescription": "Assign employee to projects"
-    }, 
+    },
     "invoice": "Invoice",
     "price": "Price",
     "login": "Login"
@@ -35,57 +35,57 @@
     "totalEmployees": "Employees",
     "overview": "Overview",
     "rectenEmployees": "Recent Employees hours"
-},
-"Client": {
-  "title": "Clients",
-  "createNewClient": "Create new client",
-  "upgradePlan": "Upgrade your plan to add new clients",
-  "form": {
-    "name": "Name",
-    "organization": "Organization",
-    "phone": "Phone",
-    "email": "Email",
-    "status": "Status",
-    "statusActive": "Active",
-    "statuseInactive": "Inactive",
-    "color": "Color",
-    "date": "Date",
-    "update": "Update",
-    "create": "Create client"
   },
-  "detail": "Detail"
-},
-"Remainders": {
-  "title": "Remainders",
-  "addRemiander": "Add Remainder",
-  "editRemainder": "Edit Remainder",
-  "form": {
-    "name": "Name",
-    "startDate": "Start date",
-    "frequency": "Frequency",
-    "weekly": "Weekly",
-    "monthly": "Monthly",
-    "daysOfTheWeek": {
-      "title": "Days of the week",
-      "monday": "Monday",
-      "tuesday": "Tuesday",
-      "wednesday": "Wednesday",
-      "thursday": "Thursday",
-      "friday": "Friday",
-      "saturday": "Saturday",
-      "sunday": "Sunday"
+  "Client": {
+    "title": "Clients",
+    "createNewClient": "Create new client",
+    "upgradePlan": "Upgrade your plan to add new clients",
+    "form": {
+      "name": "Name",
+      "organization": "Organization",
+      "phone": "Phone",
+      "email": "Email",
+      "status": "Status",
+      "statusActive": "Active",
+      "statuseInactive": "Inactive",
+      "color": "Color",
+      "date": "Date",
+      "update": "Update",
+      "create": "Create client"
     },
-    "daysOfTheMonth": "Days of the month",
-    "reminderTime": "Reminder Time",
-    "emailRecipient": "Email Recipient",
-    "reminderMessage": "Reminder Message",
-    "status": "Status",
-    "statusActive": "Active",
-    "statuseInactive": "Inactive",
-    "statusPaused": "Paused",
-    "update": "Update",
-    "create": "Create Remainder"
-  }
+    "detail": "Detail"
+  },
+  "Remainders": {
+    "title": "Remainders",
+    "addRemiander": "Add Remainder",
+    "editRemainder": "Edit Remainder",
+    "form": {
+      "name": "Name",
+      "startDate": "Start date",
+      "frequency": "Frequency",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "daysOfTheWeek": {
+        "title": "Days of the week",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+      },
+      "daysOfTheMonth": "Days of the month",
+      "reminderTime": "Reminder Time",
+      "emailRecipient": "Email Recipient",
+      "reminderMessage": "Reminder Message",
+      "status": "Status",
+      "statusActive": "Active",
+      "statuseInactive": "Inactive",
+      "statusPaused": "Paused",
+      "update": "Update",
+      "create": "Create Remainder"
+    }
   },
   "Project": {
     "title": "Projects",
@@ -142,7 +142,7 @@
     "form": {
       "name": "Name",
       "supplier": "Supplier",
-      "status":"Status",
+      "status": "Status",
       "paid": "Paid",
       "unpaid": "Unpaid",
       "patially": "Partially",
@@ -199,7 +199,7 @@
       "date": "Started month",
       "employeeAddress": "Employee Address",
       "update": "Update Employee",
-      "create":"Create Employee"
+      "create": "Create Employee"
     },
     "detail": "Detail",
     "workHoursTracking": "Work Hours Tracking",
@@ -212,23 +212,23 @@
     "title": "Employee hours",
     "addEmployeeHours": "Add Employee hours",
     "editEmployeeHours": "Edit Employee hours",
-    "upgradePlan":"Upgrade your plan to add new employees hours.",
+    "upgradePlan": "Upgrade your plan to add new employees hours.",
     "form": {
       "employee": "Employee",
       "date": "Date",
       "overtimeHours": "Overtime hours",
       "hours": "Hours",
-      "minutes":"Minutes",
+      "minutes": "Minutes",
       "description": "Description"
     }
   },
   "AssignEmployee": {
     "title": "Assign Employee to Project",
     "upgradePlan": "Upgrade your plan to assign employee.",
-    "addEmployee":"Assign employee",
+    "addEmployee": "Assign employee",
     "editEmployee": "Edit assign employee",
     "form": {
-      "employee":"Employee",
+      "employee": "Employee",
       "project": "Project",
       "update": "Update",
       "create": "Assign employee"
@@ -236,7 +236,7 @@
   },
   "Invoice": {
     "title": "Invoice",
-    "addNewInvoice":"Add new invoice",
+    "addNewInvoice": "Add new invoice",
     "upgradePlan": "Upgrade your plan to add new invoice",
     "form": {
       "companyInformation": "Company Information",
@@ -264,7 +264,7 @@
       "totalPrice": "Total price",
       "addDescription": "Add description",
       "deleteDescription": "Delete",
-      "payment":"Payment",
+      "payment": "Payment",
       "subtotal": "Subtotal",
       "taxRate": "Tax rate",
       "totalTax": "Total tax",
@@ -287,7 +287,7 @@
     "f7": "✅ Create Invoices",
     "f8": "✅ Reminder",
     "timeFrame1": "per month",
-    "btnText1": "Choose plan",
+    "btnText1": "  plan",
     "free1": "7 days free then",
     "name2": "Enterprise",
     "description2": "Used more for large companies",
@@ -304,5 +304,4 @@
     "freeTrialActive": "Free trial is active",
     "freeTrial": "Free trial"
   }
-  
 }

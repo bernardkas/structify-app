@@ -21,7 +21,6 @@ import FileUploader from '@/components/ui-reusable/file-uploader';
 import { createPlansBlueprint } from '@/actions/Model/plans-blueprints';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { s3Upload } from '@/actions/upload-s3';
 import { uploadFileToS3 } from '@/lib/upload-file-s3';
 import { useTranslations } from 'next-intl';
 
@@ -46,7 +45,7 @@ const AddFiles = ({ file, projectId, handleCloseDialog }: AddFilesProps) => {
     createPlansBlueprint(values).then(data => {
       if (data?.success) {
         setLoading(false);
-        handleCloseDialog()
+        handleCloseDialog();
         toast(data?.success, { type: 'success' });
       }
     });
@@ -55,24 +54,24 @@ const AddFiles = ({ file, projectId, handleCloseDialog }: AddFilesProps) => {
   const [uploadFile, setUploadFile] = useState<File | null>(null);
 
   const onSubmit = async (data: any) => {
-    setLoading(true)
+    setLoading(true);
 
     const formData = new FormData();
-    formData.append('file', uploadFile as any)
+    formData.append('file', uploadFile as any);
     const upload = await axios.post('/api/s3-upload', formData, {
-        headers: {
-          'Content-Type': uploadFile?.type,
-          'Content-Disposition': 'inline',
-        },
-      });
+      headers: {
+        'Content-Type': uploadFile?.type,
+        'Content-Disposition': 'inline',
+      },
+    });
 
-      const uploadedFile = upload.data.fileName
+    const uploadedFile = upload.data.fileName;
 
     const payload = {
       ...data,
       projectId: projectId,
       file: uploadedFile,
-      type: uploadFile?.type
+      type: uploadFile?.type,
     };
     create(payload);
   };
