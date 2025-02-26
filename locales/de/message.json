@@ -34,7 +34,7 @@
     "totalProjects": "Projekte",
     "totalEmployees": "Mitarbeiter",
     "overview": "Übersicht",
-    "rectenEmployees": "Kürzlich hinzugefügte Mitarbeiterstunden"
+    "recentEmployees": "Kürzlich hinzugefügte Mitarbeiterstunden"
   },
   "Client": {
     "title": "Kunden",

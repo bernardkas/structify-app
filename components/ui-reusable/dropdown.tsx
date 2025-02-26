@@ -8,7 +8,7 @@ export default function LanguageSwitcher() {
 
   useEffect(() => {
     // Load saved locale from localStorage on mount
-    const savedLocale = localStorage.getItem('locale') || 'de'; // Default to 'de' if nothing is saved
+    const savedLocale = localStorage.getItem('locale') || 'en'; // Default to 'de' if nothing is saved
     setLocale(savedLocale);
   }, []);
 
@@ -28,11 +28,11 @@ export default function LanguageSwitcher() {
   return (
     <select
       value={locale}
-      onChange={(e) => changeLanguage(e.target.value)}
-      className="p-2 border rounded bg-slate-900 text-white"
-    >
-      <option value="en">EN</option>
-      <option value="de">DE</option>
+      onChange={e => changeLanguage(e.target.value)}
+      className='p-2 border rounded bg-slate-900 text-white'>
+      <option value='en'>EN</option>
+      <option value='de'>DE</option>
+      <option value='al'>AL</option>
     </select>
   );
 }

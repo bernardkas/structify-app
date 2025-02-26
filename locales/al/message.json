@@ -1,0 +1,307 @@
+{
+  "Address": {
+    "street": "Rruga",
+    "city": "Qyteti",
+    "state": "Shteti",
+    "zip": "Kodi Postar",
+    "country": "Vendi"
+  },
+  "Navbar": {
+    "dashboard": "Paneli",
+    "clients": "Klientët",
+    "projects": {
+      "title": "Projektet",
+      "description": "Projektet",
+      "addHours": "Shto orë",
+      "addHoursDescription": "Shto orë në projekte"
+    },
+    "employees": {
+      "title": "Punonjësit",
+      "desc": "Menaxho punonjësit",
+      "addHours": "Shto orë",
+      "addHoursDescription": "Shto orë për punonjësit",
+      "assignEmployee": "Cakto punonjës",
+      "assignEmployeeDescription": "Cakto punonjës në projekte"
+    },
+    "invoice": "Fatura",
+    "price": "Çmimi",
+    "login": "Hyr"
+  },
+  "Dashboard": {
+    "title": "Paneli",
+    "totalRevenue": "Të ardhurat totale",
+    "totalClients": "Klientët",
+    "totalProjects": "Projektet",
+    "totalEmployees": "Punonjësit",
+    "overview": "Përmbledhje",
+    "recentEmployees": "Orët e fundit të shtuara për punonjësit"
+  },
+  "Client": {
+    "title": "Klientët",
+    "createNewClient": "Krijo klient të ri",
+    "upgradePlan": "Përmirëso planin për të shtuar klientë të rinj",
+    "form": {
+      "name": "Emri",
+      "organization": "Organizata",
+      "phone": "Telefoni",
+      "email": "Email",
+      "status": "Statusi",
+      "statusActive": "Aktiv",
+      "statusInactive": "Jo aktiv",
+      "color": "Ngjyra",
+      "date": "Data",
+      "update": "Përditëso",
+      "create": "Krijo klient"
+    },
+    "detail": "Detajet"
+  },
+  "Remainders": {
+    "title": "Kujtimet",
+    "addRemiander": "Shto kujtim",
+    "editRemainder": "Edito kujtim",
+    "form": {
+      "name": "Emri",
+      "startDate": "Data e fillimit",
+      "frequency": "Frekuenca",
+      "weekly": "Javore",
+      "monthly": "Mujore",
+      "daysOfTheWeek": {
+        "title": "Ditët e javës",
+        "monday": "E hënë",
+        "tuesday": "E martë",
+        "wednesday": "E mërkurë",
+        "thursday": "E enjte",
+        "friday": "E premte",
+        "saturday": "E shtunë",
+        "sunday": "E diel"
+      },
+      "daysOfTheMonth": "Ditët e muajit",
+      "reminderTime": "Koha e kujtimit",
+      "emailRecipient": "Pranuesi i email-it",
+      "reminderMessage": "Mesazhi i kujtimit",
+      "status": "Statusi",
+      "statusActive": "Aktiv",
+      "statuseInactive": "Jo aktiv",
+      "statusPaused": "I ndaluar",
+      "update": "Përditëso",
+      "create": "Krijo kujtim"
+    }
+  },
+  "Project": {
+    "title": "Projektet",
+    "createNewProject": "Krijo projekt të ri",
+    "upgradePlan": "Përmirëso planin për të shtuar projekte të reja",
+    "form": {
+      "name": "Emri",
+      "hourlyRate": "Norma për orë",
+      "totalBudget": "Buxheti total",
+      "status": "Statusi",
+      "statusStarted": "I pa filluar",
+      "statusInProgress": "Në progres",
+      "statusCompleted": "I përfunduar",
+      "projectType": "Lloji i projektit",
+      "newConstruction": "Ndërtim i ri",
+      "renovation": "Rinovim",
+      "maintenance": "Mirëmbajtje",
+      "client": "Klienti",
+      "color": "Ngjyra",
+      "projectSite": "Vendndodhja e projektit",
+      "date": "Data e fillimit",
+      "description": "Përshkrimi",
+      "update": "Përditëso",
+      "create": "Krijo projekt"
+    },
+    "SubpageNav": {
+      "detail": "Detajet",
+      "employee": "Punonjësit",
+      "budgetAndCost": "Gjurmimi i buxhetit dhe kostos",
+      "materials": "Materialet",
+      "projectHours": "Orët e projektit",
+      "plansBlueprints": "Planet dhe skemat"
+    }
+  },
+  "BudgetAndCost": {
+    "title": "Gjurmimi i buxhetit dhe kostos",
+    "addBudgetCost": "Shto buxhet dhe kosto",
+    "editBudgetCost": "Edito buxhet dhe kosto",
+    "form": {
+      "name": "Emri",
+      "totalBudget": "Buxheti total",
+      "costIncurred": "Kostot e bëra",
+      "costOverruns": "Të tepërtat e kostos",
+      "type": "Lloji",
+      "amount": "Shuma",
+      "update": "Përditëso buxhetin",
+      "create": "Krijo buxhet"
+    }
+  },
+  "Material": {
+    "title": "Materialet",
+    "addMaterial": "Shto material",
+    "editMaterial": "Edito material",
+    "form": {
+      "name": "Emri",
+      "supplier": "Furnizuesi",
+      "status": "Statusi",
+      "paid": "I paguar",
+      "unpaid": "I papaguar",
+      "partially": "Pjesërisht",
+      "date": "Data",
+      "description": "Përshkrimi",
+      "materialName": "Emri i materialit",
+      "price": "Çmimi",
+      "update": "Përditëso materialin",
+      "create": "Krijo material"
+    }
+  },
+  "ProjectHours": {
+    "projectHours": "Orët e projektit",
+    "addProjectHours": "Shto orë projekti",
+    "editProjectHours": "Edito orë projekti",
+    "upgradePlan": "Përmirëso planin për të shtuar orë të reja të projektit",
+    "form": {
+      "name": "Projekti",
+      "date": "Data",
+      "hours": "Orët",
+      "minutes": "Minutat",
+      "description": "Përshkrimi",
+      "update": "Përditëso orët e projektit",
+      "create": "Shto orë projekti"
+    },
+    "totalEarnings": "Fitimet totale",
+    "totalHours": "Orët totale"
+  },
+  "PlansAndBlueprint": {
+    "title": "Planet dhe skemat",
+    "addPlansBlueprints": "Shto plan dhe skema",
+    "editPlansBlueprints": "Edito plan dhe skema",
+    "form": {
+      "name": "Emri i skemës",
+      "files": "Skedarët",
+      "type": "Lloji",
+      "create": "Krijo plan dhe skema"
+    },
+    "uploadFile": "Ngarko skedar"
+  },
+  "Employee": {
+    "title": "Punonjësit",
+    "addEmployee": "Shto punonjës",
+    "upgradePlan": "Përmirëso planin për të shtuar punonjës të rinj",
+    "form": {
+      "name": "Emri",
+      "email": "Email",
+      "color": "Ngjyra",
+      "phone": "Telefoni",
+      "hourlyRate": "Norma për orë",
+      "salary": "Paga",
+      "overtime": "Orët jashtë orarit",
+      "jobTitle": "Titulli i punës",
+      "date": "Muaji i fillimit",
+      "employeeAddress": "Adresa e punonjësit",
+      "update": "Përditëso punonjësin",
+      "create": "Krijo punonjës"
+    },
+    "detail": "Detajet",
+    "workHoursTracking": "Gjurmimi i orëve të punës",
+    "overtimeHours": "Orët jashtë orarit:",
+    "overtimeTotal": "Orët totale jashtë orarit",
+    "totalHours": "Orët totale:",
+    "totalEarning": "Fitimet totale:"
+  },
+  "EmployeeHours": {
+    "title": "Orët e punonjësve",
+    "addEmployeeHours": "Shto orë për punonjës",
+    "editEmployeeHours": "Edito orët e punonjësve",
+    "upgradePlan": "Përmirëso planin për të shtuar orë të reja për punonjës",
+    "form": {
+      "employee": "Punonjësi",
+      "date": "Data",
+      "overtimeHours": "Orët jashtë orarit",
+      "hours": "Orët",
+      "minutes": "Minutat",
+      "description": "Përshkrimi"
+    }
+  },
+  "AssignEmployee": {
+    "title": "Cakto punonjës në projekt",
+    "upgradePlan": "Përmirëso planin për të caktuar punonjës",
+    "addEmployee": "Cakto punonjës",
+    "editEmployee": "Edito punonjësin e caktuar",
+    "form": {
+      "employee": "Punonjësi",
+      "project": "Projekti",
+      "update": "Përditëso",
+      "create": "Cakto punonjës"
+    }
+  },
+  "Invoice": {
+    "title": "Fatura",
+    "addNewInvoice": "Shto fatura të re",
+    "upgradePlan": "Përmirëso planin për të shtuar fatura të reja",
+    "form": {
+      "companyInformation": "Informacioni i kompanisë",
+      "name": "Emri",
+      "invoiceNumber": "Numri i faturës",
+      "companyName": "Emri i kompanisë",
+      "address": "Adresa",
+      "city": "Qyteti",
+      "postCode": "Kodi postar",
+      "companyPhone": "Telefoni i kompanisë",
+      "email": "Email",
+      "date": "Data",
+      "companyLogo": "Logoja e kompanisë",
+      "clientName": "Emri i klientit",
+      "clientCompnayName": "Emri i kompanisë së klientit",
+      "clientAddress": "Adresa e klientit",
+      "clientPhone": "Telefoni i klientit",
+      "clientEmail": "Email i klientit",
+      "description": "Përshkrimi",
+      "onlyDescription": "Vetëm përshkrim",
+      "withPrice": "Me çmim",
+      "writeDesc": "Shkruaj përshkrimin këtu",
+      "quantity": "Sasia",
+      "unitPrice": "Çmimi për njësi",
+      "totalPrice": "Çmimi total",
+      "addDescription": "Shto përshkrim",
+      "deleteDescription": "Fshi",
+      "payment": "Pagesa",
+      "subtotal": "Nëntotali",
+      "taxRate": "Norma e taksës",
+      "totalTax": "Taksa totale",
+      "fullPrice": "Çmimi total",
+      "update": "Përditëso",
+      "create": "Krijo",
+      "back": "Kthehu",
+      "next": "Vazhdo"
+    }
+  },
+  "Price": {
+    "name1": "Standard",
+    "description1": "Më i preferuari",
+    "f1": "✅ 100 klientë",
+    "f2": "✅ 500 projekte",
+    "f3": "✅ 500 punonjës",
+    "f4": "✅ Gjurmimi i orëve të punonjësve",
+    "f5": "✅ Gjurmimi i orëve të projektit",
+    "f6": "✅ Gjurmimi i buxhetit dhe kostos",
+    "f7": "✅ Krijo faturat",
+    "f8": "✅ Kujtimet",
+    "timeFrame1": "në muaj",
+    "btnText1": "Zgjidh planin",
+    "free1": "7 ditë falas, pastaj",
+    "name2": "Enterprise",
+    "description2": "Më i përshtatshëm për biznese të mëdha",
+    "f9": "✅ Klientë të pakufizuar",
+    "f10": "✅ Projekte të pakufizuara",
+    "f11": "✅ Punonjës të pakufizuar",
+    "f12": "✅ Gjurmimi i orëve të punonjësve",
+    "f13": "✅ Gjurmimi i orëve të projektit",
+    "f14": "✅ Gjurmimi i buxhetit dhe kostos",
+    "f15": "✅ Krijo faturat",
+    "f16": "✅ Kujtimet",
+    "btnText2": "Zgjidh planin",
+    "timeFrame2": "në muaj",
+    "freeTrialActive": "Versioni falas është aktiv",
+    "freeTrial": "Versioni falas"
+  }
+}

@@ -21,8 +21,8 @@ interface DashboardOverviewProps {
   projects: any;
   clients: any;
   employees: any;
-  employeeHours: any
-  currentUser?: any
+  employeeHours: any;
+  currentUser?: any;
 }
 
 const DashboardOverview = ({
@@ -30,33 +30,31 @@ const DashboardOverview = ({
   clients,
   employees,
   employeeHours,
-  currentUser
+  currentUser,
 }: DashboardOverviewProps) => {
   const [timeRange, setTimeRange] = useState<string>('12');
   const [filteredProjects, setFilteredProjects] = useState<any[]>([]);
   const [filteredClients, setFilteredClients] = useState<any[]>([]);
   const [filteredEmployees, setFilteredEmployees] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true); 
+  const [loading, setLoading] = useState<boolean>(true);
 
   const t = useTranslations('Dashboard');
 
   useEffect(() => {
     setLoading(true);
-    
 
     const filteredData = {
       projects: filterDataByTimeRange(projects, timeRange, 'createdAt'),
       clients: filterDataByTimeRange(clients, timeRange, 'createdAt'),
-      employees: filterDataByTimeRange(employees, timeRange, 'createdAt')
+      employees: filterDataByTimeRange(employees, timeRange, 'createdAt'),
     };
-  
+
     setFilteredProjects(filteredData.projects);
     setFilteredClients(filteredData.clients);
     setFilteredEmployees(filteredData.employees);
-    
+
     setLoading(false);
   }, [projects, clients, employees, timeRange]);
-  
 
   const totalBudget = Array.isArray(filteredProjects)
     ? filteredProjects.reduce(
@@ -65,40 +63,36 @@ const DashboardOverview = ({
       )
     : 0;
 
-    const totalHours = Array.isArray(filteredProjects)
-  ? filteredProjects.reduce((acc, project) => {
-      const projectHoursTotal = Array.isArray(project.projectHours)
-        ? project.projectHours.reduce((hoursAcc: any, item: any) => {
-            const totalMinutes = item.hours * 60 + item.minutes;
-            return hoursAcc + totalMinutes; 
-          }, 0)
-        : 0;
+  const totalHours = Array.isArray(filteredProjects)
+    ? filteredProjects.reduce((acc, project) => {
+        const projectHoursTotal = Array.isArray(project.projectHours)
+          ? project.projectHours.reduce((hoursAcc: any, item: any) => {
+              const totalMinutes = item.hours * 60 + item.minutes;
+              return hoursAcc + totalMinutes;
+            }, 0)
+          : 0;
 
-      const totalInHours = projectHoursTotal / 60;
+        const totalInHours = projectHoursTotal / 60;
 
-      const totalCost = totalInHours * (project?.hourlyRate || 0);
+        const totalCost = totalInHours * (project?.hourlyRate || 0);
 
-      return acc + totalCost;
-    }, 0)
-  : 0;
-  
+        return acc + totalCost;
+      }, 0)
+    : 0;
+
   const totalProjects = filteredProjects.length;
   const totalClients = filteredClients.length;
   const totalEmployees = filteredEmployees.length;
 
-  const totalRevenue = totalBudget + totalHours
-
+  const totalRevenue = totalBudget + totalHours;
 
   const monthlyBudgetData = getMonthlyBudgetAndHoursData(
     filteredProjects,
-    'createdAt', 
-    'totalBudget', 
-    'hours', 
-    'minutes' 
+    'createdAt',
+    'totalBudget',
+    'hours',
+    'minutes'
   );
-
-
-
 
   return (
     <div className='space-y-5 mx-3'>
@@ -109,7 +103,9 @@ const DashboardOverview = ({
       <div className='grid gap-4  md:grid-cols-2 lg:grid-cols-4'>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>{t('totalRevenue')}</CardTitle>
+            <CardTitle className='text-sm font-medium'>
+              {t('totalRevenue')}
+            </CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -187,7 +183,9 @@ const DashboardOverview = ({
         </Card>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>{t('totalEmployees')}</CardTitle>
+            <CardTitle className='text-sm font-medium'>
+              {t('totalEmployees')}
+            </CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -227,32 +225,25 @@ const DashboardOverview = ({
             </CardDescription> */}
           </CardHeader>
           <CardContent className='pl-2'>
-          {loading ? (
+            {loading ? (
               <Skeleton className='h-10 w-full' />
             ) : (
-
               <Overview monthlyBudgetData={monthlyBudgetData} />
-            )
-          }
+            )}
           </CardContent>
         </Card>
         <Card className='col-span-3'>
           <CardHeader>
-            <CardTitle>{t('rectenEmployees')}</CardTitle>
+            <CardTitle>{t('recentEmployees')}</CardTitle>
           </CardHeader>
           <CardContent>
-          {loading ? (
+            {loading ? (
               <Skeleton className='h-10 w-full' />
+            ) : employeeHours?.length > 0 ? (
+              <RecentEmployeesHours employeeHours={employeeHours} />
             ) : (
-
-              employeeHours?.length > 0 ? (
-                <RecentEmployeesHours employeeHours={employeeHours} />
-                
-              ) : (
-                <p>No data</p>
-              )
-            )  
-          }
+              <p>No data</p>
+            )}
           </CardContent>
         </Card>
       </div>
