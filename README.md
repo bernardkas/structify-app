@@ -12,7 +12,19 @@ This is a starter tamplate the stack we use is:
 
 How to use:
 
+Copy `.env.example` to `.env` and fill in your own service credentials:
+
+```sh
+cp .env.example .env
+```
+
+The example documents the database, Auth.js, OAuth, email, S3, Stripe, and
+analytics settings. Keep secrets in `.env` or your deployment's environment
+settings. Only `NEXT_PUBLIC_` values may be exposed to the browser; Stripe's
+secret key must use `STRIPE_SECRET_KEY`.
+
 yarn next dev
+
 The Structify project is a software solution designed to manage various aspects of construction-related tasks, including managing clients, employees, houses, and other construction projects. It aims to streamline and simplify the management process, providing a centralized platform for project owners, managers, or administrators to efficiently handle tasks and operations related to construction. Here's a detailed explanation:
 
 Key Features of Structify: Client Management:
@@ -34,5 +46,3 @@ Generate and Manage Invoices: Structify supports invoicing for completed work, a
 Project and Task Scheduling: Users can set deadlines for specific tasks within a project and assign employees to those tasks. The dashboard provides a visual timeline of upcoming work and deadlines. Reminders: The system can automatically send reminders about project deadlines or tasks that need to be completed regularly (e.g., weekly maintenance checks). Customizable Dashboard:
 
 Centralized Overview: The dashboard provides a high-level overview of key metrics, such as total clients, employees, projects, properties, and financial information. Task Management: Users can track current tasks, upcoming deadlines, and employee performance directly from the dashboard. User Authentication and Security:
-
-

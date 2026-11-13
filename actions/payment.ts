@@ -13,7 +13,7 @@ export const payment = async (priceId: string | null) => {
   });
   const userid = user?.id;
   try {
-    const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!);
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {

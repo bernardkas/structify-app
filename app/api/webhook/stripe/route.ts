@@ -5,7 +5,7 @@ import { SubscriptionType } from '@prisma/client';
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
 
-const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY!);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 const webhhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
 export async function POST(req: Request) {
